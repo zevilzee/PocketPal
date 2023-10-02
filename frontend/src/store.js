@@ -4,8 +4,6 @@ import { persistReducer } from "redux-persist";
 import { combineReducers } from "redux";
 import userSlice from "./src/slices/userSlice";
 
-import { Api } from "./src/slices/Api";
-
 const persistconfig = {
   key: "root",
   version: 1,
