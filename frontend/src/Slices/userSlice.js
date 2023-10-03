@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { useSelector, shallowEqual } from "react-redux";
-import { useActions } from "../hooks/useAction";
+import { useActions } from "../Hooks/useActions";
 
 export const initialState = {
   fullName: null,
