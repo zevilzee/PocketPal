@@ -1,20 +1,24 @@
 import React, { useRef } from "react";
-
 import {
   View,
   Text,
   Image,
-  TouchableOpacity,
   StyleSheet,
   Animated,
   PanResponder,
 } from "react-native";
 import { scale } from "react-native-size-matters";
 import { LinearGradient } from "expo-linear-gradient";
+import {
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "react-native-vector-icons";
+import Color from "../../../assets/colors/Color";
+import { useNavigation } from "@react-navigation/native";
 
 const IntroScreen = () => {
   const pan = useRef(new Animated.ValueXY()).current;
-
+  const navigation = useNavigation();
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onMoveShouldSetPanResponder: () => true,
@@ -22,17 +26,13 @@ const IntroScreen = () => {
       useNativeDriver: false,
     }),
     onPanResponderRelease: (e, gestureState) => {
-      if (gestureState.dx > 100) {
-        // Handle the swipe action here (e.g., unlock)
-        // You can replace the following alert with your logic.
-        alert("Unlocked!");
-        // Reset the position of the draggable element
+      if (gestureState.dx > 150) {
+        navigation.navigate("LoginOrSignUp");
         Animated.spring(pan, {
           toValue: { x: 0, y: 0 },
           useNativeDriver: false,
         }).start();
       } else {
-        // If the swipe was not enough, animate back to the initial position
         Animated.spring(pan, {
           toValue: { x: 0, y: 0 },
           useNativeDriver: false,
@@ -47,22 +47,61 @@ const IntroScreen = () => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={["#163DA7", "#C66DB4"]} // Gradient colors
-        start={{ x: 0.55, y: 0.77 }} // Vertical gradient, start at the top
-        end={{ x: 0.11, y: 0.55 }} // Vertical gradient, end at the bottom
-        style={styles.gradientBackground}
-      >
-        <View style={styles.buttonContainer}>
-          <Text style={styles.unlockText}>Slide to Unlock</Text>
+      <View style={styles.contentContainer}>
+        <View style={{ paddingVertical: scale(20) }}>
+          <Image
+            source={require("../../../assets/IntroImg.png")}
+            style={styles.image}
+          />
         </View>
-        <Animated.View
-          {...panResponder.panHandlers}
-          style={[styles.swipeButton, animatedStyle]}
-        >
-          <Text style={styles.unlockIcon}>→</Text>
-        </Animated.View>
-      </LinearGradient>
+
+        <View>
+          <Text style={styles.title}>Take Control of Your Finances Today!</Text>
+          <Text style={styles.subTitle}>
+            With our app, you can easily track your income and expenses, set
+            financial goals, and make informed decisions about your money.
+          </Text>
+        </View>
+
+        <View style={styles.swipeContainer}>
+          <Animated.View
+            {...panResponder.panHandlers}
+            style={[styles.swipeButton, animatedStyle]}
+          >
+            <LinearGradient
+              colors={["#163DA7", "#C66DB4"]}
+              start={{ x: 0.55, y: 0.77 }}
+              end={{ x: 0.11, y: 0.55 }}
+              style={styles.gradientBackground}
+            >
+              <MaterialCommunityIcons
+                name="arrow-right"
+                style={{ ...styles.unlockIcon, color: Color.White }}
+              />
+            </LinearGradient>
+
+            <Text>Get Started</Text>
+            <MaterialIcons
+              name="keyboard-arrow-right"
+              style={styles.swipIcon}
+            />
+            <MaterialIcons
+              name="keyboard-arrow-right"
+              style={styles.swipIcon}
+            />
+            <MaterialIcons
+              name="keyboard-arrow-right"
+              style={styles.swipIcon}
+            />
+          </Animated.View>
+          <View style={styles.unlock}>
+            <MaterialCommunityIcons
+              name="lock-open"
+              style={styles.unlockIcon}
+            />
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -73,32 +112,71 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  gradientBackground: {
-    width: "80%",
-    height: 60,
-    borderRadius: 30,
-    flexDirection: "row",
+  contentContainer: {
+    width: scale(300),
     alignItems: "center",
-    overflow: "hidden",
   },
-  buttonContainer: {
-    flex: 1,
+  image: {
+    width: scale(250),
+    height: scale(250),
+    resizeMode: "contain",
+    paddingVertical: scale(30),
+  },
+  title: {
+    fontFamily: "Bold",
+    fontSize: scale(23),
+  },
+  subTitle: {
+    fontFamily: "Regular",
+    paddingVertical: scale(15),
+  },
+  gradientBackground: {
+    width: scale(50),
+    height: scale(50),
+    borderRadius: scale(25),
     justifyContent: "center",
     alignItems: "center",
+    flexDirection: "row",
   },
-  unlockText: {
-    fontSize: 16,
-    color: "white",
+  swipeContainer: {
+    width: scale(300),
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: scale(20),
+    backgroundColor: "#DFDFDF",
+    overflow: "hidden",
+    flexDirection: "row",
+    borderRadius: scale(20),
   },
   swipeButton: {
-    width: 60,
-    height: 60,
     justifyContent: "center",
     alignItems: "center",
+    flexDirection: "row",
+    gap: 10,
   },
   unlockIcon: {
     fontSize: 24,
     color: "white",
+  },
+  getStartedText: {
+    color: "#163DA7",
+    marginLeft: scale(10),
+    fontSize: scale(18),
+  },
+  swipIcon: {
+    fontSize: scale(20),
+  },
+  unlock: {
+    backgroundColor: Color.White,
+    width: scale(50),
+    height: scale(50),
+    borderRadius: scale(25),
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  unlockIcon: {
+    color: Color.Blue,
+    fontSize: scale(30),
   },
 });
 
