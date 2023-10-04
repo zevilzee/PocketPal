@@ -17,6 +17,7 @@ import {
 import IntroScreen from "./src/Screens/IntroScreen/IntroScreen";
 import LoginOrSignUpScreen from "./src/Screens/LoginOrSignUpScreen/LoginOrSignUpScreen";
 import SignUp from "./src/Screens/SignUpScreen/SignUp";
+import OtpScreen from "./src/Screens/OtpScreen/OtpScreen";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -52,6 +53,7 @@ function Main() {
               component={LoginOrSignUpScreen}
             />
             <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="Otp" component={OtpScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

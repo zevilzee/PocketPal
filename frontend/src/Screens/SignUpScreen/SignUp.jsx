@@ -1,14 +1,29 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
 import Header from "../../Components/Header";
 import Color from "../../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
 import CustomInput from "../../Components/CustomInput";
 import GradientButton from "../../Components/GradientButton";
 import { AntDesign } from "react-native-vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { BlurView as ExpoBlurView } from "expo-blur";
 
 const SignUp = () => {
-  const handleSignUp = () => {};
+  const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleSignUp = () => {
+    // navigation.navigate("Otp");
+    setModalVisible(true);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -99,6 +114,52 @@ const SignUp = () => {
             <AntDesign name="apple1" style={styles.apple} />
           </View>
         </View>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <ExpoBlurView style={styles.blurView} tint="light" intensity={10}>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <TouchableOpacity
+                  onPress={() => setModalVisible(false)}
+                  style={styles.crossContainer}
+                >
+                  <Image
+                    source={require("../../../assets/cross.png")}
+                    style={styles.cross}
+                  />
+                </TouchableOpacity>
+                <Image
+                  source={require("../../../assets/tick.png")}
+                  style={styles.tickIcon}
+                />
+                <Text style={styles.modalTitle}>Successfully Registered</Text>
+                <Text
+                  style={{
+                    ...styles.modalTitle,
+                    fontFamily: "Medium",
+                    fontSize: scale(16),
+                    width: scale(180),
+                  }}
+                >
+                  Your account has been successfully registered.
+                </Text>
+
+                <GradientButton
+                  title="Login"
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                  containerStyle={styles.modalButton}
+                />
+              </View>
+            </View>
+          </ExpoBlurView>
+        </Modal>
       </View>
     </View>
   );
@@ -187,5 +248,51 @@ const styles = StyleSheet.create({
     width: scale(2),
     height: scale(38),
     backgroundColor: Color.Input,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: scale(300),
+  },
+  modalContent: {
+    backgroundColor: Color.White,
+    width: "100%",
+    paddingVertical: scale(20),
+    alignItems: "center",
+    borderRadius: scale(20),
+    shadowColor: Color.Black,
+    elevation: 6,
+    borderColor: Color.Blue,
+  },
+  modalTitle: {
+    fontFamily: "Bold",
+    fontSize: scale(18),
+    marginBottom: scale(20),
+  },
+  blurView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cross: {
+    width: scale(20),
+    height: scale(20),
+    resizeMode: "contain",
+  },
+  crossContainer: {
+    position: "relative",
+    right: scale(-120),
+    top: scale(-15),
+    paddingHorizontal: scale(20),
+    paddingVertical: scale(10),
+  },
+  tickIcon: {
+    width: scale(90),
+    height: scale(80),
+    resizeMode: "contain",
+  },
+  modalButton: {
+    width: scale(260),
   },
 });
