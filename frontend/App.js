@@ -18,6 +18,10 @@ import IntroScreen from "./src/Screens/IntroScreen/IntroScreen";
 import LoginOrSignUpScreen from "./src/Screens/LoginOrSignUpScreen/LoginOrSignUpScreen";
 import SignUp from "./src/Screens/SignUpScreen/SignUp";
 import OtpScreen from "./src/Screens/OtpScreen/OtpScreen";
+import LoginScreen from "./src/Screens/LoginScreen/LoginScreen";
+import ForgotPass from "./src/Screens/ForgotPassScreen/ForgotPass";
+import VerifyEmail from "./src/Screens/ForgotPassScreen/VerifyEmail";
+import ResetPassword from "./src/Screens/ForgotPassScreen/ResetPassword";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -54,6 +58,10 @@ function Main() {
             />
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="Otp" component={OtpScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Forgot" component={ForgotPass} />
+            <Stack.Screen name="verifyEmail" component={VerifyEmail} />
+            <Stack.Screen name="ResetPass" component={ResetPassword} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

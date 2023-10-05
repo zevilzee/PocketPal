@@ -16,7 +16,7 @@ import { AntDesign } from "react-native-vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { BlurView as ExpoBlurView } from "expo-blur";
 
-const SignUp = () => {
+const LoginScreen = () => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -24,11 +24,8 @@ const SignUp = () => {
     // navigation.navigate("Otp");
     setModalVisible(true);
   };
-
-  const handlenavigation = () => {
-    console.log("press");
-    setModalVisible(false);
-    navigation.navigate("Login");
+  const handleForget = () => {
+    navigation.navigate("Forgot");
   };
   return (
     <View style={styles.container}>
@@ -39,18 +36,11 @@ const SignUp = () => {
             source={require("../../../assets/logo.png")}
             style={styles.image}
           />
-          <Text style={styles.title}>Sign Up</Text>
+          <Text style={styles.title}>Login</Text>
         </View>
       </View>
       <View style={styles.formContainer}>
         <View style={styles.InputContainer}>
-          <CustomInput
-            placeholder="Name Here"
-            onChangeText={(text) => {
-              console.log("Input Text:", text);
-            }}
-          />
-
           <CustomInput
             placeholder="Email"
             onChangeText={(text) => {
@@ -65,36 +55,15 @@ const SignUp = () => {
             }}
           />
 
-          <CustomInput
-            placeholder="City"
-            onChangeText={(text) => {
-              console.log("Input Text:", text);
-            }}
-          />
-
-          <CustomInput
-            placeholder="State"
-            onChangeText={(text) => {
-              console.log("Input Text:", text);
-            }}
-          />
-
-          <CustomInput
-            placeholder="Country"
-            onChangeText={(text) => {
-              console.log("Input Text:", text);
-            }}
-          />
-
-          <CustomInput
-            placeholder="Phone Number"
-            onChangeText={(text) => {
-              console.log("Input Text:", text);
-            }}
-          />
+          <TouchableOpacity
+            style={styles.forgetContainer}
+            onPress={handleForget}
+          >
+            <Text style={styles.forgetTitle}>Forget Password?</Text>
+          </TouchableOpacity>
 
           <GradientButton
-            title="Register"
+            title="Login"
             onPress={handleSignUp}
             containerStyle={styles.gradientButton}
           />
@@ -102,9 +71,9 @@ const SignUp = () => {
 
         <View style={styles.InputContainer}>
           <View style={styles.haveAccount}>
-            <Text style={styles.accountTitle}>Already have an account? </Text>
+            <Text style={styles.accountTitle}>Don’t have an account? </Text>
             <Text style={{ ...styles.accountTitle, color: Color.Red }}>
-              Login
+              Sign Up
             </Text>
           </View>
         </View>
@@ -120,56 +89,12 @@ const SignUp = () => {
             <AntDesign name="apple1" style={styles.apple} />
           </View>
         </View>
-
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <ExpoBlurView style={styles.blurView} tint="light" intensity={10}>
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <TouchableOpacity
-                  onPress={() => setModalVisible(false)}
-                  style={styles.crossContainer}
-                >
-                  <Image
-                    source={require("../../../assets/cross.png")}
-                    style={styles.cross}
-                  />
-                </TouchableOpacity>
-                <Image
-                  source={require("../../../assets/tick.png")}
-                  style={styles.tickIcon}
-                />
-                <Text style={styles.modalTitle}>Successfully Registered</Text>
-                <Text
-                  style={{
-                    ...styles.modalTitle,
-                    fontFamily: "Medium",
-                    fontSize: scale(16),
-                    width: scale(180),
-                  }}
-                >
-                  Your account has been successfully registered.
-                </Text>
-
-                <GradientButton
-                  title="Login"
-                  onPress={handlenavigation}
-                  containerStyle={styles.modalButton}
-                />
-              </View>
-            </View>
-          </ExpoBlurView>
-        </Modal>
       </View>
     </View>
   );
 };
 
-export default SignUp;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -253,50 +178,12 @@ const styles = StyleSheet.create({
     height: scale(38),
     backgroundColor: Color.Input,
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: scale(300),
-  },
-  modalContent: {
-    backgroundColor: Color.White,
-    width: "100%",
+  forgetContainer: {
     paddingVertical: scale(20),
-    alignItems: "center",
-    borderRadius: scale(20),
-    shadowColor: Color.Black,
-    elevation: 6,
-    borderColor: Color.Blue,
+    alignItems: "flex-end",
   },
-  modalTitle: {
+  forgetTitle: {
     fontFamily: "Bold",
-    fontSize: scale(18),
-    marginBottom: scale(20),
-  },
-  blurView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  cross: {
-    width: scale(20),
-    height: scale(20),
-    resizeMode: "contain",
-  },
-  crossContainer: {
-    position: "relative",
-    right: scale(-120),
-    top: scale(-15),
-    paddingHorizontal: scale(20),
-    paddingVertical: scale(10),
-  },
-  tickIcon: {
-    width: scale(90),
-    height: scale(80),
-    resizeMode: "contain",
-  },
-  modalButton: {
-    width: scale(260),
+    fontSize: scale(14),
   },
 });
