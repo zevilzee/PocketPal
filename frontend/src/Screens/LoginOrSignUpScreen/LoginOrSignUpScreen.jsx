@@ -11,6 +11,10 @@ const LoginOrSignUpScreen = () => {
   const handleSignUp = () => {
     navigation.navigate("SignUp");
   };
+
+  const handleLogin = () => {
+    navigation.navigate("Login");
+  };
   return (
     <View style={styles.container}>
       <Header />
@@ -34,7 +38,7 @@ const LoginOrSignUpScreen = () => {
           />
           <Text style={styles.or}>OR</Text>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Log In</Text>
           </TouchableOpacity>
         </View>

@@ -21,8 +21,7 @@ const LoginScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleSignUp = () => {
-    // navigation.navigate("Otp");
-    setModalVisible(true);
+    navigation.navigate("Home");
   };
   const handleForget = () => {
     navigation.navigate("Forgot");
