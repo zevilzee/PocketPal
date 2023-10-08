@@ -1,19 +1,14 @@
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
-import { Fontisto } from "react-native-vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { FontAwesome } from "react-native-vector-icons";
 
-const HistoryCard = () => {
-  const navigation = useNavigation();
-  const handleHistoryNavigation = () => {
-    navigation.navigate("History");
-  };
+const StartEndTime = () => {
   return (
     <View style={styles.card}>
       <View style={styles.container}>
-        <Text style={styles.title}>$1320</Text>
+        <FontAwesome name="calendar" style={styles.icon} />
         <View style={styles.row}>
           <Text style={styles.subTitle}>Cash in Hand</Text>
         </View>
@@ -21,27 +16,18 @@ const HistoryCard = () => {
       <View style={styles.line}></View>
 
       <View style={styles.container}>
-        <Text style={styles.title}>$1320</Text>
+        <FontAwesome name="calendar" style={styles.icon} />
+
         <View style={styles.row}>
           <Text style={styles.subTitle}>Todays Income</Text>
         </View>
       </View>
-      <View style={styles.line}></View>
-
-      <TouchableOpacity
-        style={styles.container}
-        onPress={handleHistoryNavigation}
-      >
-        <Fontisto name="history" style={styles.icon} />
-        <View style={styles.row}>
-          <Text style={styles.subTitle}>History</Text>
-        </View>
-      </TouchableOpacity>
     </View>
   );
 };
 
-export default HistoryCard;
+export default StartEndTime;
+
 const styles = StyleSheet.create({
   card: {
     width: scale(321),
@@ -49,12 +35,16 @@ const styles = StyleSheet.create({
     borderRadius: scale(8),
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: scale(18),
+    paddingVertical: scale(12),
     elevation: 3,
+    marginVertical: scale(14),
   },
   container: {
     flex: 1,
     alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: scale(10),
   },
   title: {
     fontSize: scale(18),
@@ -71,13 +61,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#828282",
   },
   subTitle: {
-    fontSize: scale(10),
-    fontFamily: "Regular",
+    fontSize: scale(12),
+    fontFamily: "Medium",
     color: Color.Black,
   },
   icon: {
-    fontSize: scale(18),
-    color: "#FF5E5E",
+    fontSize: scale(16),
+    color: Color.Blue,
     paddingVertical: scale(2),
   },
 });

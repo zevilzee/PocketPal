@@ -24,6 +24,7 @@ import VerifyEmail from "./src/Screens/ForgotPassScreen/VerifyEmail";
 import ResetPassword from "./src/Screens/ForgotPassScreen/ResetPassword";
 import HomeScreen from "./src/Screens/HomeScreen/HomeScreen";
 import IncomeScreen from "./src/Screens/IncomeScreen/IncomeScreen";
+import HistoryScreen from "./src/Screens/HistoryScreen/HistoryScreen";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -66,6 +67,7 @@ function Main() {
             <Stack.Screen name="ResetPass" component={ResetPassword} />
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Income" component={IncomeScreen} />
+            <Stack.Screen name="History" component={HistoryScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

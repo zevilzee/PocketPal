@@ -9,8 +9,8 @@ const HeaderTitle = ({ title }) => {
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
-        <Ionicons name="chevron-back" style={styles.icon} />
       </View>
+      <Ionicons name="chevron-back" style={styles.icon} />
     </View>
   );
 };
@@ -38,8 +38,9 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: "absolute",
-    left: scale(-115),
+    left: scale(12),
     fontSize: scale(22),
     color: Color.White,
+    zIndex: 100,
   },
 });

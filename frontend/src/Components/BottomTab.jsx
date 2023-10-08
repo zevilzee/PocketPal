@@ -13,7 +13,7 @@ const BottomTab = ({ title, image }) => {
         end={{ x: 0.11, y: 0.55 }}
         style={styles.gradientBackground}
       >
-        {/* <Image source={image} style={styles.image} /> */}
+        {image !== undefined && <Image source={image} style={styles.image} />}
         <Text style={styles.title}>{title}</Text>
       </LinearGradient>
     </View>
@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
     color: Color.White,
   },
   image: {
-    width: scale(25),
-    height: scale(25),
+    width: scale(15),
+    height: scale(15),
+    resizeMode: "contain",
   },
 });

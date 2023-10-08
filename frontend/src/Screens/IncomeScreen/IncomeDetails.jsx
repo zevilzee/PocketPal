@@ -4,7 +4,6 @@ import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
 
 const EntryItem = ({ item }) => {
-  console.log(item);
   return (
     <View
       style={{
