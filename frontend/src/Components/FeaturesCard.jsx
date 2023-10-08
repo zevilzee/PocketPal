@@ -3,9 +3,12 @@ import React from "react";
 import { scale } from "react-native-size-matters";
 import Color from "../../assets/colors/Color";
 
-const FeaturesCard = ({ title, image, style }) => {
+const FeaturesCard = ({ title, image, style, onpress }) => {
   return (
-    <TouchableOpacity style={{ ...styles.container, backgroundColor: style }}>
+    <TouchableOpacity
+      style={{ ...styles.container, backgroundColor: style }}
+      onPress={onpress}
+    >
       <Image source={image} style={styles.img} />
       <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>

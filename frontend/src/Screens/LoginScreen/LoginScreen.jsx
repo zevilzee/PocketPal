@@ -14,7 +14,6 @@ import CustomInput from "../../Components/CustomInput";
 import GradientButton from "../../Components/GradientButton";
 import { AntDesign } from "react-native-vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { BlurView as ExpoBlurView } from "expo-blur";
 
 const LoginScreen = () => {
   const navigation = useNavigation();

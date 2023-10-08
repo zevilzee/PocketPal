@@ -8,9 +8,14 @@ import notification from "../../../assets/notification.png";
 import analytics from "../../../assets/analytics.png";
 import Color from "../../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
+import { useNavigation } from "@react-navigation/native";
 
 const FeatureCardsHome = () => {
-  const handleIncome = () => {};
+  const navigation = useNavigation();
+
+  const handleIncome = () => {
+    navigation.navigate("Income");
+  };
   const handleExpense = () => {};
   const handleGoal = () => {};
   const handleAnalytics = () => {};

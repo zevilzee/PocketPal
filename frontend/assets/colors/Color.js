@@ -3,6 +3,9 @@ const White = "#ffff";
 const Black = "#000";
 const Input = "#5C5C5C";
 const Red = "#FF5E5E";
+const Border = "#C8C8C8";
+const Bg = "#F3F3F3";
+const Green = "#1A9218";
 
 const Color = {
   Blue,
@@ -10,6 +13,9 @@ const Color = {
   Black,
   Input,
   Red,
+  Border,
+  Bg,
+  Green,
 };
 
 export default Color;
