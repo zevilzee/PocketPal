@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: Color.White,
   },
   contentContainer: {
     width: scale(300),

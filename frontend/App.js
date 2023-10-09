@@ -51,7 +51,7 @@ function Main() {
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="LoginOrSignUp"
+            initialRouteName="Intro"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Intro" component={IntroScreen} />

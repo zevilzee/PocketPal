@@ -1,20 +1,23 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
 import { AntDesign } from "react-native-vector-icons";
 
-const DurationCard = () => {
+const DurationCard = ({ modal, selectedItem }) => {
   return (
     <View style={styles.card}>
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>Select History Duration</Text>
         </View>
-        <View style={styles.durationTime}>
-          <Text style={styles.time}>This Month</Text>
+        <TouchableOpacity
+          style={styles.durationTime}
+          onPress={() => modal(true)}
+        >
+          <Text style={styles.time}>{selectedItem}</Text>
           <AntDesign name="down" style={styles.icon} />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
