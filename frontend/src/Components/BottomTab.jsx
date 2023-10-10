@@ -1,12 +1,12 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { scale } from "react-native-size-matters";
 import Color from "../../assets/colors/Color";
 
-const BottomTab = ({ title, image }) => {
+const BottomTab = ({ title, image, onpress }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onpress}>
       <LinearGradient
         colors={["#163DA7", "#C66DB4"]}
         start={{ x: 0.55, y: 0.77 }}
@@ -16,7 +16,7 @@ const BottomTab = ({ title, image }) => {
         {image !== undefined && <Image source={image} style={styles.image} />}
         <Text style={styles.title}>{title}</Text>
       </LinearGradient>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -8,7 +8,13 @@ import Color from "../../../assets/colors/Color";
 import IncomeDetails from "./IncomeDetails";
 import expenseData from "./Data";
 import BottomTab from "../../Components/BottomTab";
+import { useNavigation } from "@react-navigation/core";
 const IncomeScreen = () => {
+  const navigation = useNavigation();
+
+  const handleCashIn = () => {
+    navigation.navigate("CashIn");
+  };
   return (
     <View style={styles.container}>
       <HeaderTitle title="Income" />
@@ -21,7 +27,7 @@ const IncomeScreen = () => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <IncomeDetails data={item} />}
       />
-      <BottomTab title="Cash In" />
+      <BottomTab title="Cash In" onpress={handleCashIn} />
     </View>
   );
 };
