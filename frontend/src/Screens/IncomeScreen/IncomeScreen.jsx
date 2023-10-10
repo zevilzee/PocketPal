@@ -15,13 +15,15 @@ const IncomeScreen = () => {
   const handleCashIn = () => {
     navigation.navigate("CashIn");
   };
+
+  const handleFilter = () => {};
   return (
     <View style={styles.container}>
       <HeaderTitle title="Income" />
       <View style={styles.historyCard}>
         <HistoryCard />
       </View>
-      <SearchInput />
+      <SearchInput filter={handleFilter} screen="" />
       <FlatList
         data={expenseData}
         keyExtractor={(item, index) => index.toString()}

@@ -26,6 +26,7 @@ import HomeScreen from "./src/Screens/HomeScreen/HomeScreen";
 import IncomeScreen from "./src/Screens/IncomeScreen/IncomeScreen";
 import HistoryScreen from "./src/Screens/HistoryScreen/HistoryScreen";
 import CashIn from "./src/Screens/IncomeScreen/CashIn/CashIn";
+import ExpenseScreen from "./src/Screens/ExpenseScreen/ExpenseScreen";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -70,6 +71,7 @@ function Main() {
             <Stack.Screen name="Income" component={IncomeScreen} />
             <Stack.Screen name="History" component={HistoryScreen} />
             <Stack.Screen name="CashIn" component={CashIn} />
+            <Stack.Screen name="Expense" component={ExpenseScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

@@ -6,6 +6,7 @@ const Red = "#FF5E5E";
 const Border = "#C8C8C8";
 const Bg = "#F3F3F3";
 const Green = "#1A9218";
+const SubHeading = "#4A4A4A";
 
 const Color = {
   Blue,
@@ -16,6 +17,7 @@ const Color = {
   Border,
   Bg,
   Green,
+  SubHeading,
 };
 
 export default Color;

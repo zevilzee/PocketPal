@@ -16,7 +16,9 @@ const FeatureCardsHome = () => {
   const handleIncome = () => {
     navigation.navigate("Income");
   };
-  const handleExpense = () => {};
+  const handleExpense = () => {
+    navigation.navigate("Expense");
+  };
   const handleGoal = () => {};
   const handleAnalytics = () => {};
   const handleNotifications = () => {};
