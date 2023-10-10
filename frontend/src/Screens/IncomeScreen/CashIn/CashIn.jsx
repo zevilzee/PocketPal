@@ -1,12 +1,28 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useState } from "react";
 import HeaderTitle from "../../../Components/HeaderTitle";
 import Color from "../../../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
 import { textInputContainer } from "../../../Components/CustomStyle";
-import { AntDesign, MaterialIcons } from "react-native-vector-icons";
+import {
+  AntDesign,
+  MaterialIcons,
+  FontAwesome,
+} from "react-native-vector-icons";
+import GradientButton from "../../../Components/GradientButton";
+import IncomeMethodModal from "./IncomeMethodModal";
 
 const CashIn = () => {
+  const handleSave = () => {};
+  const [modalVisibal, setmodalVisibal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
+  console.log(selectedItem);
   return (
     <View style={styles.container}>
       <HeaderTitle title="Income" />
@@ -22,7 +38,10 @@ const CashIn = () => {
           </View>
 
           <View style={textInputContainer}>
-            <View style={styles.method}>
+            <TouchableOpacity
+              style={styles.method}
+              onPress={() => setmodalVisibal(true)}
+            >
               <View style={styles.addContainer}>
                 <AntDesign
                   name="plus"
@@ -40,15 +59,56 @@ const CashIn = () => {
                   style={styles.icon}
                 />
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
 
           <View style={textInputContainer}>
-            <View style={styles.method}>
-              <Text>Enter Details</Text>
-              <MaterialIcons name="keyboard-voice" style={{ ...styles.icon }} />
+            {/* <View style={styles.method}> */}
+            <TextInput
+              placeholder="Enter Details"
+              // style={styles.textInput}
+            />
+            {/* <MaterialIcons name="keyboard-voice" style={{ ...styles.icon }} /> */}
+            {/* </View> */}
+          </View>
+
+          <View style={{ flexDirection: "row", gap: scale(14) }}>
+            <View style={[textInputContainer, styles.dateContainer]}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: scale(10),
+                  paddingVertical: scale(6),
+                }}
+              >
+                <FontAwesome
+                  name="calendar"
+                  style={{ ...styles.icon, color: Color.Blue }}
+                />
+                <Text>17 Sep, 2023 </Text>
+              </View>
+            </View>
+            <View style={[textInputContainer, styles.dateContainer]}>
+              <AntDesign
+                name="clockcircle"
+                style={{ ...styles.icon, color: Color.Blue }}
+              />
+              <Text>07:28PM</Text>
             </View>
           </View>
+
+          <GradientButton
+            title="Save"
+            onPress={handleSave}
+            containerStyle={styles.gradientButton}
+          />
+
+          <IncomeMethodModal
+            visibal={modalVisibal}
+            setmodalVisibal={setmodalVisibal}
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+          />
         </View>
       </View>
     </View>
@@ -91,5 +151,13 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: scale(18),
+  },
+  dateContainer: {
+    width: scale(153),
+  },
+  gradientButton: {
+    width: scale(210),
+    alignSelf: "center",
+    marginVertical: scale(10),
   },
 });
