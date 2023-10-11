@@ -1,17 +1,32 @@
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { scale } from "react-native-size-matters";
-import { AntDesign } from "react-native-vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "react-native-vector-icons";
 import Color from "../../../assets/colors/Color";
 
-const SearchInput = () => {
+const SearchInput = ({ filter, screen }) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <AntDesign name="search1" style={styles.icon} />
         <TextInput placeholder="Search" />
       </View>
-      <View>
+      <View style={styles.iconsContainer}>
+        {screen === "EXPENSE" && (
+          <TouchableOpacity style={{ position: "relative", right: scale(12) }}>
+            <MaterialCommunityIcons
+              name="filter-menu-outline"
+              style={styles.filter}
+            />
+          </TouchableOpacity>
+        )}
         <Image
           source={require("../../../assets/pdfIcon.png")}
           style={styles.pdf}
@@ -33,7 +48,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputContainer: {
-    width: scale(250),
+    width: scale(240),
     flexDirection: "row",
     alignItems: "center",
     gap: scale(12),
@@ -49,5 +64,13 @@ const styles = StyleSheet.create({
   pdf: {
     width: scale(26),
     height: scale(26),
+  },
+  iconsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  filter: {
+    // position: "relative",
+    fontSize: scale(23),
   },
 });

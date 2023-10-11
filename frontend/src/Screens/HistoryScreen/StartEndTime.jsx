@@ -10,7 +10,7 @@ const StartEndTime = () => {
       <View style={styles.container}>
         <FontAwesome name="calendar" style={styles.icon} />
         <View style={styles.row}>
-          <Text style={styles.subTitle}>Cash in Hand</Text>
+          <Text style={styles.subTitle}>Start date</Text>
         </View>
       </View>
       <View style={styles.line}></View>
@@ -19,7 +19,7 @@ const StartEndTime = () => {
         <FontAwesome name="calendar" style={styles.icon} />
 
         <View style={styles.row}>
-          <Text style={styles.subTitle}>Todays Income</Text>
+          <Text style={styles.subTitle}>Ending date</Text>
         </View>
       </View>
     </View>

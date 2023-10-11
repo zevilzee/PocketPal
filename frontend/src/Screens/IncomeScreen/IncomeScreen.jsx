@@ -8,20 +8,28 @@ import Color from "../../../assets/colors/Color";
 import IncomeDetails from "./IncomeDetails";
 import expenseData from "./Data";
 import BottomTab from "../../Components/BottomTab";
+import { useNavigation } from "@react-navigation/core";
 const IncomeScreen = () => {
+  const navigation = useNavigation();
+
+  const handleCashIn = () => {
+    navigation.navigate("CashIn");
+  };
+
+  const handleFilter = () => {};
   return (
     <View style={styles.container}>
       <HeaderTitle title="Income" />
       <View style={styles.historyCard}>
         <HistoryCard />
       </View>
-      <SearchInput />
+      <SearchInput filter={handleFilter} screen="" />
       <FlatList
         data={expenseData}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <IncomeDetails data={item} />}
       />
-      <BottomTab title="Cash In" />
+      <BottomTab title="Cash In" onpress={handleCashIn} />
     </View>
   );
 };
