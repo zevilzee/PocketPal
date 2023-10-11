@@ -18,6 +18,12 @@ const userSchema = new mongoose.Schema(
         message: "Phone number must be 11 digits.",
       },
     },
+    ExpenseCategory:{
+      type : [],
+    },
+    IncomeType:{
+      type: [],
+    },
     password: {
       type: String,
       required: true,
