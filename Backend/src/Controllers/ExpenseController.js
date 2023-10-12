@@ -1,5 +1,5 @@
 import Expense from "../Models/ExpenseModel.js";
-
+import User from "../Models/userModel.js";
 export const GetExpenseHistory = async (req, res, next) => {
   const { startDate, endDate, user } = req.body;
   try {
@@ -17,3 +17,69 @@ export const GetExpenseHistory = async (req, res, next) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const createExpense = async (req, res, next) => {
+  const { user } = req.body;
+
+  let userData = await User.find({ _id: user });
+  const newBalance = parseInt(userData.balance) - parseInt(req.body.amount);
+
+  await User.findByIdAndUpdate(
+    { _id: user },
+    { balance: newBalance.toString() }
+  );
+
+  let expense = await Expense.create(req.body);
+
+  res.send({ status: 200, data: expense });
+};
+
+export const updateExpense = async (req, res, next) => {
+  if (req.body.amount) {
+    const expense = await Expense.find({ _id: req.params.id });
+    let userData = await User.find({ _id: expense.user });
+    const newBalance = parseInt(expense.amount) + parseInt(userData.balance);
+    newBalance = parseInt(userData.balance) - parseInt(req.body.amount);
+
+    await User.findByIdAndUpdate(
+      { _id: expense.user },
+      { balance: newBalance.toString() }
+    );
+
+    const updatedExpense = await Expense.findByIdAndUpdate(
+      { _id: req.params.id },
+      { amount: req.body.amount },
+      { new: true }
+    );
+
+    res.send({ status: 200, data: updatedExpense });
+  }
+  else{
+    const updatedIncome = await Income.findByIdAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      { new: true }
+    );
+
+    res.send({ status: 200, data: updatedIncome });
+  }
+};
+
+export const deleteExpense = async (req,res,next) =>{
+ 
+  const expense = await Expense.find({ _id: req.params.id });
+  let userData = await User.find({ _id: expense.user });
+  const newBalance = parseInt(expense.amount) - parseInt(userData.balance);
+
+  await User.findByIdAndUpdate(
+    { _id: expense.user },
+    { balance: newBalance.toString() }
+  );
+
+  await Expense.findByIdAndUpdate(
+    { _id: req.params.id }
+  );
+
+  res.send({ status: 200, data: "Deleted Successfully" });
+
+}
