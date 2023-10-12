@@ -38,7 +38,7 @@ export const updateIncome = async (req, res, next) => {
   if (req.body.amount) {
     const income = await Income.find({ _id: req.params.id });
     let userData = await User.find({ _id: income.user });
-    const newBalance = parseInt(income.amount) - parseInt(userData.balance);
+    let newBalance = parseInt(income.amount) - parseInt(userData.balance);
     newBalance = parseInt(userData.balance) + parseInt(req.body.amount);
 
     await User.findByIdAndUpdate(
