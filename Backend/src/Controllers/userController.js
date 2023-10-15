@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 
 // user/sign-up route POST
 export const signUp = async (req, res, next) => {
+  console.log(req.body);
   let filteredFields = filterFields({
     reqBody: req.body,
     schema: UserModel,

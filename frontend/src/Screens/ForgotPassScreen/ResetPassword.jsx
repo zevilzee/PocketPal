@@ -14,10 +14,16 @@ import GradientButton from "../../Components/GradientButton";
 import { BlurView as ExpoBlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import CustomInput from "../../Components/CustomInput";
+import { Entypo } from "react-native-vector-icons";
+import PasswordInput from "../../Components/PasswordInput";
 
 const ResetPassword = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
+  const [confirmPassword, setconfirmPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
   const handleReset = () => {
     // Show the modal when the button is clicked
     setModalVisible(true);
@@ -27,6 +33,14 @@ const ResetPassword = () => {
   };
 
   const handleSignUp = () => {};
+
+  const handlePassChange = (text) => {
+    setPassword(text);
+  };
+
+  const handleConfirmPassword = (text) => {
+    setconfirmPassword(text);
+  };
 
   return (
     <View style={styles.container}>
@@ -45,22 +59,40 @@ const ResetPassword = () => {
           <View style={styles.InputContainer}>
             <View style={styles.titleContainer}>
               <Text style={styles.subTtiel}>
-                We have send you a code to verify
+                Please enter your new password to
               </Text>
-              <Text style={styles.subTtiel}>your email address</Text>
+              <Text style={styles.subTtiel}>continue</Text>
             </View>
-            <CustomInput
+            <PasswordInput
               placeholder="Enter your Password"
-              onChangeText={(text) => {
-                console.log("Input Text:", text);
-              }}
+              value={password}
+              onChangeText={handlePassChange}
+              style={styles.input}
+              icon={
+                passwordVisible ? (
+                  <Entypo name="eye" size={20} color={Color.Blue} />
+                ) : (
+                  <Entypo name="eye-with-line" size={20} color={Color.Blue} />
+                )
+              }
+              onIconPress={() => setPasswordVisible(!passwordVisible)}
+              secureTextEntry={!passwordVisible}
             />
 
-            <CustomInput
+            <PasswordInput
               placeholder="Confirm Password"
-              onChangeText={(text) => {
-                console.log("Input Text:", text);
-              }}
+              value={confirmPassword}
+              onChangeText={handleConfirmPassword}
+              style={styles.input}
+              icon={
+                passwordVisible ? (
+                  <Entypo name="eye" size={20} color={Color.Blue} />
+                ) : (
+                  <Entypo name="eye-with-line" size={20} color={Color.Blue} />
+                )
+              }
+              onIconPress={() => setPasswordVisible(!passwordVisible)}
+              secureTextEntry={!passwordVisible}
             />
           </View>
           <GradientButton

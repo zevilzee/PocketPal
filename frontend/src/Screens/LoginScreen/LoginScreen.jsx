@@ -14,10 +14,16 @@ import CustomInput from "../../Components/CustomInput";
 import GradientButton from "../../Components/GradientButton";
 import { AntDesign } from "react-native-vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { Entypo } from "react-native-vector-icons";
+import PasswordInput from "../../Components/PasswordInput";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [email, setemail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handleSignUp = () => {
     navigation.navigate("Home");
@@ -25,6 +31,10 @@ const LoginScreen = () => {
   const handleForget = () => {
     navigation.navigate("Forgot");
   };
+  const handlePassChange = (text) => {
+    setPassword(text);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -42,17 +52,25 @@ const LoginScreen = () => {
           <CustomInput
             placeholder="Email"
             onChangeText={(text) => {
-              console.log("Input Text:", text);
+              setemail(text);
             }}
           />
 
-          <CustomInput
+          <PasswordInput
             placeholder="Password"
-            onChangeText={(text) => {
-              console.log("Input Text:", text);
-            }}
+            value={password}
+            onChangeText={handlePassChange}
+            style={styles.input}
+            icon={
+              passwordVisible ? (
+                <Entypo name="eye" size={20} color={Color.Blue} />
+              ) : (
+                <Entypo name="eye-with-line" size={20} color={Color.Blue} />
+              )
+            }
+            onIconPress={() => setPasswordVisible(!passwordVisible)}
+            secureTextEntry={!passwordVisible}
           />
-
           <TouchableOpacity
             style={styles.forgetContainer}
             onPress={handleForget}

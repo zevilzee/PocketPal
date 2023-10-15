@@ -1,16 +1,30 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { scale } from "react-native-size-matters";
 import Color from "../../assets/colors/Color";
 
 import { Ionicons } from "react-native-vector-icons";
+import { useNavigation } from "@react-navigation/native";
 const HeaderTitle = ({ title }) => {
+  const navigation = useNavigation();
+
+  const handleBack = () => {
+    navigation.goBack();
+  };
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
       </View>
-      <Ionicons name="chevron-back" style={styles.icon} />
+      <Pressable onPress={handleBack}>
+        <Ionicons name="chevron-back" style={styles.icon} />
+      </Pressable>
     </View>
   );
 };

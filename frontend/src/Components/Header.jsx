@@ -3,10 +3,16 @@ import React from "react";
 import { MaterialIcons } from "react-native-vector-icons";
 import { scale } from "react-native-size-matters";
 import Color from "../../assets/colors/Color";
+import { useNavigation } from "@react-navigation/native";
 
 const Header = () => {
+  const navigation = useNavigation();
+
+  const handleBack = () => {
+    navigation.goBack();
+  };
   return (
-    <Pressable>
+    <Pressable onPress={handleBack}>
       <MaterialIcons name="keyboard-arrow-left" style={styles.swipIcon} />
     </Pressable>
   );

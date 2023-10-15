@@ -19,10 +19,12 @@ import { BlurView as ExpoBlurView } from "expo-blur";
 const ForgotPass = () => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [email, setemail] = useState("");
 
   const handleVerify = () => {
     navigation.navigate("verifyEmail");
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -47,7 +49,7 @@ const ForgotPass = () => {
             <CustomInput
               placeholder="Email"
               onChangeText={(text) => {
-                console.log("Input Text:", text);
+                setemail(text);
               }}
             />
           </View>
