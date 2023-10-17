@@ -15,6 +15,7 @@ import GradientButton from "../../Components/GradientButton";
 import { AntDesign } from "react-native-vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { BlurView as ExpoBlurView } from "expo-blur";
+import { BASE_URL } from "../../../CONSTANTS";
 
 const ForgotPass = () => {
   const navigation = useNavigation();
@@ -23,6 +24,13 @@ const ForgotPass = () => {
 
   const handleVerify = () => {
     navigation.navigate("verifyEmail");
+
+    // try {
+    //   const res = `${BASE_URL}/resetPass`;
+    //   console.log(res);
+    // } catch (error) {
+    //   console.log("error", error);
+    // }
   };
 
   return (

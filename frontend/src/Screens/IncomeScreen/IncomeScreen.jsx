@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HeaderTitle from "../../Components/HeaderTitle";
 import HistoryCard from "./HistoryCard";
 import { scale } from "react-native-size-matters";
@@ -12,9 +12,27 @@ import { useNavigation } from "@react-navigation/core";
 const IncomeScreen = () => {
   const navigation = useNavigation();
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const handleCashIn = () => {
     navigation.navigate("CashIn");
   };
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await axios.get(`${BASE_URL}/demeUrl`);
+  //       setData(res.data);
+  //     } catch (error) {
+  //       setError(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, []);
 
   const handleFilter = () => {};
   return (

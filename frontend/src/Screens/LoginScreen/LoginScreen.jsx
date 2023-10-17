@@ -16,23 +16,37 @@ import { AntDesign } from "react-native-vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "react-native-vector-icons";
 import PasswordInput from "../../Components/PasswordInput";
+import axios from "axios";
+import BASE_URL from "../../../CONSTANTS";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const handleSignUp = () => {
-    navigation.navigate("Home");
-  };
   const handleForget = () => {
     navigation.navigate("Forgot");
   };
   const handlePassChange = (text) => {
     setPassword(text);
+  };
+
+  const handleLogin = async () => {
+    navigation.navigate("Home");
+    // try {
+    //   const res = await axios.post(`${BASE_URL}/sign-in`, {
+    //     phoneNumber,
+    //     password,
+    //   });
+
+    //   console.log(res?.data);
+    // } catch (error) {
+    //   console.log("error in login screen", error);
+    // }
   };
 
   return (
@@ -50,9 +64,9 @@ const LoginScreen = () => {
       <View style={styles.formContainer}>
         <View style={styles.InputContainer}>
           <CustomInput
-            placeholder="Email"
+            placeholder="phone Number"
             onChangeText={(text) => {
-              setemail(text);
+              setphoneNumber(text);
             }}
           />
 
@@ -80,7 +94,7 @@ const LoginScreen = () => {
 
           <GradientButton
             title="Login"
-            onPress={handleSignUp}
+            onPress={handleLogin}
             containerStyle={styles.gradientButton}
           />
         </View>

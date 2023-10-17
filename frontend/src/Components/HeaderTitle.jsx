@@ -1,10 +1,4 @@
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { scale } from "react-native-size-matters";
 import Color from "../../assets/colors/Color";
@@ -22,8 +16,8 @@ const HeaderTitle = ({ title }) => {
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
       </View>
-      <Pressable onPress={handleBack}>
-        <Ionicons name="chevron-back" style={styles.icon} />
+      <Pressable onPress={handleBack} style={styles.icon}>
+        <Ionicons name="chevron-back" style={styles.iconBack} />
       </Pressable>
     </View>
   );
@@ -53,6 +47,11 @@ const styles = StyleSheet.create({
   icon: {
     position: "absolute",
     left: scale(12),
+    fontSize: scale(22),
+    color: Color.White,
+    zIndex: 100,
+  },
+  iconBack: {
     fontSize: scale(22),
     color: Color.White,
     zIndex: 100,

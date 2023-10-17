@@ -13,17 +13,27 @@ import { scale } from "react-native-size-matters";
 import GradientButton from "../../Components/GradientButton";
 import OTPTextInput from "react-native-otp-textinput";
 import { BlurView as ExpoBlurView } from "expo-blur";
+import axios from "axios";
+import { BASE_URL } from "../../../CONSTANTS";
 
 const OtpScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [otp, setotp] = useState("");
 
   const handleSignUp = () => {
     // Show the modal when the button is clicked
     setModalVisible(true);
   };
-  const handleVerifyAuto = (e) => {
+  const handleVerifyAuto = async (e) => {
     console.log(e);
+
+    try {
+      const res = await axios.post(`${BASE_URL}/matchotp`);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>

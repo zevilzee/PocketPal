@@ -20,17 +20,14 @@ import { useNavigation } from "@react-navigation/native";
 import { BlurView as ExpoBlurView } from "expo-blur";
 import { Entypo } from "react-native-vector-icons";
 import axios from "axios";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from "firebase/auth";
+// import {
+//   getAuth,
+//   createUserWithEmailAndPassword,
+//   sendEmailVerification,
+// } from "firebase/auth";
 
-import generateOtp from "generate-otp"; // Import OTP generation library
-import { auth } from "../../../Firebase";
 import PasswordInput from "../../Components/PasswordInput";
-
-const BASE_URL = "http://192.168.43.163:3000";
+import { BASE_URL } from "../../../CONSTANTS";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -45,38 +42,56 @@ const SignUp = () => {
   const [verificationCode, setVerificationCode] = useState(""); // State to store the OTP
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const auth = getAuth();
+  // const auth = getAuth();
 
-  console.log(auth);
+  // console.log(auth);
 
   // Import Firebase auth from your Firebase setup
+  // const handleSignUp = async () => {
+  //   try {
+  //     console.log(name, email, password, city, state, country, phoneNumber);
+
+  //     // Create a user with email and password in Firebase
+  //     createUserWithEmailAndPassword(auth, email, password).then(
+  //       (userCredential) => {
+  //         // Signed up
+  //         const user = userCredential.user;
+
+  //         // Send email verification to the user
+  //         console.log(user);
+  //         sendEmailVerification(auth.currentUser)
+  //           .then((res) => {
+  //             // Show the success modal
+  //             console.log(res);
+  //             setModalVisible(true);
+  //           })
+  //           .catch((error) => {
+  //             console.error("Error sending email verification", error);
+  //           });
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.error("Error during user registration", error);
+  //     // Handle the registration error (e.g., show an error message to the user)
+  //   }
+  // };
+
   const handleSignUp = async () => {
-    try {
-      console.log(name, email, password, city, state, country, phoneNumber);
-
-      // Create a user with email and password in Firebase
-      createUserWithEmailAndPassword(auth, email, password).then(
-        (userCredential) => {
-          // Signed up
-          const user = userCredential.user;
-
-          // Send email verification to the user
-          console.log(user);
-          sendEmailVerification(auth.currentUser)
-            .then((res) => {
-              // Show the success modal
-              console.log(res);
-              setModalVisible(true);
-            })
-            .catch((error) => {
-              console.error("Error sending email verification", error);
-            });
-        }
-      );
-    } catch (error) {
-      console.error("Error during user registration", error);
-      // Handle the registration error (e.g., show an error message to the user)
-    }
+    // try {
+    //   const res = await axios.post(`${BASE_URL}/sign-up`, {
+    //     name,
+    //     phoneNumber,
+    //     email,
+    //     city,
+    //     state,
+    //     country,
+    //     password,
+    //   });
+    //   console.log(res);
+    // } catch (error) {
+    //   console.log("error", error);
+    // }
+    setModalVisible(true);
   };
 
   const handlenavigation = () => {
@@ -157,7 +172,7 @@ const SignUp = () => {
               <CustomInput
                 placeholder="Country"
                 onChangeText={(text) => {
-                  setcity(text);
+                  setcountry(text);
                 }}
               />
 

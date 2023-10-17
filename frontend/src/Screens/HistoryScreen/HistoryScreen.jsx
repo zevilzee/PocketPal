@@ -13,13 +13,22 @@ import ModalDuration from "./ModalDuration";
 const HistoryScreen = () => {
   const [modalVisibal, setmodalVisibal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
-  console.log(selectedItem);
+  const [date, setDate] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
+
+  console.log(date, endTime);
+
   return (
     <View style={styles.container}>
       <HeaderTitle title="Income history" />
       <View style={styles.historyCard}>
         <DurationCard modal={setmodalVisibal} selectedItem={selectedItem} />
-        <StartEndTime />
+        <StartEndTime
+          date={date}
+          setDate={setDate}
+          endTime={endTime}
+          setEndTime={setEndTime}
+        />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ItemsTable />

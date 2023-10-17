@@ -1,27 +1,93 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
+import React, { useState } from "react";
 import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
 import { FontAwesome } from "react-native-vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
-const StartEndTime = () => {
+const StartEndTime = ({ date, setDate, setEndTime, endTime }) => {
+  // Date and time picker state variables
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const [showDatePick, setshowDatePick] = useState(false);
+
+  const showDatePicker = () => {
+    setshowDatePick(true);
+  };
+
+  const hideDatePick = () => {
+    setshowDatePick(false);
+  };
+
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
+  const handleDate = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+    hideDatePick();
+  };
+
+  const handleTimeSelect = (event, selectedDate) => {
+    const currentDate = selectedDate || endTime;
+    setEndTime(currentDate);
+    hideTimePicker();
+  };
+
+  console.log(isTimePickerVisible, showDatePick);
+
+  const formatSelectedDate = (selectedDate) => {
+    if (selectedDate instanceof Date) {
+      return selectedDate.toLocaleDateString(); // You can customize the format by passing options to toLocaleDateString
+    }
+    return ""; // Handle invalid date or other cases
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.container}>
         <FontAwesome name="calendar" style={styles.icon} />
-        <View style={styles.row}>
-          <Text style={styles.subTitle}>Start date</Text>
-        </View>
+        <Pressable onPress={showDatePicker} style={styles.row}>
+          <Text style={styles.subTitle}>{formatSelectedDate(date)}</Text>
+        </Pressable>
       </View>
       <View style={styles.line}></View>
 
       <View style={styles.container}>
         <FontAwesome name="calendar" style={styles.icon} />
-
-        <View style={styles.row}>
-          <Text style={styles.subTitle}>Ending date</Text>
-        </View>
+        <Pressable style={styles.row} onPress={showTimePicker}>
+          <Text style={styles.subTitle}>{formatSelectedDate(endTime)}</Text>
+        </Pressable>
       </View>
+
+      {showDatePick && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          // display="default"
+          onChange={handleDate}
+        />
+      )}
+
+      {isTimePickerVisible && (
+        <DateTimePicker
+          value={endTime}
+          mode="date"
+          is24Hour={false}
+          // display="default"
+          onChange={handleTimeSelect}
+        />
+      )}
     </View>
   );
 };

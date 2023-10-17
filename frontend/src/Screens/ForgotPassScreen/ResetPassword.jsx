@@ -16,6 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import CustomInput from "../../Components/CustomInput";
 import { Entypo } from "react-native-vector-icons";
 import PasswordInput from "../../Components/PasswordInput";
+import axios from "axios";
+import { BASE_URL } from "../../../CONSTANTS";
 
 const ResetPassword = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -24,9 +26,15 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const handleReset = () => {
+  const handleReset = async () => {
     // Show the modal when the button is clicked
     setModalVisible(true);
+
+    // try {
+    //   const res = await axios.post(`${BASE_URL}/changePass/demeUrl`);
+    // } catch (error) {
+    //   console.log("error", error);
+    // }
   };
   const handleVerifyAuto = (e) => {
     console.log(e);
