@@ -34,6 +34,7 @@ let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
 
 function Main() {
+  const UserState = useUserState();
   const [fontsLoaded, error] = useFonts({
     Regular: require("./assets/fonts/Gantari-Regular.ttf"),
     Bold: require("./assets/fonts/Gantari-Bold.ttf"),
@@ -49,13 +50,15 @@ function Main() {
   if (!fontsLoaded || error) {
     return null;
   }
-
+  const initialRouteName = isEqual(initialUserState, UserState)
+  ? "Intro"
+  : "Home";
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Intro"
+            initialRouteName={initialRouteName}
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Intro" component={IntroScreen} />

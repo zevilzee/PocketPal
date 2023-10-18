@@ -77,20 +77,20 @@ const SignUp = () => {
   // };
 
   const handleSignUp = async () => {
-    // try {
-    //   const res = await axios.post(`${BASE_URL}/sign-up`, {
-    //     name,
-    //     phoneNumber,
-    //     email,
-    //     city,
-    //     state,
-    //     country,
-    //     password,
-    //   });
-    //   console.log(res);
-    // } catch (error) {
-    //   console.log("error", error);
-    // }
+    try {
+      const res = await axios.post(`${BASE_URL}/user/sign-up`, {
+        name,
+        phoneNumber,
+        email,
+        city,
+        state,
+        country,
+        password,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log("error", error);
+    }
     setModalVisible(true);
   };
 

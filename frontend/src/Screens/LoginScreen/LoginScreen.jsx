@@ -17,9 +17,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "react-native-vector-icons";
 import PasswordInput from "../../Components/PasswordInput";
 import axios from "axios";
-import BASE_URL from "../../../CONSTANTS";
-
+import {BASE_URL} from "../../../CONSTANTS";
+import { useUserState, useUserStateActions } from "../../Slices/userSlice";
 const LoginScreen = () => {
+  const userActions = useUserStateActions();
+  
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [email, setemail] = useState("");
@@ -36,17 +38,21 @@ const LoginScreen = () => {
   };
 
   const handleLogin = async () => {
-    navigation.navigate("Home");
-    // try {
-    //   const res = await axios.post(`${BASE_URL}/sign-in`, {
-    //     phoneNumber,
-    //     password,
-    //   });
-
-    //   console.log(res?.data);
-    // } catch (error) {
-    //   console.log("error in login screen", error);
-    // }
+    try {
+      const res = await axios.post(`${BASE_URL}/user/sign-in`, {
+        email,
+        password,
+      });
+      userActions.setUser(res.data.user);
+      userActions.settoken(res.headers.auth_token);
+     
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Home" }],
+      });
+    } catch (error) {
+      console.log("error in login screen", error);
+    }
   };
 
   return (
@@ -64,9 +70,9 @@ const LoginScreen = () => {
       <View style={styles.formContainer}>
         <View style={styles.InputContainer}>
           <CustomInput
-            placeholder="phone Number"
+            placeholder="Email"
             onChangeText={(text) => {
-              setphoneNumber(text);
+              setemail(text);
             }}
           />
 

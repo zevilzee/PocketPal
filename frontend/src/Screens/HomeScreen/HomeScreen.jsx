@@ -6,9 +6,13 @@ import Color from "../../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
 import ATMCard from "./ATMCard";
 
+import { useUserState, useUserStateActions } from "../../Slices/userSlice";
+
 import FeatureCardsHome from "./FeatureCardsHome";
 
 const HomeScreen = () => {
+  const userState = useUserState();
+  
   return (
     <View style={styles.container}>
       <HeaderHome />

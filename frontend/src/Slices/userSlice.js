@@ -5,9 +5,14 @@ import { useActions } from "../Hooks/useActions";
 export const initialState = {
   fullName: null,
   phoneNumber: null,
-  type: null,
   profile: null,
   email: null,
+  state: null,
+  country: null,
+  balance: null,
+  city: null,
+  IncomeType: null,
+  ExpenseCategory:null,
 };
 
 export const userSlice = createSlice({
@@ -19,20 +24,22 @@ export const userSlice = createSlice({
     },
     setUser: (state, action) => {
       state.id = action.payload._id;
-      state.fullName = action.payload.fullName;
+      state.fullName = action.payload.name;
       state.phoneNumber = action.payload.phoneNumber;
       state.profile = action.payload.profile;
-      state.type = action.payload.type;
       state.email = action.payload.email;
+      state.state = action.payload.state;
+      state.country = action.payload.country;
+      state.balance = action.payload.balance;
+      state.city = action.payload.city;
+      state.IncomeType= action.payload.IncomeType;
+      state.ExpenseCategory = action.payload.ExpenseCategory;
     },
     setfullName: (state, action) => {
       state.fullName = action.payload;
     },
     setprofile: (state, action) => {
       state.profile = action.payload;
-    },
-    settype: (state, action) => {
-      state.type = action.payload;
     },
     setemail: (state, action) => {
       state.email = action.payload;
