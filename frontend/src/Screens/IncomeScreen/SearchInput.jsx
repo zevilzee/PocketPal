@@ -11,7 +11,7 @@ import { scale } from "react-native-size-matters";
 import { AntDesign, MaterialCommunityIcons } from "react-native-vector-icons";
 import Color from "../../../assets/colors/Color";
 
-const SearchInput = ({ filter, screen }) => {
+const SearchInput = ({ filter, screen, modalVisible }) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -20,7 +20,10 @@ const SearchInput = ({ filter, screen }) => {
       </View>
       <View style={styles.iconsContainer}>
         {screen === "EXPENSE" && (
-          <TouchableOpacity style={{ position: "relative", right: scale(12) }}>
+          <TouchableOpacity
+            style={{ position: "relative", right: scale(12) }}
+            onPress={() => modalVisible(true)}
+          >
             <MaterialCommunityIcons
               name="filter-menu-outline"
               style={styles.filter}

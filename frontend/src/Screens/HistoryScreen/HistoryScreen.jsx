@@ -16,8 +16,6 @@ const HistoryScreen = () => {
   const [date, setDate] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
 
-  console.log(date, endTime);
-
   return (
     <View style={styles.container}>
       <HeaderTitle title="Income history" />

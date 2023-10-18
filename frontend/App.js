@@ -27,6 +27,8 @@ import IncomeScreen from "./src/Screens/IncomeScreen/IncomeScreen";
 import HistoryScreen from "./src/Screens/HistoryScreen/HistoryScreen";
 import CashIn from "./src/Screens/IncomeScreen/CashIn/CashIn";
 import ExpenseScreen from "./src/Screens/ExpenseScreen/ExpenseScreen";
+import AddExpense from "./src/Screens/ExpenseScreen/AddExpense";
+import AddCategory from "./src/Screens/ExpenseScreen/AddCategory";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -72,6 +74,8 @@ function Main() {
             <Stack.Screen name="History" component={HistoryScreen} />
             <Stack.Screen name="CashIn" component={CashIn} />
             <Stack.Screen name="Expense" component={ExpenseScreen} />
+            <Stack.Screen name="AddExpense" component={AddExpense} />
+            <Stack.Screen name="AddCategory" component={AddCategory} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

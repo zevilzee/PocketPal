@@ -1,5 +1,11 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useState } from "react";
 
 import { scale } from "react-native-size-matters";
 
@@ -11,6 +17,8 @@ import expenseData from "../IncomeScreen/Data";
 import BottomTab from "../../Components/BottomTab";
 import Color from "../../../assets/colors/Color";
 import ExpenseDetails from "./ExpenseDetails";
+import Icon from "../../../assets/add.png";
+import FilterModal from "./FilterModal";
 
 const bills = [
   {
@@ -40,25 +48,47 @@ const bills = [
 ];
 const ExpenseScreen = () => {
   const navigation = useNavigation();
+  const [modalVisibal, setmodalVisibal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
 
   const handleCashIn = () => {
     navigation.navigate("CashIn");
   };
 
   const handleFilter = () => {};
+
+  const handleCreateBill = () => {
+    navigation.navigate("AddExpense");
+  };
   return (
     <View style={styles.container}>
       <HeaderTitle title="EXPENSE" />
       <View style={styles.historyCard}>
         <HistoryCard />
       </View>
-      <SearchInput filter={handleFilter} screen="EXPENSE" />
+      <SearchInput
+        filter={handleFilter}
+        screen="EXPENSE"
+        modalVisible={setmodalVisibal}
+      />
       <FlatList
         data={bills}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <ExpenseDetails data={item} />}
       />
-      <BottomTab title="Cash In" onpress={handleCashIn} />
+
+      <FilterModal
+        visibal={modalVisibal}
+        setmodalVisibal={setmodalVisibal}
+        selectedItem={selectedItem}
+        setSelectedItem={setSelectedItem}
+      />
+
+      <BottomTab
+        title="Create new bill"
+        image={Icon}
+        onpress={handleCreateBill}
+      />
     </View>
   );
 };
