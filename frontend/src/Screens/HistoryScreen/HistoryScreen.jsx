@@ -15,27 +15,30 @@ import { useUserState } from "../../Slices/userSlice";
 const HistoryScreen = () => {
   const userState = useUserState();
   const [modalVisibal, setmodalVisibal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("");
+  const [selectedItem, setSelectedItem] = useState("All");
   const [date, setDate] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
-  const [data,setData] = useState([]);
+  const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/income/getIncome/${userState.id}`,{
-         headers:{
-          "auth-token": userState.token,
-         }
-        });
+        const res = await axios.get(
+          `${BASE_URL}/income/getIncome/${userState.id}`,
+          {
+            headers: {
+              "auth-token": userState.token,
+            },
+          }
+        );
         console.log(res.data);
         setData(res.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
         setError(error);
-      } 
-    }
+      }
+    };
 
-  fetchData();
+    fetchData();
   }, []);
   return (
     <View style={styles.container}>
@@ -50,7 +53,7 @@ const HistoryScreen = () => {
         />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ItemsTable data={data}/>
+        <ItemsTable data={data} />
       </ScrollView>
 
       <ModalDuration

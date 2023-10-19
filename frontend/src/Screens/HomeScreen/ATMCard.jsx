@@ -4,8 +4,9 @@ import { scale } from "react-native-size-matters";
 import { AntDesign } from "react-native-vector-icons";
 import Color from "../../../assets/colors/Color";
 import { LinearGradient } from "expo-linear-gradient";
+import { useUserState } from "../../Slices/userSlice";
 
-const ATMCard = () => {
+const ATMCard = ({ balance }) => {
   return (
     // <ImageBackground
     //   style={styles.imageBg}
@@ -33,7 +34,7 @@ const ATMCard = () => {
         <View style={styles.contentContainer}>
           <View>
             <Text style={styles.total}>Total Balance</Text>
-            <Text style={styles.amount}>$45,000</Text>
+            <Text style={styles.amount}>${balance}</Text>
           </View>
           <View>
             <Text style={styles.spent}>Spent money</Text>

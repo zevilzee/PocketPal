@@ -17,23 +17,33 @@ import {
 } from "react-native-vector-icons";
 import GradientButton from "../../../Components/GradientButton";
 import IncomeMethodModal from "./IncomeMethodModal";
-import axios from 'axios';
+import axios from "axios";
 import { BASE_URL } from "../../../../CONSTANTS";
 import { useUserState } from "../../../Slices/userSlice";
 
 const CashIn = () => {
   const userState = useUserState();
+  const [name, setname] = useState("");
+  const [amount, setamount] = useState("");
+
   const handleSave = () => {
-    axios.post(`${BASE_URL}/income/create-income`,{
-      name: "Test",
-      Method: "Freelancing",
-      user: userState.id,
-      amount: "1000",
-    }).then((res)=>{console.log(res)}).catch((e)=>{console.log(e)})
+    axios
+      .post(`${BASE_URL}/income/create-income`, {
+        name: `${name}`,
+        Method: `${selectedItem}`,
+        user: userState.id,
+        amount: `${amount}`,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
   const [modalVisibal, setmodalVisibal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
-  console.log(selectedItem);
+
   return (
     <View style={styles.container}>
       <HeaderTitle title="Income" />
@@ -45,6 +55,8 @@ const CashIn = () => {
               placeholder="Enter amount"
               style={styles.textInput}
               keyboardType="number-pad"
+              value={amount}
+              onChangeText={(text) => setamount(text)}
             />
           </View>
 
@@ -62,7 +74,11 @@ const CashIn = () => {
                     color: Color.Blue,
                   }}
                 />
-                <Text style={styles.title}>Select Income Methods</Text>
+                <Text style={styles.title}>
+                  {selectedItem !== ""
+                    ? `${selectedItem}`
+                    : "Select Income Methods"}
+                </Text>
               </View>
               <View>
                 <MaterialIcons
@@ -77,13 +93,15 @@ const CashIn = () => {
             {/* <View style={styles.method}> */}
             <TextInput
               placeholder="Enter Details"
+              value={name}
+              onChangeText={(text) => setname(text)}
               // style={styles.textInput}
             />
             {/* <MaterialIcons name="keyboard-voice" style={{ ...styles.icon }} /> */}
             {/* </View> */}
           </View>
 
-          <View style={{ flexDirection: "row", gap: scale(14) }}>
+          {/* <View style={{ flexDirection: "row", gap: scale(14) }}>
             <View style={[textInputContainer, styles.dateContainer]}>
               <View
                 style={{
@@ -106,7 +124,7 @@ const CashIn = () => {
               />
               <Text>07:28PM</Text>
             </View>
-          </View>
+          </View> */}
 
           <GradientButton
             title="Save"

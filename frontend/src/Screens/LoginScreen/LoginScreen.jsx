@@ -17,11 +17,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "react-native-vector-icons";
 import PasswordInput from "../../Components/PasswordInput";
 import axios from "axios";
-import {BASE_URL} from "../../../CONSTANTS";
+import { BASE_URL } from "../../../CONSTANTS";
 import { useUserState, useUserStateActions } from "../../Slices/userSlice";
 const LoginScreen = () => {
   const userActions = useUserStateActions();
-  
+
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [email, setemail] = useState("");
@@ -45,7 +45,7 @@ const LoginScreen = () => {
       });
       userActions.setUser(res.data.user);
       userActions.settoken(res.headers.auth_token);
-     
+
       navigation.reset({
         index: 0,
         routes: [{ name: "Home" }],

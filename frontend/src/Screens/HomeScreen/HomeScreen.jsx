@@ -12,13 +12,13 @@ import FeatureCardsHome from "./FeatureCardsHome";
 
 const HomeScreen = () => {
   const userState = useUserState();
-  
+
   return (
     <View style={styles.container}>
       <HeaderHome />
       <View style={styles.mainContainer}>
-        <NameHeader />
-        <ATMCard />
+        <NameHeader userName={userState?.fullName} />
+        <ATMCard balance={userState?.balance} />
         <Text style={styles.title}>Features</Text>
         <FeatureCardsHome />
       </View>

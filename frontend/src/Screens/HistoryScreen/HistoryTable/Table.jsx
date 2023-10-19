@@ -2,12 +2,17 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import { Table, Row } from "react-native-table-component";
 import { scale } from "react-native-size-matters";
 import Color from "../../../../assets/colors/Color";
+import { formatCustomDate } from "../../../Utiles/GetData";
+import { useUserState } from "../../../Slices/userSlice";
+import { CustomDateYear } from "../../../Utiles/GetDateYear";
 
 const TableDesign = ({ data }) => {
-  const tableHead = ["Date", "Daily income", "Cash In Hand"];
+  const userState = useUserState();
 
+  const tableHead = ["Date", "Daily income", "Cash In Hand"];
   const tableData = data?.map((item) => {
-    return [item?.date, item?.cash, item?.cashInHand];
+    const date = CustomDateYear(item?.date);
+    return [date, item?.amount, userState?.balance];
   });
 
   return (
@@ -19,7 +24,7 @@ const TableDesign = ({ data }) => {
               data={[...tableHead]}
               style={styles.head}
               textStyle={styles.headText}
-              widthArr={[100, 125, 125]}
+              widthArr={[110, 125, 125]}
             />
 
             {tableData.map((rowData, index) => (
@@ -32,7 +37,7 @@ const TableDesign = ({ data }) => {
                     : styles.row
                 }
                 textStyle={styles.text}
-                widthArr={[100, 150, 100]}
+                widthArr={[110, 150, 100]}
               />
             ))}
           </Table>

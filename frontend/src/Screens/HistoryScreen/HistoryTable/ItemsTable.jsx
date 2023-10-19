@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import dummyData from "../Data";
 import TableDesign from "./Table";
 
-const ItemsTable = () => {
+const ItemsTable = ({ data }) => {
   return (
     <View>
-      <TableDesign data={dummyData} />
+      <TableDesign data={data} />
     </View>
   );
 };

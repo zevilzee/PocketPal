@@ -19,10 +19,10 @@ export const GetIncomeHistory = async (req, res, next) => {
 };
 
 export const GetIncome = async (req, res, next) => {
-  console.log("getIncome called",req.user)
+  console.log("getIncome called", req.user);
   try {
     const incomeHistory = await Income.find({
-      user:req.params.id ,
+      user: req.params.id,
     });
 
     res.json(incomeHistory);

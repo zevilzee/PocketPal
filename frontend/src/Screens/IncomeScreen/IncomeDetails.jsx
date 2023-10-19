@@ -2,8 +2,11 @@ import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
+import { calculateTimeDifference } from "../../Utiles/timeDifference";
+import { formatCustomDate } from "../../Utiles/GetData";
 
 const EntryItem = ({ item }) => {
+  const time = calculateTimeDifference(item?.date);
   return (
     <View
       style={{
@@ -13,15 +16,15 @@ const EntryItem = ({ item }) => {
     >
       <View style={styles.topContainer}>
         <View>
-          <Text style={styles.title}>01:27 PM</Text>
+          <Text style={styles.title}>{time}</Text>
 
           <Text style={{ ...styles.title, paddingVertical: scale(4) }}>
             1 item
           </Text>
-          <Text style={styles.billName}>Bill no.1</Text>
+          <Text style={styles.billName}>{item?.Method}</Text>
         </View>
         <View>
-          <Text style={styles.billamount}>$660</Text>
+          <Text style={styles.billamount}>{item?.amount}</Text>
         </View>
       </View>
     </View>
@@ -29,6 +32,7 @@ const EntryItem = ({ item }) => {
 };
 
 const IncomeDetails = ({ data }) => {
+  // console.log(data?.billNumber, "main");
   if (!data) {
     // Handle the case where data is not available
     return <Text>Data not available</Text>;
