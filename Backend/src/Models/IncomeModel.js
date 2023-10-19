@@ -15,6 +15,10 @@ const IncomeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  name:{
+    type:String,
+    required:true,
+  }
 });
 
 const Income = mongoose.model("Income", IncomeSchema);

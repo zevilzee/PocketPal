@@ -17,9 +17,20 @@ import {
 } from "react-native-vector-icons";
 import GradientButton from "../../../Components/GradientButton";
 import IncomeMethodModal from "./IncomeMethodModal";
+import axios from 'axios';
+import { BASE_URL } from "../../../../CONSTANTS";
+import { useUserState } from "../../../Slices/userSlice";
 
 const CashIn = () => {
-  const handleSave = () => {};
+  const userState = useUserState();
+  const handleSave = () => {
+    axios.post(`${BASE_URL}/income/create-income`,{
+      name: "Test",
+      Method: "Freelancing",
+      user: userState.id,
+      amount: "1000",
+    }).then((res)=>{console.log(res)}).catch((e)=>{console.log(e)})
+  };
   const [modalVisibal, setmodalVisibal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   console.log(selectedItem);

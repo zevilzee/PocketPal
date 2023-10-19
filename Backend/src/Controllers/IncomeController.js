@@ -18,6 +18,20 @@ export const GetIncomeHistory = async (req, res, next) => {
   }
 };
 
+export const GetIncome = async (req, res, next) => {
+  console.log("getIncome called",req.user)
+  try {
+    const incomeHistory = await Income.find({
+      user:req.params.id ,
+    });
+
+    res.json(incomeHistory);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export const createIncome = async (req, res, next) => {
   const { user } = req.body;
 

@@ -9,30 +9,41 @@ import IncomeDetails from "./IncomeDetails";
 import expenseData from "./Data";
 import BottomTab from "../../Components/BottomTab";
 import { useNavigation } from "@react-navigation/core";
+import {useUserState} from "../../Slices/userSlice";
+import axios from 'axios';
+import {BASE_URL} from "../../../CONSTANTS";
 const IncomeScreen = () => {
   const navigation = useNavigation();
+  const userState = useUserState();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [data,setData] = useState([]);
   const handleCashIn = () => {
     navigation.navigate("CashIn");
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await axios.get(`${BASE_URL}/demeUrl`);
-  //       setData(res.data);
-  //     } catch (error) {
-  //       setError(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log(userState.token)
+      try {
+        const res = await axios.get(`${BASE_URL}/income/getIncome/${userState.id}`,{
+         headers:{
+          "auth-token": userState.token,
+         }
+        });
+        console.log(res.data);
+        setData(res.data);
+      } catch (error) {
+        console.log(error)
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  //   fetchData();
-  // }, []);
+  fetchData();
+  }, []);
 
   const handleFilter = () => {};
   return (
@@ -43,7 +54,7 @@ const IncomeScreen = () => {
       </View>
       <SearchInput filter={handleFilter} screen="" />
       <FlatList
-        data={expenseData}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <IncomeDetails data={item} />}
       />

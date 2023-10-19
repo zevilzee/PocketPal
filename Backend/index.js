@@ -14,8 +14,8 @@ app.use(cors({
 app.use(express.json());
 const server = http.createServer(app);
 app.use("/user", userRoutes);
-app.use("expense",expenseRoutes);
-app.use("income",incomeRoutes);
+app.use("/expense",expenseRoutes);
+app.use("/income",incomeRoutes);
 server.listen(process.env.PORT || 3000, () => {
   console.log("Server is running");
 });
