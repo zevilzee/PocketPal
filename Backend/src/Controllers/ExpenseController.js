@@ -21,7 +21,7 @@ export const GetExpenseHistory = async (req, res, next) => {
 export const createExpense = async (req, res, next) => {
   const { user } = req.body;
 
-  let userData = await User.find({ _id: user });
+  let userData = await User.findOne({ _id: user });
   const newBalance = parseInt(userData.balance) - parseInt(req.body.amount);
 
   await User.findByIdAndUpdate(
@@ -36,8 +36,8 @@ export const createExpense = async (req, res, next) => {
 
 export const updateExpense = async (req, res, next) => {
   if (req.body.amount) {
-    const expense = await Expense.find({ _id: req.params.id });
-    let userData = await User.find({ _id: expense.user });
+    const expense = await Expense.findOne({ _id: req.params.id });
+    let userData = await User.findOne({ _id: expense.user });
     let newBalance = parseInt(expense.amount) + parseInt(userData.balance);
     newBalance = parseInt(userData.balance) - parseInt(req.body.amount);
 
@@ -67,8 +67,8 @@ export const updateExpense = async (req, res, next) => {
 
 export const deleteExpense = async (req,res,next) =>{
  
-  const expense = await Expense.find({ _id: req.params.id });
-  let userData = await User.find({ _id: expense.user });
+  const expense = await Expense.findOne({ _id: req.params.id });
+  let userData = await User.findOne({ _id: expense.user });
   const newBalance = parseInt(expense.amount) - parseInt(userData.balance);
 
   await User.findByIdAndUpdate(

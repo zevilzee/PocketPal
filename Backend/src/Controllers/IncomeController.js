@@ -33,25 +33,29 @@ export const GetIncome = async (req, res, next) => {
 };
 
 export const createIncome = async (req, res, next) => {
-  const { user } = req.body;
+  try{
+    const { user } = req.body;
 
-  let userData = await User.find({ _id: user });
-  const newBalance = parseInt(userData.balance) + parseInt(req.body.amount);
-
-  await User.findByIdAndUpdate(
-    { _id: user },
-    { balance: newBalance.toString() }
-  );
-
-  let income = await Income.create(req.body);
-
+    let userData = await User.findOne({ _id: user });
+    const newBalance = parseInt(userData.balance) + parseInt(req.body.amount);
+    await User.findByIdAndUpdate(
+      { _id: user },
+      { balance: newBalance.toString() }
+    );
+  
+    let income = await Income.create(req.body);
   res.send({ status: 200, data: income });
+  }
+  catch(e)
+  {
+    res.status(500).send(e)
+  }
 };
 
 export const updateIncome = async (req, res, next) => {
   if (req.body.amount) {
-    const income = await Income.find({ _id: req.params.id });
-    let userData = await User.find({ _id: income.user });
+    const income = await Income.findOne({ _id: req.params.id });
+    let userData = await User.findOne({ _id: income.user });
     let newBalance = parseInt(income.amount) - parseInt(userData.balance);
     newBalance = parseInt(userData.balance) + parseInt(req.body.amount);
 
@@ -79,8 +83,8 @@ export const updateIncome = async (req, res, next) => {
 };
 
 export const deleteIncome = async (req, res, next) => {
-  const income = await Income.find({ _id: req.params.id });
-  let userData = await User.find({ _id: income.user });
+  const income = await Income.findOne({ _id: req.params.id });
+  let userData = await User.findOne({ _id: income.user });
   const newBalance = parseInt(income.amount) - parseInt(userData.balance);
 
   await User.findByIdAndUpdate(
