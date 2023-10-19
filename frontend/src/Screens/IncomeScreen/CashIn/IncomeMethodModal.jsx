@@ -31,6 +31,7 @@ const IncomeMethodModal = ({
   selectedItem,
   setSelectedItem,
 }) => {
+  const [tempSelectedItem, setTempSelectedItem] = useState("");
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -47,34 +48,27 @@ const IncomeMethodModal = ({
       d.id === item.id ? { ...d, isSelected: !d.isSelected } : d
     );
     setSelectedItem(item.label);
+    setTempSelectedItem(item.label);
     data = updatedData;
     // setmodalVisibal(false);
   };
 
-  console.log(selectedItem, "in parent");
-
   const handleContinue = () => {
     setmodalVisibal(false);
+    setTempSelectedItem("");
   };
 
   return (
-    <Modal
-      visible={visibal}
-      transparent={true}
-      onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
-        setmodalVisibal(!visibal);
-      }}
-    >
+    <Modal visible={visibal} transparent={true}>
       <View style={styles.modelcontainer}>
         <View style={styles.ConfrmModel}>
-          {selectedItem !== "" ? (
+          {tempSelectedItem !== "" ? (
             <View style={styles.selectedItemContainer}>
               <View>
                 <Text style={styles.title}>Select Method</Text>
               </View>
               <View style={textInputContainer}>
-                <Text style={styles.titleSelected}>{selectedItem}</Text>
+                <Text style={styles.titleSelected}>{tempSelectedItem}</Text>
               </View>
 
               <GradientButton
