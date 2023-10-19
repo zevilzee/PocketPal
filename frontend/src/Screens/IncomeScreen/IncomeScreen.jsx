@@ -9,41 +9,63 @@ import IncomeDetails from "./IncomeDetails";
 import expenseData from "./Data";
 import BottomTab from "../../Components/BottomTab";
 import { useNavigation } from "@react-navigation/core";
-import {useUserState} from "../../Slices/userSlice";
-import axios from 'axios';
-import {BASE_URL} from "../../../CONSTANTS";
+import { useUserState } from "../../Slices/userSlice";
+import axios from "axios";
+import { BASE_URL } from "../../../CONSTANTS";
+import { formatCustomDate } from "../../Utiles/GetData";
+
 const IncomeScreen = () => {
   const navigation = useNavigation();
   const userState = useUserState();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [data,setData] = useState([]);
+  const [data, setData] = useState([]);
   const handleCashIn = () => {
     navigation.navigate("CashIn");
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(userState.token)
       try {
-        const res = await axios.get(`${BASE_URL}/income/getIncome/${userState.id}`,{
-         headers:{
-          "auth-token": userState.token,
-         }
-        });
-        console.log(res.data);
+        const res = await axios.get(
+          `${BASE_URL}/income/getIncome/${userState.id}`,
+          {
+            headers: {
+              "auth-token": userState.token,
+            },
+          }
+        );
         setData(res.data);
       } catch (error) {
-        console.log(error)
         setError(error);
       } finally {
         setLoading(false);
       }
-    }
+    };
 
-  fetchData();
+    fetchData();
   }, []);
+
+  const groupedExpenses = {};
+
+  data.forEach((expense) => {
+    const date = formatCustomDate(expense.date);
+    if (!groupedExpenses[date]) {
+      groupedExpenses[date] = {
+        timestamp: date,
+        entries: [],
+        totalAmount: 0,
+        billNumber: 0,
+      };
+    }
+    groupedExpenses[date].entries.push(expense);
+    groupedExpenses[date].totalAmount += expense.amount;
+    groupedExpenses[date].billNumber += 1;
+  });
+
+  const groupedExpenseData = Object.values(groupedExpenses);
+  console.log(groupedExpenseData);
 
   const handleFilter = () => {};
   return (
@@ -54,7 +76,7 @@ const IncomeScreen = () => {
       </View>
       <SearchInput filter={handleFilter} screen="" />
       <FlatList
-        data={data}
+        data={groupedExpenseData}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <IncomeDetails data={item} />}
       />

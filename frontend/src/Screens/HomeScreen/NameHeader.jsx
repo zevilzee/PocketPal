@@ -4,7 +4,7 @@ import { scale } from "react-native-size-matters";
 import { AntDesign } from "react-native-vector-icons";
 import Color from "../../../assets/colors/Color";
 
-const NameHeader = () => {
+const NameHeader = ({ userName }) => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -16,7 +16,7 @@ const NameHeader = () => {
         </View>
         <View style={styles.userContainer}>
           <Text style={styles.title}>Good Morning,</Text>
-          <Text style={styles.name}>John!</Text>
+          <Text style={styles.name}>{userName}!</Text>
         </View>
       </View>
       <View style={styles.iconContainer}>
