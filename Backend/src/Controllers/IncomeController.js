@@ -11,7 +11,7 @@ export const GetIncomeHistory = async (req, res, next) => {
       user: user,
     });
 
-    res.json(incomeHistory);
+    res.send(incomeHistory);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
