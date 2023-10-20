@@ -25,7 +25,7 @@ const AddExpense = () => {
   const navigation = useNavigation();
   const [modalVisibal, setmodalVisibal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
-  const [selectPaid, setselectPaid] = useState("");
+  const [selected, setselected] = useState("");
   const [selectUnPaid, setselectUnPaid] = useState("");
 
   const handleSave = () => {};
@@ -34,11 +34,13 @@ const AddExpense = () => {
   };
 
   const handleSelectPaid = () => {
-    setselectPaid("Paid");
+    setselected("Paid");
   };
   const handleSelectUnPaid = () => {
-    setselectUnPaid("UnPaid");
+    setselected("UnPaid");
   };
+
+  console.log(selected);
   return (
     <View style={styles.container}>
       <HeaderTitle title="ADD NEW EXPENSE" />
@@ -88,7 +90,7 @@ const AddExpense = () => {
               style={styles.unpaidContainer}
               onPress={handleSelectUnPaid}
             >
-              <Text style={styles.unpaidTitle}>Unpaid</Text>
+              <Text style={styles.paidTitle}>Unpaid</Text>
             </TouchableOpacity>
           </View>
 
@@ -202,23 +204,34 @@ const styles = StyleSheet.create({
     marginVertical: scale(10),
   },
   status: {
-    backgroundColor: "red",
     flexDirection: "row",
-    width: scale(150),
+    width: scale(230),
+    gap: scale(12),
   },
   paidContainer: {
-    backgroundColor: "yellow",
     paddingVertical: scale(7),
-    paddingHorizontal: scale(25),
     borderRadius: scale(15),
+    borderWidth: 0.4,
+    backgroundColor: "green",
+    width: scale(70),
+    alignItems: "center",
   },
   unpaidContainer: {
-    backgroundColor: "yellow",
     paddingVertical: scale(7),
-    paddingHorizontal: scale(25),
     borderRadius: scale(15),
+    borderWidth: 0.4,
+    backgroundColor: "red",
+    width: scale(70),
+    alignItems: "center",
+  },
+  paidTitle: {
+    fontFamily: "Bold",
+    fontSize: scale(12),
+    color: Color.White,
   },
   unpaidTitle: {
     fontFamily: "Bold",
+    fontSize: scale(12),
+    // color: Color.White,
   },
 });

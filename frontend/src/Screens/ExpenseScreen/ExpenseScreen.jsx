@@ -19,6 +19,7 @@ import Color from "../../../assets/colors/Color";
 import ExpenseDetails from "./ExpenseDetails";
 import Icon from "../../../assets/add.png";
 import FilterModal from "./FilterModal";
+import HIstoryCardExpence from "../../Components/HIstoryCardExpence";
 
 const bills = [
   {
@@ -64,7 +65,7 @@ const ExpenseScreen = () => {
     <View style={styles.container}>
       <HeaderTitle title="EXPENSE" />
       <View style={styles.historyCard}>
-        <HistoryCard />
+        <HIstoryCardExpence />
       </View>
       <SearchInput
         filter={handleFilter}
