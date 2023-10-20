@@ -21,15 +21,24 @@ let data = [
   { label: "Single Day", isSelected: false, id: 3 },
   { label: "Last Week", isSelected: false, id: 4 },
   { label: "Last Month", isSelected: false, id: 5 },
-  { label: "Date Range", isSelected: false, id: 6 },
+  // { label: "Date Range", isSelected: false, id: 6 },
 ];
 
 const ModalDuration = ({
   setmodalVisibal,
   visibal,
-  selectedItem,
   setSelectedItem,
+  getHistory,
 }) => {
+  const handleItemPress = (item) => {
+    const updatedData = data.map((d) =>
+      d.id === item.id ? { ...d, isSelected: !d.isSelected } : d
+    );
+    setSelectedItem(item.label);
+    getHistory(item.label);
+    data = updatedData;
+    setmodalVisibal(false);
+  };
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -44,15 +53,6 @@ const ModalDuration = ({
         )}
       </TouchableOpacity>
     );
-  };
-
-  const handleItemPress = (item) => {
-    const updatedData = data.map((d) =>
-      d.id === item.id ? { ...d, isSelected: !d.isSelected } : d
-    );
-    setSelectedItem(item.label);
-    data = updatedData;
-    setmodalVisibal(false);
   };
 
   return (

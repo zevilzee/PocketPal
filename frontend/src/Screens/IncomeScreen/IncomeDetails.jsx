@@ -63,7 +63,7 @@ const IncomeDetails = ({ data }) => {
         <FlatList
           data={data.entries}
           renderItem={({ item }) => <EntryItem item={item} />}
-          keyExtractor={(item) => item.id} // Replace 'id' with your unique identifier
+          keyExtractor={(item) => item.id}
         />
       </View>
     </View>

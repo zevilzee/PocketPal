@@ -5,11 +5,13 @@ import Color from "../../../assets/colors/Color";
 import { Fontisto } from "react-native-vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-const HistoryCard = () => {
+const HistoryCard = ({ todayIncome }) => {
   const navigation = useNavigation();
   const handleHistoryNavigation = () => {
     navigation.navigate("History");
   };
+  const incomeToday = todayIncome.map((item) => item.totalAmount);
+
   return (
     <View style={styles.card}>
       <View style={styles.container}>
@@ -21,7 +23,7 @@ const HistoryCard = () => {
       <View style={styles.line}></View>
 
       <View style={styles.container}>
-        <Text style={styles.title}>$1320</Text>
+        <Text style={styles.title}>${incomeToday[0]}</Text>
         <View style={styles.row}>
           <Text style={styles.subTitle}>Todays Income</Text>
         </View>
