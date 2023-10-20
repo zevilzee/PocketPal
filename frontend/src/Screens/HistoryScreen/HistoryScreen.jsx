@@ -30,7 +30,7 @@ const HistoryScreen = () => {
             },
           }
         );
-        console.log(res.data);
+        // console.log(res.data);
         setData(res.data);
       } catch (error) {
         console.log(error);
@@ -40,17 +40,70 @@ const HistoryScreen = () => {
 
     fetchData();
   }, []);
+
+  function getFormattedDate(date) {
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const hours = String(date.getUTCHours()).padStart(2, "0");
+    const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+    const seconds = String(date.getUTCSeconds()).padStart(2, "0");
+    const milliseconds = String(date.getUTCMilliseconds()).padStart(3, "0");
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+  }
+
+  const customeDateHistory = async (selectedOption) => {
+    const today = new Date();
+    const start = new Date(today);
+    const end = new Date(today);
+
+    if (selectedOption === "This Month") {
+      start.setDate(1);
+    } else if (selectedOption === "Single Day") {
+      start.setDate(today.getDate());
+    } else if (selectedOption === "Last Week") {
+      start.setDate(today.getDate() - 6);
+    } else if (selectedOption === "Last Month") {
+      start.setMonth(today.getMonth() - 1);
+      start.setDate(1);
+      end.setDate(0);
+    } else if (selectedOption === "All") {
+      start.setFullYear(today.getFullYear() - 6);
+    }
+
+    const startDate = getFormattedDate(start);
+    const endDate = getFormattedDate(end);
+
+    try {
+      const res = await axios.get(`${BASE_URL}/income/get-income-history`, {
+        headers: {
+          "auth-token": userState.token,
+        },
+        params: {
+          startDate,
+          endDate,
+          user: userState.id,
+        },
+      });
+      console.log(res?.data);
+      setData(res.data);
+    } catch (error) {
+      console.log("error while fetching custom date history", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <HeaderTitle title="Income history" />
       <View style={styles.historyCard}>
         <DurationCard modal={setmodalVisibal} selectedItem={selectedItem} />
-        <StartEndTime
+        {/* <StartEndTime
           date={date}
           setDate={setDate}
           endTime={endTime}
           setEndTime={setEndTime}
-        />
+        /> */}
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ItemsTable data={data} />
@@ -61,6 +114,7 @@ const HistoryScreen = () => {
         setmodalVisibal={setmodalVisibal}
         selectedItem={selectedItem}
         setSelectedItem={setSelectedItem}
+        getHistory={customeDateHistory}
       />
 
       <BottomTab title="PDF" image={Icon} />

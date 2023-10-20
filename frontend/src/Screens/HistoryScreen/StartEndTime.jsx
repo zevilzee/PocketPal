@@ -44,8 +44,6 @@ const StartEndTime = ({ date, setDate, setEndTime, endTime }) => {
     hideTimePicker();
   };
 
-  console.log(isTimePickerVisible, showDatePick);
-
   const formatSelectedDate = (selectedDate) => {
     if (selectedDate instanceof Date) {
       return selectedDate.toLocaleDateString(); // You can customize the format by passing options to toLocaleDateString

@@ -1,7 +1,8 @@
 import Income from "../Models/IncomeModel.js";
 import User from "../Models/userModel.js";
 export const GetIncomeHistory = async (req, res, next) => {
-  const { startDate, endDate, user } = req.body;
+  const { startDate, endDate, user } = req.query;
+
   try {
     const incomeHistory = await Income.find({
       date: {
@@ -33,7 +34,7 @@ export const GetIncome = async (req, res, next) => {
 };
 
 export const createIncome = async (req, res, next) => {
-  try{
+  try {
     const { user } = req.body;
 
     let userData = await User.findOne({ _id: user });
@@ -42,13 +43,11 @@ export const createIncome = async (req, res, next) => {
       { _id: user },
       { balance: newBalance.toString() }
     );
-  
+
     let income = await Income.create(req.body);
-  res.send({ status: 200, data: income });
-  }
-  catch(e)
-  {
-    res.status(500).send(e)
+    res.send({ status: 200, data: income });
+  } catch (e) {
+    res.status(500).send(e);
   }
 };
 

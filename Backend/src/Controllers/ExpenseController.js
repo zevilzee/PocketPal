@@ -2,6 +2,7 @@ import Expense from "../Models/ExpenseModel.js";
 import User from "../Models/userModel.js";
 export const GetExpenseHistory = async (req, res, next) => {
   const { startDate, endDate, user } = req.body;
+  console.log(req.body);
   try {
     const ExpenseHistory = await Expense.find({
       date: {
@@ -53,8 +54,7 @@ export const updateExpense = async (req, res, next) => {
     );
 
     res.send({ status: 200, data: updatedExpense });
-  }
-  else{
+  } else {
     const updatedIncome = await Income.findByIdAndUpdate(
       { _id: req.params.id },
       req.body,
@@ -65,8 +65,7 @@ export const updateExpense = async (req, res, next) => {
   }
 };
 
-export const deleteExpense = async (req,res,next) =>{
- 
+export const deleteExpense = async (req, res, next) => {
   const expense = await Expense.findOne({ _id: req.params.id });
   let userData = await User.findOne({ _id: expense.user });
   const newBalance = parseInt(expense.amount) - parseInt(userData.balance);
@@ -76,10 +75,7 @@ export const deleteExpense = async (req,res,next) =>{
     { balance: newBalance.toString() }
   );
 
-  await Expense.findByIdAndUpdate(
-    { _id: req.params.id }
-  );
+  await Expense.findByIdAndUpdate({ _id: req.params.id });
 
   res.send({ status: 200, data: "Deleted Successfully" });
-
-}
+};

@@ -18,6 +18,9 @@ const IncomeScreen = () => {
   const navigation = useNavigation();
   const userState = useUserState();
 
+  const date = new Date();
+  const currentDate = formatCustomDate(date);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -65,14 +68,16 @@ const IncomeScreen = () => {
   });
 
   const groupedExpenseData = Object.values(groupedExpenses);
-  console.log(groupedExpenseData);
+  const todayIncome = groupedExpenseData.filter(
+    (item) => item?.timestamp === currentDate
+  );
 
   const handleFilter = () => {};
   return (
     <View style={styles.container}>
       <HeaderTitle title="Income" />
       <View style={styles.historyCard}>
-        <HistoryCard />
+        <HistoryCard todayIncome={todayIncome} />
       </View>
       <SearchInput filter={handleFilter} screen="" />
       <FlatList
