@@ -23,6 +23,7 @@ import HIstoryCardExpence from "../../Components/HIstoryCardExpence";
 import {useUserState} from "../../Slices/userSlice";
 import axios from 'axios';
 import {BASE_URL} from "../../../CONSTANTS";
+import { useUserStateActions } from "../../Slices/userSlice";
 const bills = [
   {
     description: "Electricity Bill",
@@ -50,6 +51,7 @@ const bills = [
   },
 ];
 const ExpenseScreen = () => {
+  const userStateActions = useUserStateActions();
   const userState = useUserState();
   const [data,setData] = useState([]);
   useEffect(() => {
@@ -66,6 +68,7 @@ const ExpenseScreen = () => {
         );
         console.log(res.data);
         setData(res.data);
+        userStateActions.setbalance(userState.balance - amount)
       } catch (error) {
         console.log(error);
       }

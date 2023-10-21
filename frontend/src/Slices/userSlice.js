@@ -22,6 +22,9 @@ export const userSlice = createSlice({
     resetState: () => {
       return initialState;
     },
+    setBalance: (state,action) =>{
+      state.balance = action.payload.balance;
+    },
     setUser: (state, action) => {
       state.id = action.payload._id;
       state.fullName = action.payload.name;

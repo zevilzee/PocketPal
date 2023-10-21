@@ -24,7 +24,7 @@ const HIstoryCardExpence = () => {
       <View style={styles.container}>
         <Text style={styles.title}></Text>
         <View style={styles.row}>
-          <Text style={styles.subTitle}>Todays Income</Text>
+          <Text style={styles.subTitle}>Todays Expense</Text>
         </View>
       </View>
       <View style={styles.line}></View>

@@ -19,9 +19,10 @@ import GradientButton from "../../../Components/GradientButton";
 import IncomeMethodModal from "./IncomeMethodModal";
 import axios from "axios";
 import { BASE_URL } from "../../../../CONSTANTS";
-import { useUserState } from "../../../Slices/userSlice";
+import { useUserState, useUserStateActions } from "../../../Slices/userSlice";
 
 const CashIn = () => {
+  const userStateActions = useUserStateActions();
   const userState = useUserState();
   const [name, setname] = useState("");
   const [amount, setamount] = useState("");
@@ -36,6 +37,7 @@ const CashIn = () => {
       })
       .then((res) => {
         console.log(res);
+        userStateActions.setbalance(userState.balance + amount)
       })
       .catch((e) => {
         console.log(e);
