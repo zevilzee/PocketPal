@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 import { scale } from "react-native-size-matters";
 
@@ -20,7 +20,9 @@ import ExpenseDetails from "./ExpenseDetails";
 import Icon from "../../../assets/add.png";
 import FilterModal from "./FilterModal";
 import HIstoryCardExpence from "../../Components/HIstoryCardExpence";
-
+import {useUserState} from "../../Slices/userSlice";
+import axios from 'axios';
+import {BASE_URL} from "../../../CONSTANTS";
 const bills = [
   {
     description: "Electricity Bill",
@@ -48,6 +50,30 @@ const bills = [
   },
 ];
 const ExpenseScreen = () => {
+  const userState = useUserState();
+  const [data,setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log(userState.id);
+      try {
+        const res = await axios.get(
+          `${BASE_URL}/expense/getExpense/${userState.id}`,
+          {
+            headers: {
+              "auth-token": userState.token,
+            },
+          }
+        );
+        console.log(res.data);
+        setData(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
   const navigation = useNavigation();
   const [modalVisibal, setmodalVisibal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
@@ -73,7 +99,7 @@ const ExpenseScreen = () => {
         modalVisible={setmodalVisibal}
       />
       <FlatList
-        data={bills}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <ExpenseDetails data={item} />}
       />

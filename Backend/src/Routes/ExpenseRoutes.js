@@ -1,11 +1,17 @@
 import { Router } from "express";
-import { GetExpenseHistory, createExpense, deleteExpense, updateExpense } from "../Controllers/ExpenseController.js";
+import {
+  GetExpense,
+  GetExpenseHistory,
+  createExpense,
+  deleteExpense,
+  updateExpense,
+} from "../Controllers/ExpenseController.js";
 import { checkLogin } from "../Middlewares/checkLogin.js";
 const router = Router();
-router.get("/get-expense-history", checkLogin, GetExpenseHistory);
-router.post("/create-expense",checkLogin,createExpense);
-router.patch("/update-expense/:id",checkLogin,updateExpense);
-router.delete("/delete-inome/:id",checkLogin,deleteExpense);
-
+router.get("/get-expense-history", GetExpenseHistory);
+router.post("/create-expense", createExpense);
+router.patch("/update-expense/:id", updateExpense);
+router.delete("/delete-inome/:id", deleteExpense);
+router.get("/getExpense/:id", GetExpense);
 
 export default router;

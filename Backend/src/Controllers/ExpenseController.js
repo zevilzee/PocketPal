@@ -19,6 +19,19 @@ export const GetExpenseHistory = async (req, res, next) => {
   }
 };
 
+export const GetExpense = async (req, res, next) => {
+  //console.log("getExpense called", req.user);
+  try {
+    const ExpenseHistory = await Expense.find({
+      user: req.params.id,
+    });
+    res.json(ExpenseHistory);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 export const createExpense = async (req, res, next) => {
   const { user } = req.body;
 
@@ -55,13 +68,13 @@ export const updateExpense = async (req, res, next) => {
 
     res.send({ status: 200, data: updatedExpense });
   } else {
-    const updatedIncome = await Income.findByIdAndUpdate(
+    const updatedExpense = await Expense.findByIdAndUpdate(
       { _id: req.params.id },
       req.body,
       { new: true }
     );
 
-    res.send({ status: 200, data: updatedIncome });
+    res.send({ status: 200, data: updatedExpense });
   }
 };
 

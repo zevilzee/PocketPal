@@ -23,7 +23,7 @@ const ExpenseDetails = ({ data }) => {
                 style={styles.image}
               />
               <View style={styles.description}>
-                <Text style={styles.title}>{data?.description}</Text>
+                <Text style={styles.title}>{data?.name}</Text>
                 <Text style={styles.date}>{data?.date}</Text>
               </View>
             </View>

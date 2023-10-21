@@ -20,6 +20,9 @@ import IncomeMethodModal from "../IncomeScreen/CashIn/IncomeMethodModal";
 import Color from "../../../assets/colors/Color";
 import { textInputContainer } from "../../Components/CustomStyle";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { BASE_URL } from "../../../CONSTANTS";
+import { useUserState } from "../../Slices/userSlice";
 
 const AddExpense = () => {
   const navigation = useNavigation();
@@ -27,8 +30,26 @@ const AddExpense = () => {
   const [selectedItem, setSelectedItem] = useState("");
   const [selected, setselected] = useState("");
   const [selectUnPaid, setselectUnPaid] = useState("");
-
-  const handleSave = () => {};
+  const userState = useUserState();
+  const [name, setname] = useState("");
+  const [amount, setamount] = useState("");
+  const handleSave = () => {
+    
+      axios
+        .post(`${BASE_URL}/expense/create-expense`, {
+          name: `${name}`,
+          category: `Eating Out`,
+          user: userState.id,
+          amount: `${amount}`,
+          status :`unpaid`
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+  };
   const handleAddCategory = () => {
     navigation.navigate("AddCategory");
   };
@@ -52,6 +73,7 @@ const AddExpense = () => {
               placeholder="Enter amount"
               style={styles.textInput}
               keyboardType="number-pad"
+              onChangeText={(text) => setamount(text)}
             />
           </View>
 
@@ -73,6 +95,7 @@ const AddExpense = () => {
             {/* <View style={styles.method}> */}
             <TextInput
               placeholder="Enter Details"
+              onChangeText={(text) => setname(text)}
               // style={styles.textInput}
             />
             {/* <MaterialIcons name="keyboard-voice" style={{ ...styles.icon }} /> */}
