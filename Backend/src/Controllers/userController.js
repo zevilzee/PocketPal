@@ -44,6 +44,18 @@ export const signIn = async (req, res, next) => {
   }
 };
 
+export const forgotPassword = async (req,res)=>{
+  try {
+    let hash = await hashSync(req.body.password);
+    const user = await UserModel.findByIdAndUpdate({_id:req.param.id},{password: hash},{new:true});
+    res.send({status:200,messsage: user});
+  }
+  catch(e)
+  {
+    res.send({status:500,messsage: "Internal server error"})
+  }
+}
+
 //user/me ROUTE GET
 export const me = async (req, res, next) => {
    res.status(200).json({ success: true, user: req?.user });
