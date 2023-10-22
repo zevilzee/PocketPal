@@ -5,7 +5,7 @@ import { Fontisto } from "react-native-vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Color from "../../assets/colors/Color";
 
-const HIstoryCardExpence = () => {
+const HIstoryCardExpence = ({ todayExpense }) => {
   const navigation = useNavigation();
   const handleHistoryNavigation = () => {
     navigation.navigate("History");
@@ -22,7 +22,7 @@ const HIstoryCardExpence = () => {
       <View style={styles.line}></View>
 
       <View style={styles.container}>
-        <Text style={styles.title}></Text>
+        <Text style={styles.title}>${todayExpense}</Text>
         <View style={styles.row}>
           <Text style={styles.subTitle}>Todays Expense</Text>
         </View>

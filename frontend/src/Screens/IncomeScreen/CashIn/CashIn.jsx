@@ -1,4 +1,5 @@
 import {
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -20,13 +21,15 @@ import IncomeMethodModal from "./IncomeMethodModal";
 import axios from "axios";
 import { BASE_URL } from "../../../../CONSTANTS";
 import { useUserState, useUserStateActions } from "../../../Slices/userSlice";
+import { useRoute } from "@react-navigation/native";
 
 const CashIn = () => {
   const userStateActions = useUserStateActions();
   const userState = useUserState();
   const [name, setname] = useState("");
   const [amount, setamount] = useState("");
-
+  const [modalVisibal, setmodalVisibal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
   const handleSave = () => {
     axios
       .post(`${BASE_URL}/income/create-income`, {
@@ -36,15 +39,17 @@ const CashIn = () => {
         amount: `${amount}`,
       })
       .then((res) => {
-        console.log(res);
-        userStateActions.setbalance(userState.balance + amount)
+        Alert.alert("Income added successfully");
+        setname("");
+        setamount("");
+        setSelectedItem("");
+        const newBalance = parseInt(userState.Balance) + parseInt(amount);
+        userStateActions.setBalance(newBalance.toString());
       })
       .catch((e) => {
         console.log(e);
       });
   };
-  const [modalVisibal, setmodalVisibal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("");
 
   return (
     <View style={styles.container}>

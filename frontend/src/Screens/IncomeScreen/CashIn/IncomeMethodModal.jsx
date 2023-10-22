@@ -44,6 +44,7 @@ const IncomeMethodModal = ({
   };
 
   const handleItemPress = (item) => {
+    console.log(item);
     const updatedData = data.map((d) =>
       d.id === item.id ? { ...d, isSelected: !d.isSelected } : d
     );

@@ -6,6 +6,7 @@ export const ContextProvider = ({ children }) => {
   const [firebaseApi, setfirebaseApi] = useState("");
   const [userSignUpData, setuserSignUpData] = useState(null);
   const [resetPass, setresetPass] = useState("");
+  const [expenceCategory, setexpenceCategory] = useState("");
   return (
     <StateContext.Provider
       value={{
@@ -15,6 +16,8 @@ export const ContextProvider = ({ children }) => {
         setuserSignUpData,
         resetPass,
         setresetPass,
+        expenceCategory,
+        setexpenceCategory,
       }}
     >
       {children}

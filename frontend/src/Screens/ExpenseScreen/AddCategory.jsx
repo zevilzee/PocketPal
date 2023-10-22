@@ -19,6 +19,7 @@ import {
 } from "react-native-vector-icons";
 import { textInputContainer } from "../../Components/CustomStyle";
 import AddCategoryModal from "./AddCategoryModal";
+import { useStateContext } from "../../context/ContextProvider";
 
 const data = [
   { label: "Eating out", id: 1 },
@@ -32,20 +33,35 @@ const Width = Dimensions.get("screen").width;
 const AddCategory = () => {
   const [modalVisibal, setmodalVisibal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
-
+  const { expenceCategory, setexpenceCategory } = useStateContext();
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
-        // onPress={() => handleItemPress(item)}
+        onPress={() => handleItemPress(item)}
         style={styles.itemContainer}
       >
         <View style={styles.containerLeft}>
-          <Fontisto name="radio-btn-active" style={styles.icon} />
+          {selectedItem === item?.label ? (
+            <Fontisto name="radio-btn-active" style={styles.icon} />
+          ) : (
+            <Fontisto name="radio-btn-passive" style={styles.icon} />
+          )}
           <Text style={styles.itemText}>{item.label}</Text>
         </View>
         <AntDesign name="delete" style={styles.icon} />
       </TouchableOpacity>
     );
+  };
+
+  const handleItemPress = (item) => {
+    const updatedData = data.map((d) =>
+      d.id === item.id ? { ...d, isSelected: !d.isSelected } : d
+    );
+    setSelectedItem(item?.label);
+    setexpenceCategory(item?.label);
+
+    // data = updatedData;
+    // setmodalVisibal(false);
   };
   return (
     <View style={styles.container}>

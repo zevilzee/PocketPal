@@ -1,8 +1,16 @@
 import React from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
 import { AntDesign, Ionicons } from "react-native-vector-icons";
+import { formatCustomDate } from "../../Utiles/GetData";
 
 const ExpenseDetails = ({ data }) => {
   if (!data) {
@@ -10,6 +18,12 @@ const ExpenseDetails = ({ data }) => {
     return <Text>Data not available</Text>;
   }
 
+  const formatedDate = formatCustomDate(data?.date);
+
+  const handleDelete = (item) => {
+    console.log(item);
+  };
+  const handleEdit = (data) => {};
   return (
     <View style={styles.container}>
       <View style={styles.entries}>
@@ -24,12 +38,16 @@ const ExpenseDetails = ({ data }) => {
               />
               <View style={styles.description}>
                 <Text style={styles.title}>{data?.name}</Text>
-                <Text style={styles.date}>{data?.date}</Text>
+                <Text style={styles.date}>{formatedDate}</Text>
               </View>
             </View>
             <View style={styles.rightIcons}>
-              <AntDesign name="delete" style={styles.icon} />
-              <Ionicons name="create-outline" style={styles.icon} />
+              <TouchableOpacity onPress={(data) => handleDelete(data.id)}>
+                <AntDesign name="delete" style={styles.icon} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={(data) => handleEdit(data)}>
+                <Ionicons name="create-outline" style={styles.icon} />
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -41,7 +59,7 @@ const ExpenseDetails = ({ data }) => {
           </View>
           <View
             style={
-              data?.status === "Paid"
+              data?.status === "paid"
                 ? styles.paidContainer
                 : styles.unpaidContainer
             }
