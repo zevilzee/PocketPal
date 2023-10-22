@@ -29,6 +29,7 @@ import CashIn from "./src/Screens/IncomeScreen/CashIn/CashIn";
 import ExpenseScreen from "./src/Screens/ExpenseScreen/ExpenseScreen";
 import AddExpense from "./src/Screens/ExpenseScreen/AddExpense";
 import AddCategory from "./src/Screens/ExpenseScreen/AddCategory";
+import { ContextProvider } from "./src/context/ContextProvider";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -51,14 +52,14 @@ function Main() {
     return null;
   }
   const initialRouteName = isEqual(initialUserState, UserState)
-  ? "Intro"
-  : "Home";
+    ? "Intro"
+    : "Home";
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName={initialRouteName}
+            initialRouteName="Intro"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Intro" component={IntroScreen} />
@@ -89,9 +90,11 @@ function Main() {
 export default function App() {
   return (
     <ReduxProvider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Main />
-      </PersistGate>
+      <ContextProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <Main />
+        </PersistGate>
+      </ContextProvider>
     </ReduxProvider>
   );
 }

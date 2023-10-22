@@ -11,17 +11,17 @@ const userSchema = new mongoose.Schema(
       type: Number,
       required: true,
       unique: true,
-      validate: {
-        validator: function (value) {
-          return /^\d{10}$/.test(value.toString());
-        },
-        message: "Phone number must be 11 digits.",
-      },
+      //   validate: {
+      //     validator: function (value) {
+      //       return /^\d{10}$/.test(value.toString());
+      //     },
+      //     message: "Phone number must be 11 digits.",
+      //   },
     },
-    ExpenseCategory:{
-      type : [],
+    ExpenseCategory: {
+      type: [],
     },
-    IncomeType:{
+    IncomeType: {
       type: [],
     },
     password: {
@@ -44,10 +44,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    balance:{
+    balance: {
       type: String,
       default: "0",
-    }
+    },
   },
   { timestamps: true }
 );

@@ -8,8 +8,9 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Pressable,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "../../Components/Header";
 import Color from "../../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
@@ -25,9 +26,18 @@ import axios from "axios";
 //   createUserWithEmailAndPassword,
 //   sendEmailVerification,
 // } from "firebase/auth";
+import {
+  PhoneAuthProvider,
+  signInWithCredential,
+  signOut,
+} from "firebase/auth";
 
 import PasswordInput from "../../Components/PasswordInput";
 import { BASE_URL } from "../../../CONSTANTS";
+import { auth } from "../../../Firebase";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { useStateContext } from "../../context/ContextProvider";
+import { firebaseConfig } from "../../Hooks/FirebaseConfig";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -41,6 +51,13 @@ const SignUp = () => {
   const [phoneNumber, setphoneNumber] = useState("");
   const [verificationCode, setVerificationCode] = useState(""); // State to store the OTP
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const [VerificationId, setVerificationId] = useState("");
+  const recaptchaVerifier = useRef(null);
+
+  const { firebaseApi, setfirebaseApi, userSignUpData, setuserSignUpData } =
+    useStateContext();
+  // console.log(firebaseApi);
 
   // const auth = getAuth();
 
@@ -76,22 +93,43 @@ const SignUp = () => {
   //   }
   // };
 
-  const handleSignUp = async () => {
-    try {
-      const res = await axios.post(`${BASE_URL}/user/sign-up`, {
-        name,
-        phoneNumber,
-        email,
-        city,
-        state,
-        country,
-        password,
-      });
-      console.log(res);
-    } catch (error) {
-      console.log("error", error);
+  // console.log(userData);
+  const handleVerificationCode = async (recaptchaVerifier) => {
+    const userData = {
+      name,
+      phoneNumber,
+      email,
+      city,
+      state,
+      country,
+      password,
+    };
+
+    if (
+      !name ||
+      !password ||
+      !phoneNumber ||
+      !city ||
+      !country ||
+      !state ||
+      !email
+    ) {
+      Alert.alert("All fields are required");
+      return;
     }
-    setModalVisible(true);
+    try {
+      const phoneProvider = new PhoneAuthProvider(auth);
+      const verificationId = await phoneProvider.verifyPhoneNumber(
+        phoneNumber,
+        recaptchaVerifier.current
+      );
+      setVerificationId(verificationId);
+      setfirebaseApi(verificationId);
+      setuserSignUpData(userData);
+      navigation.navigate("Otp");
+    } catch (err) {
+      console.log("Error:", err);
+    }
   };
 
   const handlenavigation = () => {
@@ -114,6 +152,11 @@ const SignUp = () => {
     >
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
+          <FirebaseRecaptchaVerifierModal
+            ref={recaptchaVerifier}
+            firebaseConfig={firebaseConfig}
+            // languageCode = {i18n.language}
+          />
           <View style={styles.topContainer}>
             <Header />
             <View style={styles.imageContainer}>
@@ -177,7 +220,7 @@ const SignUp = () => {
               />
 
               <CustomInput
-                placeholder="Phone Number"
+                placeholder="Phone Number, e.g., +92300000000"
                 onChangeText={(text) => {
                   setphoneNumber(text);
                 }}
@@ -185,7 +228,7 @@ const SignUp = () => {
 
               <GradientButton
                 title="Register"
-                onPress={handleSignUp}
+                onPress={() => handleVerificationCode(recaptchaVerifier)}
                 containerStyle={styles.gradientButton}
               />
             </View>
@@ -212,52 +255,6 @@ const SignUp = () => {
                 <AntDesign name="apple1" style={styles.apple} />
               </View>
             </View>
-
-            <Modal
-              animationType="fade"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => setModalVisible(false)}
-            >
-              <ExpoBlurView style={styles.blurView} tint="light" intensity={10}>
-                <View style={styles.modalContainer}>
-                  <View style={styles.modalContent}>
-                    <TouchableOpacity
-                      onPress={() => setModalVisible(false)}
-                      style={styles.crossContainer}
-                    >
-                      <Image
-                        source={require("../../../assets/cross.png")}
-                        style={styles.cross}
-                      />
-                    </TouchableOpacity>
-                    <Image
-                      source={require("../../../assets/tick.png")}
-                      style={styles.tickIcon}
-                    />
-                    <Text style={styles.modalTitle}>
-                      Successfully Registered
-                    </Text>
-                    <Text
-                      style={{
-                        ...styles.modalTitle,
-                        fontFamily: "Medium",
-                        fontSize: scale(16),
-                        width: scale(180),
-                      }}
-                    >
-                      Your account has been successfully registered.
-                    </Text>
-
-                    <GradientButton
-                      title="Login"
-                      onPress={handlenavigation}
-                      containerStyle={styles.modalButton}
-                    />
-                  </View>
-                </View>
-              </ExpoBlurView>
-            </Modal>
           </View>
         </ScrollView>
       </View>

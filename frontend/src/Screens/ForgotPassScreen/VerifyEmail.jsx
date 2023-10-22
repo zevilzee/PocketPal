@@ -5,6 +5,7 @@ import {
   View,
   Modal,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "../../Components/Header";
@@ -14,17 +15,41 @@ import GradientButton from "../../Components/GradientButton";
 import OTPTextInput from "react-native-otp-textinput";
 import { BlurView as ExpoBlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
+import { useStateContext } from "../../context/ContextProvider";
+import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
+import { auth } from "../../../Firebase";
 
 const VerifyEmail = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
-  const handleReset = () => {
-    // Show the modal when the button is clicked
-    navigation.navigate("ResetPass");
+  const [otp, setotp] = useState("");
+  const { firebaseApi } = useStateContext();
+
+  const handleReset = async () => {
+    try {
+      const credential = PhoneAuthProvider.credential(firebaseApi, otp);
+      const userCredential = await signInWithCredential(auth, credential);
+      console.log("Phone authentication successful:", userCredential.user);
+      if (userCredential.user) {
+        navigation.navigate("ResetPass");
+      }
+    } catch (err) {
+      Alert.alert(
+        "Invalid OTP",
+        "The OTP (One-Time Password) you entered is incorrect. Please double-check the OTP you received and try again.",
+        [
+          {
+            text: "OK",
+            onPress: () => console.log("OK Pressed"),
+            style: "default",
+          },
+        ]
+      );
+
+      console.log("Error in phone authentication:", err);
+    }
   };
-  const handleVerifyAuto = (e) => {
-    console.log(e);
-  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -53,8 +78,9 @@ const VerifyEmail = () => {
             <OTPTextInput
               style={styles.inputContainer}
               handleTextChange={(e) => {
-                handleVerifyAuto(e);
+                setotp(e);
               }}
+              inputCount={6}
             />
           </View>
           <View style={styles.haveAccount}>
@@ -178,7 +204,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginTop: scale(40),
     color: Color.Blue,
-    marginHorizontal: scale(18),
+    marginHorizontal: scale(6),
     textAlign: "center",
     fontSize: 22,
     fontFamily: "Medium",
@@ -203,7 +229,7 @@ const styles = StyleSheet.create({
     fontSize: scale(14),
     position: "relative",
     top: scale(22),
-    left: scale(20),
+    left: scale(8),
   },
 
   modalContainer: {
