@@ -68,7 +68,8 @@ const ExpenseScreen = () => {
         );
         console.log(res.data);
         setData(res.data);
-        userStateActions.setbalance(userState.balance - amount)
+        const newBalance = parseInt(userState.Balance) - parseInt(amount)
+        userStateActions.setbalance(newBalance.toString())
       } catch (error) {
         console.log(error);
       }

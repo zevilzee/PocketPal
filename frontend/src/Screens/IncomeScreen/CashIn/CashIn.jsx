@@ -37,7 +37,8 @@ const CashIn = () => {
       })
       .then((res) => {
         console.log(res);
-        userStateActions.setbalance(userState.balance + amount)
+        const newBalance = parseInt(userState.Balance) + parseInt(amount)
+        userStateActions.setbalance(newBalance.toString())
       })
       .catch((e) => {
         console.log(e);
