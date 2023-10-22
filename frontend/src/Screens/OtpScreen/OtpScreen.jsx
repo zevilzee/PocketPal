@@ -5,6 +5,7 @@ import {
   View,
   Modal,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "../../Components/Header";
@@ -15,23 +16,61 @@ import OTPTextInput from "react-native-otp-textinput";
 import { BlurView as ExpoBlurView } from "expo-blur";
 import axios from "axios";
 import { BASE_URL } from "../../../CONSTANTS";
+import { useRoute } from "@react-navigation/native";
+import {
+  PhoneAuthProvider,
+  signInWithCredential,
+  signOut,
+} from "firebase/auth";
+import { auth } from "../../../Firebase";
+import { useStateContext } from "../../context/ContextProvider";
+import SignUpCompleteModal from "../../Components/SignUpCompleteModal";
 
 const OtpScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [otp, setotp] = useState("");
+  const { firebaseApi, userSignUpData } = useStateContext();
+  const [successSignup, setsuccessSignup] = useState(false);
 
-  const handleSignUp = () => {
-    // Show the modal when the button is clicked
-    setModalVisible(true);
-  };
-  const handleVerifyAuto = async (e) => {
-    console.log(e);
-
+  const handleCreateAccount = async () => {
     try {
-      const res = await axios.post(`${BASE_URL}/matchotp`);
+      const res = await axios.post(`${BASE_URL}/user/sign-up`, userSignUpData);
+      console.log(res);
+      // setModalVisible(false);
     } catch (error) {
       console.log("error", error);
     }
+  };
+
+  console.log(firebaseApi);
+
+  const handleSignUp = async () => {
+    try {
+      const credential = PhoneAuthProvider.credential(firebaseApi, otp);
+      const userCredential = await signInWithCredential(auth, credential);
+      console.log("Phone authentication successful:", userCredential.user);
+      if (userCredential.user) {
+        setModalVisible(true);
+      }
+    } catch (err) {
+      Alert.alert(
+        "Invalid OTP",
+        "The OTP (One-Time Password) you entered is incorrect. Please double-check the OTP you received and try again.",
+        [
+          {
+            text: "OK",
+            onPress: () => console.log("OK Pressed"),
+            style: "default",
+          },
+        ]
+      );
+
+      console.log("Error in phone authentication:", err);
+    }
+  };
+
+  const handleVerifyAuto = async (code) => {
+    setotp(code);
   };
 
   return (
@@ -49,15 +88,15 @@ const OtpScreen = () => {
       <View style={styles.formContainer}>
         <View style={styles.InputContainer}>
           <View>
-            <Text style={styles.titleMain}>Confirm Your Email</Text>
+            <Text style={styles.titleMain}>Confirm Your Phone</Text>
             <Text style={styles.subTitle}>Enter Verification code:</Text>
 
-            {/* four digit otp input here */}
             <OTPTextInput
               style={styles.inputContainer}
-              handleTextChange={(e) => {
-                handleVerifyAuto(e);
+              handleTextChange={(code) => {
+                handleVerifyAuto(code);
               }}
+              inputCount={6}
             />
           </View>
           <GradientButton
@@ -84,7 +123,9 @@ const OtpScreen = () => {
                       style={styles.cross}
                     />
                   </TouchableOpacity>
-                  <Text style={styles.modalTitle}>Verify your Email</Text>
+                  <Text style={styles.modalTitle}>
+                    Verify your Phone number
+                  </Text>
                   <Image
                     source={require("../../../assets/tick.png")}
                     style={styles.tickIcon}
@@ -96,13 +137,14 @@ const OtpScreen = () => {
                       fontSize: scale(16),
                     }}
                   >
-                    Verify your Email
+                    Verify your Phone number
                   </Text>
 
                   <GradientButton
                     title="Confirm"
                     onPress={() => {
                       setModalVisible(false);
+                      setsuccessSignup(true);
                     }}
                     containerStyle={styles.modalButton}
                   />
@@ -110,6 +152,12 @@ const OtpScreen = () => {
               </View>
             </ExpoBlurView>
           </Modal>
+
+          <SignUpCompleteModal
+            setModalVisible={setsuccessSignup}
+            modalVisible={successSignup}
+            handleSignUp={handleCreateAccount}
+          />
         </View>
       </View>
     </View>
@@ -176,7 +224,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginTop: scale(40),
     color: Color.Blue,
-    marginHorizontal: scale(18),
+    marginHorizontal: scale(6),
     textAlign: "center",
     fontSize: 22,
     fontFamily: "Medium",

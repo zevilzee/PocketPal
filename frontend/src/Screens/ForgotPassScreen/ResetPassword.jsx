@@ -5,6 +5,7 @@ import {
   View,
   Modal,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "../../Components/Header";
@@ -18,6 +19,7 @@ import { Entypo } from "react-native-vector-icons";
 import PasswordInput from "../../Components/PasswordInput";
 import axios from "axios";
 import { BASE_URL } from "../../../CONSTANTS";
+import { useStateContext } from "../../context/ContextProvider";
 
 const ResetPassword = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,16 +27,38 @@ const ResetPassword = () => {
   const [confirmPassword, setconfirmPassword] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const { firebaseApi, userSignUpData, resetPass } = useStateContext();
+  console.log(userSignUpData);
+  const phone = userSignUpData;
+  console.log(resetPass);
 
   const handleReset = async () => {
-    // Show the modal when the button is clicked
-    setModalVisible(true);
-
-    // try {
-    //   const res = await axios.post(`${BASE_URL}/changePass/demeUrl`);
-    // } catch (error) {
-    //   console.log("error", error);
-    // }
+    if (!password || !confirmPassword) {
+      Alert.alert("Please fill in both password fields.");
+    } else if (password === confirmPassword) {
+      try {
+        const response = await axios.post(
+          `${BASE_URL}/user/forgot-password/${resetPass}`,
+          {
+            password: password,
+          }
+        );
+        console.log(response.data);
+        if (response.status === 200) {
+          const updatedUser = response.data.message;
+        } else {
+          console.log(
+            "Password update failed. Server returned:",
+            response.status,
+            response.data.message
+          );
+        }
+      } catch (error) {
+        console.error("An error occurred while updating the password:", error);
+      }
+    } else {
+      Alert.alert("Password and Confirm Password do not match");
+    }
   };
   const handleVerifyAuto = (e) => {
     console.log(e);

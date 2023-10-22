@@ -32,10 +32,5 @@ const firebaseConfig = {
 // if (!firebase.apps.length) {
 //   firebase.initializeApp(config);
 // }
-
-const app = initializeApp(firebaseConfig);
-// const auth = initializeAuth();
-
-const auth = getAuth(app);
-// const analytics = getAnalytics(app);
-export { app, auth };
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);

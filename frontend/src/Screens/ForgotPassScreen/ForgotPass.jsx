@@ -1,26 +1,31 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  Modal,
-  TouchableOpacity,
-} from "react-native";
-import React, { useState } from "react";
+import { Image, StyleSheet, Text, View, Alert } from "react-native";
+import React, { useRef, useState } from "react";
 import Header from "../../Components/Header";
 import Color from "../../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
 import CustomInput from "../../Components/CustomInput";
 import GradientButton from "../../Components/GradientButton";
-import { AntDesign } from "react-native-vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { BlurView as ExpoBlurView } from "expo-blur";
-import { BASE_URL } from "../../../CONSTANTS";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { firebaseConfig } from "../../Hooks/FirebaseConfig";
+import { PhoneAuthProvider } from "firebase/auth";
+import { auth } from "../../../Firebase";
+import { useStateContext } from "../../context/ContextProvider";
 
 const ForgotPass = () => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [email, setemail] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
+  const recaptchaVerifier = useRef(null);
+  const {
+    firebaseApi,
+    setfirebaseApi,
+    userSignUpData,
+    setuserSignUpData,
+    resetPass,
+    setresetPass,
+  } = useStateContext();
 
   const handleVerify = () => {
     navigation.navigate("verifyEmail");
@@ -32,12 +37,39 @@ const ForgotPass = () => {
     //   console.log("error", error);
     // }
   };
+  const handleVerificationCode = async () => {
+    if (!phoneNumber) {
+      Alert.alert("All fields are required");
+      return;
+    }
+    try {
+      const phoneProvider = new PhoneAuthProvider(auth);
+      const verificationId = await phoneProvider.verifyPhoneNumber(
+        phoneNumber,
+        recaptchaVerifier.current
+      );
+      setfirebaseApi(verificationId);
+      setresetPass(phoneNumber);
+      console.log(verificationId);
+      navigation.navigate("verifyEmail");
+
+      // navigation.navigate("Otp");
+    } catch (err) {
+      console.log("Error:", err);
+    }
+  };
+  console.log(phoneNumber);
 
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <Header />
         <View style={styles.imageContainer}>
+          <FirebaseRecaptchaVerifierModal
+            ref={recaptchaVerifier}
+            firebaseConfig={firebaseConfig}
+            // languageCode = {i18n.language}
+          />
           <Image
             source={require("../../../assets/logo.png")}
             style={styles.image}
@@ -49,21 +81,21 @@ const ForgotPass = () => {
         <View style={styles.InputContainer}>
           <View style={styles.titleContainer}>
             <Text style={styles.subTtiel}>
-              Please enter your email so we can
+              Please enter your phone number so we can send you a verification
+              code
             </Text>
-            <Text style={styles.subTtiel}>send you a verification code</Text>
           </View>
           <View style={styles.CustomInput}>
             <CustomInput
-              placeholder="Email"
+              placeholder="Phone Number, e.g., +92300000000"
               onChangeText={(text) => {
-                setemail(text);
+                setphoneNumber(text);
               }}
             />
           </View>
           <GradientButton
             title="Send reset code"
-            onPress={handleVerify}
+            onPress={() => handleVerificationCode(recaptchaVerifier)}
             containerStyle={styles.gradientButton}
           />
         </View>
@@ -120,12 +152,13 @@ const styles = StyleSheet.create({
     fontFamily: "Medium",
     fontSize: scale(14),
     fontWeight: "600",
+    textAlign: "center",
   },
   CustomInput: {
     paddingVertical: scale(20),
   },
   titleContainer: {
-    width: scale(230),
+    width: scale(260),
     alignSelf: "center",
     alignItems: "center",
     paddingVertical: scale(30),
