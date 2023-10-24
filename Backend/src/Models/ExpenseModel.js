@@ -1,15 +1,14 @@
 import mongoose from "mongoose";
 
 const expenseSchema = new mongoose.Schema({
-  
-  name:{
+  name: {
     type: String,
-    required:true,
+    required: true,
   },
-  
+
   amount: {
     type: Number,
-    required: true, 
+    required: true,
   },
   date: {
     type: Date,
@@ -25,11 +24,10 @@ const expenseSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["paid", "unpaid"],
-    required: true, 
+    required: true,
   },
 });
 
 const Expense = mongoose.model("Expense", expenseSchema);
 
 export default Expense;
-

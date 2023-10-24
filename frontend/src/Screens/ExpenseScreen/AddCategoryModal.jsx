@@ -52,6 +52,7 @@ const AddCategoryModal = ({
   };
 
   const handleItemPress = (item) => {
+    // console.log(item, "item");
     const updatedData = data.map((d) =>
       d.id === item.id ? { ...d, isSelected: !d.isSelected } : d
     );
@@ -60,7 +61,7 @@ const AddCategoryModal = ({
     // setmodalVisibal(false);
   };
 
-  console.log(selectedItem, "in parent");
+  // console.log(selectedItem, "in parent");
 
   const handleContinue = () => {
     setmodalVisibal(false);

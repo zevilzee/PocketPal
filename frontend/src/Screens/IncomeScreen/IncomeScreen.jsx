@@ -27,26 +27,24 @@ const IncomeScreen = () => {
   const handleCashIn = () => {
     navigation.navigate("CashIn");
   };
-
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/income/getIncome/${userState.id}`,
+        {
+          headers: {
+            "auth-token": userState.token,
+          },
+        }
+      );
+      setData(res.data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          `${BASE_URL}/income/getIncome/${userState.id}`,
-          {
-            headers: {
-              "auth-token": userState.token,
-            },
-          }
-        );
-        setData(res.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
 

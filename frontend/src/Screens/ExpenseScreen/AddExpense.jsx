@@ -1,4 +1,5 @@
 import {
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -22,46 +23,59 @@ import { textInputContainer } from "../../Components/CustomStyle";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { BASE_URL } from "../../../CONSTANTS";
-import { useUserState } from "../../Slices/userSlice";
+import { useUserState, useUserStateActions } from "../../Slices/userSlice";
+import { useStateContext } from "../../context/ContextProvider";
 
 const AddExpense = () => {
   const navigation = useNavigation();
   const [modalVisibal, setmodalVisibal] = useState(false);
+  const userStateActions = useUserStateActions();
+
   const [selectedItem, setSelectedItem] = useState("");
   const [selected, setselected] = useState("");
   const [selectUnPaid, setselectUnPaid] = useState("");
   const userState = useUserState();
   const [name, setname] = useState("");
   const [amount, setamount] = useState("");
+  const { expenceCategory, setexpenceCategory } = useStateContext();
+
+  // console.log(selectedItem, "selected item");
+
   const handleSave = () => {
-    
-      axios
-        .post(`${BASE_URL}/expense/create-expense`, {
-          name: `${name}`,
-          category: `Eating Out`,
-          user: userState.id,
-          amount: `${amount}`,
-          status :`unpaid`
-        })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    if (!name || !amount || !expenceCategory || !selected) {
+      Alert.alert("All fileds required");
+      return;
+    }
+    axios
+      .post(`${BASE_URL}/expense/create-expense`, {
+        name: `${name}`,
+        category: `${expenceCategory}`,
+        user: userState.id,
+        amount: `${amount}`,
+        status: `${selected}`,
+      })
+      .then((res) => {
+        console.log(res.data);
+        Alert.alert("Expense added successfully");
+        const newBalance = parseInt(userState.Balance) - parseInt(amount);
+        useUserStateActions.setbalance(newBalance.toString());
+      })
+
+      .catch((e) => {
+        console.log(e);
+      });
   };
   const handleAddCategory = () => {
     navigation.navigate("AddCategory");
   };
 
   const handleSelectPaid = () => {
-    setselected("Paid");
+    setselected("paid");
   };
   const handleSelectUnPaid = () => {
-    setselected("UnPaid");
+    setselected("unpaid");
   };
 
-  console.log(selected);
   return (
     <View style={styles.container}>
       <HeaderTitle title="ADD NEW EXPENSE" />
@@ -80,7 +94,11 @@ const AddExpense = () => {
           <View style={textInputContainer}>
             <TouchableOpacity style={styles.method} onPress={handleAddCategory}>
               <View style={styles.addContainer}>
-                <Text style={styles.title}>Add Category</Text>
+                <Text style={styles.title}>
+                  {expenceCategory !== ""
+                    ? `${expenceCategory}`
+                    : "Add Category"}
+                </Text>
               </View>
               <View>
                 <MaterialIcons
@@ -116,7 +134,7 @@ const AddExpense = () => {
               <Text style={styles.paidTitle}>Unpaid</Text>
             </TouchableOpacity>
           </View>
-
+          {/* 
           <View style={{ flexDirection: "row", gap: scale(14) }}>
             <View style={[textInputContainer, styles.dateContainer]}>
               <View
@@ -140,9 +158,9 @@ const AddExpense = () => {
               />
               <Text>07:28PM</Text>
             </View>
-          </View>
+          </View> */}
 
-          <View style={{ flexDirection: "row", gap: scale(14) }}>
+          {/* <View style={{ flexDirection: "row", gap: scale(14) }}>
             <View style={[textInputContainer, styles.dateContainer]}>
               <View
                 style={{
@@ -161,7 +179,7 @@ const AddExpense = () => {
             <View style={[textInputContainer, styles.dateContainer]}>
               <Text>Add Bill No.</Text>
             </View>
-          </View>
+          </View> */}
 
           <GradientButton
             title="Save"
@@ -224,7 +242,7 @@ const styles = StyleSheet.create({
   gradientButton: {
     width: scale(210),
     alignSelf: "center",
-    marginVertical: scale(10),
+    marginVertical: scale(22),
   },
   status: {
     flexDirection: "row",
@@ -258,3 +276,5 @@ const styles = StyleSheet.create({
     // color: Color.White,
   },
 });
+
+// 526335

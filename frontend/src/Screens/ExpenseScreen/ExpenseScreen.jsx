@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { scale } from "react-native-size-matters";
 
@@ -20,10 +20,11 @@ import ExpenseDetails from "./ExpenseDetails";
 import Icon from "../../../assets/add.png";
 import FilterModal from "./FilterModal";
 import HIstoryCardExpence from "../../Components/HIstoryCardExpence";
-import {useUserState} from "../../Slices/userSlice";
-import axios from 'axios';
-import {BASE_URL} from "../../../CONSTANTS";
+import { useUserState } from "../../Slices/userSlice";
+import axios from "axios";
+import { BASE_URL } from "../../../CONSTANTS";
 import { useUserStateActions } from "../../Slices/userSlice";
+import { formatCustomDate } from "../../Utiles/GetData";
 const bills = [
   {
     description: "Electricity Bill",
@@ -53,7 +54,9 @@ const bills = [
 const ExpenseScreen = () => {
   const userStateActions = useUserStateActions();
   const userState = useUserState();
-  const [data,setData] = useState([]);
+  const [data, setData] = useState([]);
+  const date = new Date();
+  const currentDate = formatCustomDate(date);
   useEffect(() => {
     const fetchData = async () => {
       console.log(userState.id);
@@ -77,7 +80,7 @@ const ExpenseScreen = () => {
 
     fetchData();
   }, []);
-  
+
   const navigation = useNavigation();
   const [modalVisibal, setmodalVisibal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
@@ -91,11 +94,34 @@ const ExpenseScreen = () => {
   const handleCreateBill = () => {
     navigation.navigate("AddExpense");
   };
+
+  const groupedExpenses = {};
+
+  data.forEach((expense) => {
+    const date = formatCustomDate(expense.date);
+    if (!groupedExpenses[date]) {
+      groupedExpenses[date] = {
+        timestamp: date,
+        entries: [],
+        totalAmount: 0,
+        billNumber: 0,
+      };
+    }
+    groupedExpenses[date].entries.push(expense);
+    groupedExpenses[date].totalAmount += expense.amount;
+    groupedExpenses[date].billNumber += 1;
+  });
+
+  const groupedExpenseData = Object.values(groupedExpenses);
+  const todayIncome = groupedExpenseData.filter(
+    (item) => item?.timestamp === currentDate
+  );
+
   return (
     <View style={styles.container}>
       <HeaderTitle title="EXPENSE" />
       <View style={styles.historyCard}>
-        <HIstoryCardExpence />
+        <HIstoryCardExpence todayExpense={todayIncome[0]?.totalAmount} />
       </View>
       <SearchInput
         filter={handleFilter}
