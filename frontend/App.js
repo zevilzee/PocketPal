@@ -30,6 +30,7 @@ import ExpenseScreen from "./src/Screens/ExpenseScreen/ExpenseScreen";
 import AddExpense from "./src/Screens/ExpenseScreen/AddExpense";
 import AddCategory from "./src/Screens/ExpenseScreen/AddCategory";
 import { ContextProvider } from "./src/context/ContextProvider";
+import UserProfile from "./src/Screens/UserProfile/UserProfile";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -59,7 +60,7 @@ function Main() {
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Intro"
+            initialRouteName="UserProfile"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Intro" component={IntroScreen} />
@@ -80,6 +81,7 @@ function Main() {
             <Stack.Screen name="Expense" component={ExpenseScreen} />
             <Stack.Screen name="AddExpense" component={AddExpense} />
             <Stack.Screen name="AddCategory" component={AddCategory} />
+            <Stack.Screen name="UserProfile" component={UserProfile} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
