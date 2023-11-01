@@ -1,5 +1,15 @@
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
 import HeaderTitle from "../../Components/HeaderTitle";
 import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
@@ -7,84 +17,119 @@ import {
   AntDesign,
   MaterialCommunityIcons,
   Feather,
+  FontAwesome,
+  Fontisto,
 } from "react-native-vector-icons";
+import GradientButton from "../../Components/GradientButton";
+import AppBottomTab from "../../Components/AppBottomTab";
+import * as ImagePicker from "expo-image-picker";
 
 const UserProfile = () => {
+  const [image, setImage] = useState(null);
+
+  const handlePickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
   return (
-    <View style={styles.container}>
-      <HeaderTitle title="pROFILE" />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "height" : null}
+    >
+      <View style={styles.container}>
+        <HeaderTitle title="pROFILE" />
 
-      {/* Bottom container  */}
-      <View style={styles.contentContainer}>
-        {/* Image Container  */}
-        <View style={styles.imageContainer}>
-          <View style={styles.imageMain}>
-            <Image
-              source={require("../../../assets/imagePlaceHolder.png")}
-              style={styles.image}
-            />
+        {/* Bottom container  */}
+        <ScrollView style={styles.contentContainer}>
+          {/* Image Container  */}
+          <View style={styles.imageContainer}>
+            <View style={styles.imageMain}>
+              <Image
+                source={require("../../../assets/imagePlaceHolder.png")}
+                style={styles.image}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.iconContainer}
+              onPress={handlePickImage}
+            >
+              <AntDesign name="camera" style={styles.icon} />
+            </TouchableOpacity>
           </View>
-          <View style={styles.iconContainer}>
-            <AntDesign name="camera" style={styles.icon} />
-          </View>
-        </View>
 
-        {/* Form Container  */}
-        <View style={styles.formContainer}>
-          {/* User details  */}
-          <View style={styles.formContent}>
-            <View style={styles.formMain}>
-              <View style={styles.contentLeft}>
-                <MaterialCommunityIcons
-                  name="account-edit"
-                  style={styles.iconLeft}
-                />
-                <TextInput placeholder="User name" />
+          {/* Form Container  */}
+          <View style={styles.formContainer}>
+            {/* User details  */}
+            <View style={styles.formContent}>
+              <View style={styles.formMain}>
+                <View style={styles.contentLeft}>
+                  <MaterialCommunityIcons
+                    name="account-edit"
+                    style={styles.iconLeft}
+                  />
+                  <TextInput placeholder="User name" />
+                </View>
+                <View>
+                  <Feather name="edit-3" style={styles.iconRight} />
+                </View>
               </View>
-              <View>
-                <Feather name="edit-3" style={styles.iconRight} />
+              <View style={styles.formMain}>
+                <View style={styles.contentLeft}>
+                  <FontAwesome name="phone" style={styles.iconLeft} />
+                  <TextInput placeholder="Phone No" />
+                </View>
+                <View>
+                  <Feather name="edit-3" style={styles.iconRight} />
+                </View>
+              </View>
+              <View style={styles.formMain}>
+                <View style={styles.contentLeft}>
+                  <MaterialCommunityIcons
+                    name="email"
+                    style={styles.iconLeft}
+                  />
+                  <TextInput placeholder="Email" />
+                </View>
+                <View>
+                  <Feather name="edit-3" style={styles.iconRight} />
+                </View>
+              </View>
+              <View style={styles.formMain}>
+                <View style={styles.contentLeft}>
+                  <Fontisto name="locked" style={styles.iconLeft} />
+                  <TextInput placeholder="Password" />
+                </View>
+                <View>
+                  <Feather name="edit-3" style={styles.iconRight} />
+                </View>
               </View>
             </View>
-            <View style={styles.formMain}>
-              <View style={styles.contentLeft}>
-                <MaterialCommunityIcons
-                  name="account-edit"
-                  style={styles.iconLeft}
-                />
-                <TextInput placeholder="User name" />
-              </View>
-              <View>
-                <Feather name="edit-3" style={styles.iconRight} />
-              </View>
-            </View>
-            <View style={styles.formMain}>
-              <View style={styles.contentLeft}>
-                <MaterialCommunityIcons
-                  name="account-edit"
-                  style={styles.iconLeft}
-                />
-                <TextInput placeholder="User name" />
-              </View>
-              <View>
-                <Feather name="edit-3" style={styles.iconRight} />
-              </View>
-            </View>
-            <View style={styles.formMain}>
-              <View style={styles.contentLeft}>
-                <MaterialCommunityIcons
-                  name="account-edit"
-                  style={styles.iconLeft}
-                />
-                <TextInput placeholder="User name" />
-              </View>
-              <View>
-                <Feather name="edit-3" style={styles.iconRight} />
-              </View>
+
+            <View style={styles.buttonContainer}>
+              <GradientButton
+                title="Save"
+                // onPress={() => handleVerificationCode(recaptchaVerifier)}
+                containerStyle={styles.gradientButton}
+              />
             </View>
           </View>
+        </ScrollView>
+
+        <View style={styles.bottomTab}>
+          <AppBottomTab />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -93,6 +138,7 @@ export default UserProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   contentContainer: {
     backgroundColor: Color.White,
@@ -142,7 +188,7 @@ const styles = StyleSheet.create({
   formContent: {
     width: "88%",
     alignSelf: "center",
-    gap: scale(10),
+    gap: scale(20),
     marginTop: scale(10),
   },
   formMain: {
@@ -174,5 +220,15 @@ const styles = StyleSheet.create({
   iconRight: {
     fontSize: scale(14),
     color: Color.Blue,
+  },
+  buttonContainer: {
+    width: "80%",
+    alignSelf: "center",
+    marginVertical: scale(18),
+  },
+  bottomTab: {
+    backgroundColor: "yellow",
+    position: "relative",
+    bottom: 0,
   },
 });
