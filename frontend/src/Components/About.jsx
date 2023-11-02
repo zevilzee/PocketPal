@@ -10,11 +10,20 @@ import {
 } from "react-native-vector-icons";
 import Color from "../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
+import { useNavigation } from "@react-navigation/native";
 
 const About = () => {
+  const navigation = useNavigation();
+  const handlePrivacy = () => {
+    navigation.navigate("PrivacyPolicy");
+  };
+
+  const handleTermsCondition = () => {
+    navigation.navigate("TermsCondition");
+  };
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.containermain}>
+      <TouchableOpacity style={styles.containermain} onPress={handlePrivacy}>
         <View style={styles.leftContainer}>
           <Foundation name="clipboard-notes" style={styles.icoMain} />
           <Text style={styles.title}>Privacy Policy</Text>
@@ -24,7 +33,10 @@ const About = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.containermain}>
+      <TouchableOpacity
+        style={styles.containermain}
+        onPress={handleTermsCondition}
+      >
         <View style={styles.leftContainer}>
           <Foundation name="clipboard-notes" style={styles.icoMain} />
           <Text style={styles.title}>Terms & Conditions</Text>

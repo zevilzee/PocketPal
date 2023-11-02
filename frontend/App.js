@@ -33,6 +33,8 @@ import { ContextProvider } from "./src/context/ContextProvider";
 import UserProfile from "./src/Screens/UserProfile/UserProfile";
 import SettingScreen from "./src/Screens/Setting/SettingScreen";
 import { PaperProvider } from "react-native-paper";
+import PrivacyPolicy from "./src/Components/PrivacyPolicy";
+import TermsConditions from "./src/Components/TermsConditions";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -85,6 +87,8 @@ function Main() {
             <Stack.Screen name="AddCategory" component={AddCategory} />
             <Stack.Screen name="UserProfile" component={UserProfile} />
             <Stack.Screen name="SettingScreen" component={SettingScreen} />
+            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+            <Stack.Screen name="TermsCondition" component={TermsConditions} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
