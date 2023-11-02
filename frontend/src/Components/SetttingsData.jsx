@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import {
   SimpleLineIcons,
   MaterialIcons,
@@ -9,8 +9,10 @@ import {
 } from "react-native-vector-icons";
 import Color from "../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
+import LanguageModal from "./LanguageModal";
 
 const SetttingsData = () => {
+  const [modalVisible, setmodalVisible] = useState(false);
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.containermain}>
@@ -35,6 +37,7 @@ const SetttingsData = () => {
 
       <TouchableOpacity
         style={{ ...styles.containermain, borderBottomWidth: 0 }}
+        onPress={() => setmodalVisible(true)}
       >
         <View style={styles.leftContainer}>
           <Ionicons name="language" style={styles.icoMain} />
@@ -44,6 +47,10 @@ const SetttingsData = () => {
           <MaterialIcons name="keyboard-arrow-right" style={styles.arrowLeft} />
         </View>
       </TouchableOpacity>
+      <LanguageModal
+        modalVisible={modalVisible}
+        setModalVisible={setmodalVisible}
+      />
     </View>
   );
 };
