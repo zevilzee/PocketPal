@@ -9,12 +9,7 @@ import {
 import React, { useState } from "react";
 
 import { scale } from "react-native-size-matters";
-import {
-  AntDesign,
-  MaterialIcons,
-  FontAwesome,
-  Entypo,
-} from "react-native-vector-icons";
+import { MaterialIcons } from "react-native-vector-icons";
 import HeaderTitle from "../../Components/HeaderTitle";
 import GradientButton from "../../Components/GradientButton";
 import IncomeMethodModal from "../IncomeScreen/CashIn/IncomeMethodModal";

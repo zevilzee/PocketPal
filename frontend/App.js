@@ -36,6 +36,7 @@ import { PaperProvider } from "react-native-paper";
 import PrivacyPolicy from "./src/Components/PrivacyPolicy";
 import TermsConditions from "./src/Components/TermsConditions";
 import FinanceGoalScreen from "./src/Screens/FinanceGoal/FinanceGoalScreen";
+import AddNewGoal from "./src/Screens/FinanceGoal/AddNewGoal";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -91,6 +92,7 @@ function Main() {
             <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
             <Stack.Screen name="TermsCondition" component={TermsConditions} />
             <Stack.Screen name="FinanceGoal" component={FinanceGoalScreen} />
+            <Stack.Screen name="AddGoal" component={AddNewGoal} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

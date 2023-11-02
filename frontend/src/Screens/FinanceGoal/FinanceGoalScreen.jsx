@@ -7,6 +7,7 @@ import SaveingPlanBalance from "../../Components/SaveingPlanBalance";
 import FinanaceGoalItemDetails from "../../Components/FinanaceGoalItemDetails";
 import BottomTab from "../../Components/BottomTab";
 import Icon from "../../../assets/add.png";
+import { useNavigation } from "@react-navigation/native";
 
 const data = [
   {
@@ -42,6 +43,10 @@ const data = [
 ];
 
 const FinanceGoalScreen = () => {
+  const navigation = useNavigation();
+  const handleAddGoal = () => {
+    navigation.navigate("AddGoal");
+  };
   return (
     <View style={styles.container}>
       <HeaderTitle title="FINANCIAL GOALS" />
@@ -62,7 +67,7 @@ const FinanceGoalScreen = () => {
           <BottomTab
             title="Create new bill"
             image={Icon}
-            // onpress={handleCreateBill}
+            onpress={handleAddGoal}
           />
         </View>
       </View>

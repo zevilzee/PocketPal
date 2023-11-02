@@ -11,17 +11,16 @@ const FinanaceGoalItemDetails = ({ data }) => {
 
   const getColorForPercentage = (percentage) => {
     if (percentage <= 25) {
-      return "red"; // Red for 0-25%
+      return "red";
     } else if (percentage <= 50) {
-      return "yellow"; // Yellow for 26-50%
+      return "yellow";
     } else {
-      return "green"; // Green for 51-100%
+      return "green";
     }
   };
 
   const progressBarColor = getColorForPercentage(completionPercentage);
 
-  console.log(completionPercentage);
   return (
     <View style={styles.container}>
       <View style={styles.entries}>
