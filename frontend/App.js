@@ -31,6 +31,8 @@ import AddExpense from "./src/Screens/ExpenseScreen/AddExpense";
 import AddCategory from "./src/Screens/ExpenseScreen/AddCategory";
 import { ContextProvider } from "./src/context/ContextProvider";
 import UserProfile from "./src/Screens/UserProfile/UserProfile";
+import SettingScreen from "./src/Screens/Setting/SettingScreen";
+import { PaperProvider } from "react-native-paper";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -82,6 +84,7 @@ function Main() {
             <Stack.Screen name="AddExpense" component={AddExpense} />
             <Stack.Screen name="AddCategory" component={AddCategory} />
             <Stack.Screen name="UserProfile" component={UserProfile} />
+            <Stack.Screen name="SettingScreen" component={SettingScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
@@ -92,11 +95,13 @@ function Main() {
 export default function App() {
   return (
     <ReduxProvider store={store}>
-      <ContextProvider>
-        <PersistGate loading={null} persistor={persistor}>
-          <Main />
-        </PersistGate>
-      </ContextProvider>
+      <PaperProvider>
+        <ContextProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <Main />
+          </PersistGate>
+        </ContextProvider>
+      </PaperProvider>
     </ReduxProvider>
   );
 }

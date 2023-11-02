@@ -23,8 +23,10 @@ import {
 import GradientButton from "../../Components/GradientButton";
 import AppBottomTab from "../../Components/AppBottomTab";
 import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from "@react-navigation/native";
 
 const UserProfile = () => {
+  const navigation = useNavigation();
   const [image, setImage] = useState(null);
 
   const handlePickImage = async () => {
@@ -71,7 +73,10 @@ const UserProfile = () => {
           <View style={styles.formContainer}>
             {/* User details  */}
             <View style={styles.formContent}>
-              <View style={styles.formMain}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("SettingScreen")}
+                style={styles.formMain}
+              >
                 <View style={styles.contentLeft}>
                   <MaterialCommunityIcons
                     name="account-edit"
@@ -82,7 +87,7 @@ const UserProfile = () => {
                 <View>
                   <Feather name="edit-3" style={styles.iconRight} />
                 </View>
-              </View>
+              </TouchableOpacity>
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
                   <FontAwesome name="phone" style={styles.iconLeft} />
