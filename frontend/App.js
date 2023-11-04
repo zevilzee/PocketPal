@@ -30,6 +30,13 @@ import ExpenseScreen from "./src/Screens/ExpenseScreen/ExpenseScreen";
 import AddExpense from "./src/Screens/ExpenseScreen/AddExpense";
 import AddCategory from "./src/Screens/ExpenseScreen/AddCategory";
 import { ContextProvider } from "./src/context/ContextProvider";
+import UserProfile from "./src/Screens/UserProfile/UserProfile";
+import SettingScreen from "./src/Screens/Setting/SettingScreen";
+import { PaperProvider } from "react-native-paper";
+import PrivacyPolicy from "./src/Components/PrivacyPolicy";
+import TermsConditions from "./src/Components/TermsConditions";
+import FinanceGoalScreen from "./src/Screens/FinanceGoal/FinanceGoalScreen";
+import AddNewGoal from "./src/Screens/FinanceGoal/AddNewGoal";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -59,7 +66,7 @@ function Main() {
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Intro"
+            initialRouteName="FinanceGoal"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Intro" component={IntroScreen} />
@@ -80,6 +87,12 @@ function Main() {
             <Stack.Screen name="Expense" component={ExpenseScreen} />
             <Stack.Screen name="AddExpense" component={AddExpense} />
             <Stack.Screen name="AddCategory" component={AddCategory} />
+            <Stack.Screen name="UserProfile" component={UserProfile} />
+            <Stack.Screen name="SettingScreen" component={SettingScreen} />
+            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+            <Stack.Screen name="TermsCondition" component={TermsConditions} />
+            <Stack.Screen name="FinanceGoal" component={FinanceGoalScreen} />
+            <Stack.Screen name="AddGoal" component={AddNewGoal} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
@@ -90,11 +103,13 @@ function Main() {
 export default function App() {
   return (
     <ReduxProvider store={store}>
-      <ContextProvider>
-        <PersistGate loading={null} persistor={persistor}>
-          <Main />
-        </PersistGate>
-      </ContextProvider>
+      <PaperProvider>
+        <ContextProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <Main />
+          </PersistGate>
+        </ContextProvider>
+      </PaperProvider>
     </ReduxProvider>
   );
 }
