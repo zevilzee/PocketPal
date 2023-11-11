@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import HeaderTitle from "../../Components/HeaderTitle";
 import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
@@ -8,6 +8,9 @@ import FinanaceGoalItemDetails from "../../Components/FinanaceGoalItemDetails";
 import BottomTab from "../../Components/BottomTab";
 import Icon from "../../../assets/add.png";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { useUserState } from "../../Slices/userSlice";
+import { BASE_URL } from "../../../CONSTANTS";
 
 const data = [
   {
@@ -43,13 +46,29 @@ const data = [
 ];
 
 const FinanceGoalScreen = () => {
+  const userState = useUserState();
   const navigation = useNavigation();
   const handleAddGoal = () => {
     navigation.navigate("AddGoal");
   };
+  console.log(userState?.id);
+  useEffect(() => {
+    const fetchFinance = async () => {
+      try {
+        const res = await axios.get(
+          `${BASE_URL}/finance/getFinance/${userState.id}`
+        );
+        console.log(res);
+      } catch (error) {
+        console.log(error, "error while fetching Finace");
+      }
+    };
+    fetchFinance();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <HeaderTitle title="FINANCIAL GOALS" />
+      <HeaderTitle title='FINANCIAL GOALS' />
 
       <View style={styles.contentContainer}>
         <SaveingPlanBalance />
@@ -65,7 +84,7 @@ const FinanceGoalScreen = () => {
 
         <View style={styles.bottomContainer}>
           <BottomTab
-            title="Create new bill"
+            title='Create new bill'
             image={Icon}
             onpress={handleAddGoal}
           />

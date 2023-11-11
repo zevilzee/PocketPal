@@ -9,6 +9,7 @@ import { formatCustomDate } from "../../Utiles/GetData";
 import HorizantalList from "../../Components/HorizantalList";
 import GradientButton from "../../Components/GradientButton";
 import axios from "axios";
+import { useToast } from "react-native-toast-notifications";
 // import { useUserState, useUserStateActions } from "../../Slices/userSlice";
 
 import { BASE_URL } from "../../../CONSTANTS";
@@ -46,8 +47,8 @@ const HowLongData = [
 const AddNewGoal = () => {
   const currentdate = new Date();
   const userState = useUserState();
-  console.log(userState.id);
 
+  const toast = useToast();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState("");
   const [centerSelected, setCenterSelected] = useState(true);
@@ -87,15 +88,34 @@ const AddNewGoal = () => {
         Savedamount,
         endDate,
         purpose,
+        user: userState.id,
       });
-
-      console.log(res?.data);
+      if (res.data) {
+        toast.show("New goal added successfully!", {
+          type: "success",
+          placement: "top",
+          duration: 4000,
+          offset: 30,
+          animationType: "slide-in",
+        });
+        setGoalamount("");
+        setSavedamount("");
+        setpurpose("");
+      }
+      console.log("New goal added successfully");
     } catch (error) {
-      console.log(error, "error creating new goal");
+      console.error("Error creating new goal:", error);
+      toast.show("Failed to add new goal. Please try again.", {
+        type: "danger",
+        placement: "top",
+        duration: 4000,
+        offset: 30,
+        animationType: "slide-in",
+      });
+      console.log(error, "Error creating new goal");
     }
   };
 
-  console.log(endDate);
   const handleAddGoal = (text) => {
     setGoalamount(text);
   };
@@ -105,7 +125,7 @@ const AddNewGoal = () => {
   const handlePurpose = (text) => {
     setpurpose(text);
   };
-  console.log(Savedamount, Goalamount);
+
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
       <HeaderTitle title='Add new goals' />
