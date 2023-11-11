@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
-
+import { useToast } from "react-native-toast-notifications";
 import { scale } from "react-native-size-matters";
 import { MaterialIcons } from "react-native-vector-icons";
 import HeaderTitle from "../../Components/HeaderTitle";
@@ -25,7 +25,7 @@ const AddExpense = () => {
   const navigation = useNavigation();
   const [modalVisibal, setmodalVisibal] = useState(false);
   const userStateActions = useUserStateActions();
-
+  const toast = useToast();
   const [selectedItem, setSelectedItem] = useState("");
   const [selected, setselected] = useState("");
   const [selectUnPaid, setselectUnPaid] = useState("");
@@ -38,7 +38,13 @@ const AddExpense = () => {
 
   const handleSave = () => {
     if (!name || !amount || !expenceCategory || !selected) {
-      Alert.alert("All fileds required");
+      toast.show("All fileds required", {
+        type: "danger",
+        placement: "top",
+        duration: 4000,
+        offset: 30,
+        animationType: "slide-in",
+      });
       return;
     }
     axios
@@ -51,7 +57,16 @@ const AddExpense = () => {
       })
       .then((res) => {
         console.log(res.data);
-        Alert.alert("Expense added successfully");
+        toast.show("Expense added successfully", {
+          type: "success",
+          placement: "top",
+          duration: 4000,
+          offset: 30,
+          animationType: "slide-in",
+        });
+        setname("");
+        setamount("");
+        setselected("");
         const newBalance = parseInt(userState.Balance) - parseInt(amount);
         useUserStateActions.setbalance(newBalance.toString());
       })
@@ -73,15 +88,15 @@ const AddExpense = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderTitle title="ADD NEW EXPENSE" />
+      <HeaderTitle title='ADD NEW EXPENSE' />
       <View style={styles.formContainer}>
         <View style={{ marginTop: scale(20) }}>
           <View style={textInputContainer}>
             <Text>$</Text>
             <TextInput
-              placeholder="Enter amount"
+              placeholder='Enter amount'
               style={styles.textInput}
-              keyboardType="number-pad"
+              keyboardType='number-pad'
               onChangeText={(text) => setamount(text)}
             />
           </View>
@@ -97,7 +112,7 @@ const AddExpense = () => {
               </View>
               <View>
                 <MaterialIcons
-                  name="keyboard-arrow-right"
+                  name='keyboard-arrow-right'
                   style={styles.icon}
                 />
               </View>
@@ -107,7 +122,7 @@ const AddExpense = () => {
           <View style={textInputContainer}>
             {/* <View style={styles.method}> */}
             <TextInput
-              placeholder="Enter Details"
+              placeholder='Enter Details'
               onChangeText={(text) => setname(text)}
               // style={styles.textInput}
             />
@@ -177,7 +192,7 @@ const AddExpense = () => {
           </View> */}
 
           <GradientButton
-            title="Save"
+            title='Save'
             onPress={handleSave}
             containerStyle={styles.gradientButton}
           />

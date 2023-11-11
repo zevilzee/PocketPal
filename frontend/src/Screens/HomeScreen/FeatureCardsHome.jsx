@@ -19,7 +19,9 @@ const FeatureCardsHome = () => {
   const handleExpense = () => {
     navigation.navigate("Expense");
   };
-  const handleGoal = () => {};
+  const handleGoal = () => {
+    navigation.navigate("FinanceGoal")
+  };
   const handleAnalytics = () => {};
   const handleNotifications = () => {};
   return (

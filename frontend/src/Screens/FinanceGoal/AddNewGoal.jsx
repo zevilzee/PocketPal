@@ -8,6 +8,11 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatCustomDate } from "../../Utiles/GetData";
 import HorizantalList from "../../Components/HorizantalList";
 import GradientButton from "../../Components/GradientButton";
+import axios from "axios";
+// import { useUserState, useUserStateActions } from "../../Slices/userSlice";
+
+import { BASE_URL } from "../../../CONSTANTS";
+import { useUserState } from "../../Slices/userSlice";
 
 const HowLongData = [
   {
@@ -20,31 +25,16 @@ const HowLongData = [
   },
 
   {
-    id: 4,
+    id: 3,
     title: "3 Month",
   },
   {
-    id: 5,
-    title: "4 Month",
-  },
-  {
     id: 6,
-    title: "5 Month",
-  },
-  {
-    id: 7,
     title: "6 Month",
   },
-  {
-    id: 8,
-    title: "7 Month",
-  },
+
   {
     id: 9,
-    title: "8 Month",
-  },
-  {
-    id: 10,
     title: "9 Month",
   },
   {
@@ -54,12 +44,20 @@ const HowLongData = [
 ];
 
 const AddNewGoal = () => {
+  const currentdate = new Date();
+  const userState = useUserState();
+  console.log(userState.id);
+
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState("");
   const [centerSelected, setCenterSelected] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [modalVisible, setmodalVisible] = useState(false);
   const [firstInput, setfirstInput] = useState();
+  const [Goalamount, setGoalamount] = useState("");
+  const [Savedamount, setSavedamount] = useState("");
+  const [purpose, setpurpose] = useState("");
+  const [endDate, setendDate] = useState(new Date());
 
   const [selectedItem, setSelectedItem] = useState("");
   const showDatePicker = () => {
@@ -82,25 +80,56 @@ const AddNewGoal = () => {
     PickedDate = formatCustomDate(date);
   }
 
+  const handleNewGoal = async () => {
+    try {
+      const res = await axios.post(`${BASE_URL}/finance/create-finance`, {
+        Goalamount,
+        Savedamount,
+        endDate,
+        purpose,
+      });
+
+      console.log(res?.data);
+    } catch (error) {
+      console.log(error, "error creating new goal");
+    }
+  };
+
+  console.log(endDate);
+  const handleAddGoal = (text) => {
+    setGoalamount(text);
+  };
+  const handleSavedAmount = (text) => {
+    setSavedamount(text);
+  };
+  const handlePurpose = (text) => {
+    setpurpose(text);
+  };
+  console.log(Savedamount, Goalamount);
   return (
     <View style={{ flex: 1, backgroundColor: Color.White }}>
-      <HeaderTitle title="Add new goals" />
+      <HeaderTitle title='Add new goals' />
       <View style={styles.contentContainer}>
         <View style={styles.inputCard}>
-          <AddGoalInput title="Add Saving goals" placeholder="Enter amount" />
-        </View>
-
-        <View style={styles.inputCard}>
           <AddGoalInput
-            title="How much to save monthly?"
-            placeholder="Enter amount"
+            title='Add Saving goals'
+            placeholder='Enter amount'
+            handleChange={handleAddGoal}
           />
         </View>
 
         <View style={styles.inputCard}>
           <AddGoalInput
-            title="For how long?"
-            placeholder="Enter period duration"
+            title='How much to save monthly?'
+            placeholder='Enter amount'
+            handleChange={handleSavedAmount}
+          />
+        </View>
+
+        <View style={styles.inputCard}>
+          <AddGoalInput
+            title='For how long?'
+            placeholder='Enter period duration'
             handleDatePicker={showDatePicker}
             value={PickedDate}
           />
@@ -122,8 +151,9 @@ const AddNewGoal = () => {
 
         <View style={styles.inputCard}>
           <AddGoalInput
-            title="Purpose of saving?"
-            placeholder="Enter reason of saving"
+            title='Purpose of saving?'
+            placeholder='Enter reason of saving'
+            handleChange={handlePurpose}
           />
         </View>
         <View
@@ -134,15 +164,15 @@ const AddNewGoal = () => {
           }}
         >
           <GradientButton
-            title="Save Goal"
-            // onPress={() => handleVerificationCode(recaptchaVerifier)}
+            title='Save Goal'
+            onPress={handleNewGoal}
             containerStyle={styles.gradientButton}
           />
         </View>
 
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
-          mode="date"
+          mode='datetime'
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />

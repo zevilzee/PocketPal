@@ -22,8 +22,10 @@ import axios from "axios";
 import { BASE_URL } from "../../../../CONSTANTS";
 import { useUserState, useUserStateActions } from "../../../Slices/userSlice";
 import { useRoute } from "@react-navigation/native";
+import { useToast } from "react-native-toast-notifications";
 
 const CashIn = () => {
+  const toast = useToast();
   const userStateActions = useUserStateActions();
   const userState = useUserState();
   const [name, setname] = useState("");
@@ -39,7 +41,14 @@ const CashIn = () => {
         amount: `${amount}`,
       })
       .then((res) => {
-        Alert.alert("Income added successfully");
+        toast.show("Income added successfully", {
+          type: "success",
+          placement: "top",
+          duration: 4000,
+          offset: 30,
+          animationType: "slide-in ",
+        });
+        // Alert.alert("Income added successfully");
         setname("");
         setamount("");
         setSelectedItem("");
@@ -47,21 +56,28 @@ const CashIn = () => {
         userStateActions.setBalance(newBalance.toString());
       })
       .catch((e) => {
+        toast.show("Failed to add income. Please try again.", {
+          type: "danger",
+          placement: "top",
+          duration: 4000,
+          offset: 30,
+          animationType: "slide-in",
+        });
         console.log(e);
       });
   };
 
   return (
     <View style={styles.container}>
-      <HeaderTitle title="Income" />
+      <HeaderTitle title='Income' />
       <View style={styles.formContainer}>
         <View style={{ marginTop: scale(20) }}>
           <View style={textInputContainer}>
             <Text>$</Text>
             <TextInput
-              placeholder="Enter amount"
+              placeholder='Enter amount'
               style={styles.textInput}
-              keyboardType="number-pad"
+              keyboardType='number-pad'
               value={amount}
               onChangeText={(text) => setamount(text)}
             />
@@ -74,7 +90,7 @@ const CashIn = () => {
             >
               <View style={styles.addContainer}>
                 <AntDesign
-                  name="plus"
+                  name='plus'
                   style={{
                     ...styles.icon,
                     fontSize: scale(13),
@@ -89,7 +105,7 @@ const CashIn = () => {
               </View>
               <View>
                 <MaterialIcons
-                  name="keyboard-arrow-right"
+                  name='keyboard-arrow-right'
                   style={styles.icon}
                 />
               </View>
@@ -99,7 +115,7 @@ const CashIn = () => {
           <View style={textInputContainer}>
             {/* <View style={styles.method}> */}
             <TextInput
-              placeholder="Enter Details"
+              placeholder='Enter Details'
               value={name}
               onChangeText={(text) => setname(text)}
               // style={styles.textInput}
@@ -134,7 +150,7 @@ const CashIn = () => {
           </View> */}
 
           <GradientButton
-            title="Save"
+            title='Save'
             onPress={handleSave}
             containerStyle={styles.gradientButton}
           />

@@ -26,12 +26,12 @@ const AddGoalInput = ({
         <TextInput
           placeholder={placeholder}
           value={value}
-          onChange={handleChange}
+          onChangeText={(e) => handleChange(e)}
         />
 
         {title === "For how long?" && (
           <TouchableOpacity onPress={handleDatePicker}>
-            <FontAwesome name="calendar" style={styles.calendericon} />
+            <FontAwesome name='calendar' style={styles.calendericon} />
           </TouchableOpacity>
         )}
       </View>

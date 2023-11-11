@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
+import { ToastProvider } from "react-native-toast-notifications";
 import {
   useUserState,
   initialState as initialUserState,
@@ -66,33 +67,33 @@ function Main() {
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="FinanceGoal"
+            initialRouteName={initialRouteName}
             screenOptions={{ headerShown: false }}
           >
-            <Stack.Screen name="Intro" component={IntroScreen} />
+            <Stack.Screen name='Intro' component={IntroScreen} />
             <Stack.Screen
-              name="LoginOrSignUp"
+              name='LoginOrSignUp'
               component={LoginOrSignUpScreen}
             />
-            <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="Otp" component={OtpScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Forgot" component={ForgotPass} />
-            <Stack.Screen name="verifyEmail" component={VerifyEmail} />
-            <Stack.Screen name="ResetPass" component={ResetPassword} />
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Income" component={IncomeScreen} />
-            <Stack.Screen name="History" component={HistoryScreen} />
-            <Stack.Screen name="CashIn" component={CashIn} />
-            <Stack.Screen name="Expense" component={ExpenseScreen} />
-            <Stack.Screen name="AddExpense" component={AddExpense} />
-            <Stack.Screen name="AddCategory" component={AddCategory} />
-            <Stack.Screen name="UserProfile" component={UserProfile} />
-            <Stack.Screen name="SettingScreen" component={SettingScreen} />
-            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-            <Stack.Screen name="TermsCondition" component={TermsConditions} />
-            <Stack.Screen name="FinanceGoal" component={FinanceGoalScreen} />
-            <Stack.Screen name="AddGoal" component={AddNewGoal} />
+            <Stack.Screen name='SignUp' component={SignUp} />
+            <Stack.Screen name='Otp' component={OtpScreen} />
+            <Stack.Screen name='Login' component={LoginScreen} />
+            <Stack.Screen name='Forgot' component={ForgotPass} />
+            <Stack.Screen name='verifyEmail' component={VerifyEmail} />
+            <Stack.Screen name='ResetPass' component={ResetPassword} />
+            <Stack.Screen name='Home' component={HomeScreen} />
+            <Stack.Screen name='Income' component={IncomeScreen} />
+            <Stack.Screen name='History' component={HistoryScreen} />
+            <Stack.Screen name='CashIn' component={CashIn} />
+            <Stack.Screen name='Expense' component={ExpenseScreen} />
+            <Stack.Screen name='AddExpense' component={AddExpense} />
+            <Stack.Screen name='AddCategory' component={AddCategory} />
+            <Stack.Screen name='UserProfile' component={UserProfile} />
+            <Stack.Screen name='SettingScreen' component={SettingScreen} />
+            <Stack.Screen name='PrivacyPolicy' component={PrivacyPolicy} />
+            <Stack.Screen name='TermsCondition' component={TermsConditions} />
+            <Stack.Screen name='FinanceGoal' component={FinanceGoalScreen} />
+            <Stack.Screen name='AddGoal' component={AddNewGoal} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
@@ -105,9 +106,11 @@ export default function App() {
     <ReduxProvider store={store}>
       <PaperProvider>
         <ContextProvider>
-          <PersistGate loading={null} persistor={persistor}>
-            <Main />
-          </PersistGate>
+          <ToastProvider>
+            <PersistGate loading={null} persistor={persistor}>
+              <Main />
+            </PersistGate>
+          </ToastProvider>
         </ContextProvider>
       </PaperProvider>
     </ReduxProvider>
