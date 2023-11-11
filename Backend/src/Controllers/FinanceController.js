@@ -1,4 +1,5 @@
 import FinanceSchema from "../Models/FinanceModel.js";
+
 export const GetFinanceHistory = async (req, res, next) => {};
 
 export const GetFinance = async (req, res, next) => {
@@ -25,11 +26,11 @@ export const GetFinance = async (req, res, next) => {
 
 export const createFinance = async (req, res, next) => {
   try {
-    const finance = await FinanceSchema.create({
-      ...req.body,
-    });
-    res.send({ status: 500, message: finance });
+    const finance = await FinanceSchema.create(req.body);
+
+    res.send({ status: 200, message: finance });
   } catch (e) {
+    console.log(e);
     res.send({ status: 500, message: "Internal Server Error" });
   }
 };
@@ -47,7 +48,7 @@ export const updateFinance = async (req, res, next) => {
         new: true,
       }
     );
-    res.send({ status: 500, message: finance });
+    res.send({ status: 200, message: finance });
   } catch (e) {
     res.send({ status: 500, message: "Internal Server Error" });
   }
@@ -58,7 +59,7 @@ export const deleteFinance = async (req, res, next) => {
     const finance = await FinanceSchema.findByIdAnDelete({
       _id: req.params.id,
     });
-    res.send({ status: 500, message: "Finance Deleted Successfully" });
+    res.send({ status: 200, message: "Finance Deleted Successfully" });
   } catch (e) {
     res.send({ status: 500, message: "Internal Server Error" });
   }
