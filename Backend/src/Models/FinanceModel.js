@@ -1,8 +1,8 @@
 import mongoose, { Mongoose } from "mongoose";
 
 const FinanceSchema = new mongoose.Schema({
-  Goalamount: { type: Number, required: true },
-  Savedamount: { type: Number, required: true },
+  Goalamount: { type: String, required: true },
+  Savedamount: { type: String, required: true },
   startDate: {
     type: Date,
     default: Date.now,
@@ -25,4 +25,4 @@ const FinanceSchema = new mongoose.Schema({
 
 const finance = mongoose.model("Finance", FinanceSchema);
 
-export default FinanceSchema;
+export default finance;
