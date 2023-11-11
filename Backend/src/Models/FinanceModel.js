@@ -23,6 +23,6 @@ const FinanceSchema = new mongoose.Schema({
   },
 });
 
-const Income = mongoose.model("Finance", IncomeSchema);
+const finance = mongoose.model("Finance", FinanceSchema);
 
 export default FinanceSchema;

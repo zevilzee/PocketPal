@@ -1,5 +1,4 @@
-import FinanceSchema from "../Models/FinanceModel";
-
+import FinanceSchema from "../Models/FinanceModel.js";
 export const GetFinanceHistory = async (req, res, next) => {};
 
 export const GetFinance = async (req, res, next) => {
