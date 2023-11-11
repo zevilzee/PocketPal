@@ -4,7 +4,7 @@ export const GetFinanceHistory = async (req, res, next) => {};
 
 export const GetFinance = async (req, res, next) => {
   try {
-    const finances = await FinanceSchema.find({ _id: req.params.id });
+    const finances = await FinanceSchema.find({user: req.params.id });
     let newFinances = finances.map((item) => {
       const percentageSaved = (item.savedAmount / item.goalAmount) * 100;
       const date = new Date();
