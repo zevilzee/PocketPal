@@ -4,9 +4,9 @@ export const GetFinanceHistory = async (req, res, next) => {};
 
 export const GetFinance = async (req, res, next) => {
   try {
-    const finances = await FinanceSchema.find({user: req.params.id });
+    const finances = await FinanceSchema.find({ user: req.params.id });
     let newFinances = finances.map((item) => {
-      const percentageSaved = (item.savedAmount / item.goalAmount) * 100;
+      const percentageSaved = (item.Savedamount / item.Goalamount) * 100;
       const date = new Date();
       let status = "";
       if (item.endDate < date) {
@@ -18,7 +18,7 @@ export const GetFinance = async (req, res, next) => {
         status: status,
       };
     });
-    res.send({ status: 200, data: newFinances });
+    res.send({ status: 200, data: finances });
   } catch (e) {
     console.log(e);
   }
