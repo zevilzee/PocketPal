@@ -5,7 +5,7 @@ import { AntDesign } from "react-native-vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import Color from "../../assets/colors/Color";
 
-const SaveingPlanBalance = ({ balance }) => {
+const SaveingPlanBalance = ({ totalValue, loading }) => {
   return (
     <View>
       <LinearGradient
@@ -22,7 +22,7 @@ const SaveingPlanBalance = ({ balance }) => {
           <View style={styles.centerContainer}>
             <Text style={styles.title}>Personal Saving plan</Text>
             <Text style={styles.subTitle}>Target Saving</Text>
-            <Text style={styles.balance}>$5000.00</Text>
+            {!loading && <Text style={styles.balance}>${totalValue}</Text>}
           </View>
           <Image
             source={require("../../assets/half.png")}

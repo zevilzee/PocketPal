@@ -48,12 +48,11 @@ const HowLongData = [
   },
 ];
 
-const AddNewGoal = () => {
+const EditGoal = () => {
   const currentdate = new Date();
   const userState = useUserState();
   const route = useRoute();
   const data = route?.params?.data;
-  console.log(data);
 
   const toast = useToast();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -63,9 +62,10 @@ const AddNewGoal = () => {
   const [firstInput, setfirstInput] = useState();
   const [Goalamount, setGoalamount] = useState(data?.Goalamount);
   const [Savedamount, setSavedamount] = useState(data?.Savedamount);
+  const [isSaved, setisSaved] = useState("");
   const [purpose, setpurpose] = useState(data?.purpose);
-  const [endDate, setendDate] = useState(new Date());
   const [PickedDate, setPickedDate] = useState("");
+  const [endDate, setendDate] = useState(null);
 
   const [selectedItem, setSelectedItem] = useState("");
   const showDatePicker = () => {
@@ -86,32 +86,34 @@ const AddNewGoal = () => {
       setPickedDate(Date);
     }
   };
-
-  const handleNewGoal = async () => {
+  const handleEditGoal = async () => {
+    const savedAmount = Number(isSaved) + Number(Savedamount);
+    console.log(savedAmount);
     try {
-      const res = await axios.post(`${BASE_URL}/finance/create-finance`, {
-        Goalamount,
-        Savedamount,
-        endDate,
-        purpose,
-        user: userState.id,
-      });
+      const res = await axios.patch(
+        `${BASE_URL}/finance/update-finance/${data?._id}`,
+        {
+          Goalamount,
+          Savedamount: savedAmount,
+          endDate: data?.endDate,
+          purpose,
+          user: userState.id,
+        }
+      );
       if (res.data) {
-        toast.show("New goal added successfully!", {
+        toast.show("Goal edit successfully!", {
           type: "success",
           placement: "top",
           duration: 4000,
           offset: 30,
           animationType: "slide-in",
         });
-        setGoalamount("");
-        setSavedamount("");
-        setpurpose("");
       }
       console.log("New goal added successfully");
+      console.log(res, "updated res");
     } catch (error) {
       console.error("Error creating new goal:", error);
-      toast.show("Failed to add new goal. Please try again.", {
+      toast.show("Failed to edit goal. Please try again.", {
         type: "danger",
         placement: "top",
         duration: 4000,
@@ -122,11 +124,13 @@ const AddNewGoal = () => {
     }
   };
 
+  console.log(isSaved, "is saved");
+
   const handleAddGoal = (text) => {
     setGoalamount(text);
   };
   const handleSavedAmount = (text) => {
-    setSavedamount(text);
+    setisSaved(text);
   };
   const handlePurpose = (text) => {
     setpurpose(text);
@@ -137,9 +141,9 @@ const AddNewGoal = () => {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "height" : null}
     >
-      <ScrollView>
-        <View style={{ flex: 1, backgroundColor: Color.White }}>
-          <HeaderTitle title='Add new goals' />
+      <View style={{ flex: 1, backgroundColor: Color.White }}>
+        <HeaderTitle title='Edit goals' />
+        <ScrollView>
           <View style={styles.contentContainer}>
             <View style={styles.inputCard}>
               <AddGoalInput
@@ -186,6 +190,15 @@ const AddNewGoal = () => {
 
             <View style={styles.inputCard}>
               <AddGoalInput
+                title='Amount Saved'
+                placeholder='Enter how much amount saved until now?'
+                handleChange={handleSavedAmount}
+                value={isSaved}
+              />
+            </View>
+
+            <View style={styles.inputCard}>
+              <AddGoalInput
                 title='Purpose of saving?'
                 placeholder='Enter reason of saving'
                 handleChange={handlePurpose}
@@ -201,7 +214,7 @@ const AddNewGoal = () => {
             >
               <GradientButton
                 title='Save Goal'
-                onPress={handleNewGoal}
+                onPress={handleEditGoal}
                 containerStyle={styles.gradientButton}
               />
             </View>
@@ -213,13 +226,13 @@ const AddNewGoal = () => {
               onCancel={hideDatePicker}
             />
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 };
 
-export default AddNewGoal;
+export default EditGoal;
 
 const styles = StyleSheet.create({
   contentContainer: {

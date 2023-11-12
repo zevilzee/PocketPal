@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { scale } from "react-native-size-matters";
 import Color from "../../assets/colors/Color";
 import * as Progress from "react-native-progress";
+import { Feather } from "react-native-vector-icons";
+import { useNavigation } from "@react-navigation/core";
 
 const FinanaceGoalItemDetails = ({ data }) => {
+  const navigation = useNavigation();
   const completionPercentage = Math.floor(
-    (data?.savedAmount / data?.totalAmount) * 100
+    (data?.Savedamount / data?.Goalamount) * 100
   );
 
   const getColorForPercentage = (percentage) => {
@@ -21,21 +24,31 @@ const FinanaceGoalItemDetails = ({ data }) => {
 
   const progressBarColor = getColorForPercentage(completionPercentage);
 
+  const handleEditnavigation = (data) => {
+    console.log(data);
+    navigation.navigate("EditGoal", { data });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.entries}>
         <View>
           <View style={styles.contentContainer}>
-            <Text>{data?.itemName}</Text>
-            <Text>{data?.itemName}</Text>
+            <Text>{data?.purpose}</Text>
+            <TouchableOpacity
+              style={styles.editIcon}
+              onPress={() => handleEditnavigation(data)}
+            >
+              <Feather name='edit' style={styles.icon} />
+            </TouchableOpacity>
           </View>
           <View style={styles.contentContainer}>
             <Text>Goal Amount</Text>
-            <Text>$500</Text>
+            <Text>${data?.Goalamount}</Text>
           </View>
           <View style={styles.contentContainer}>
             <Text>Amount Saved</Text>
-            <Text>$700</Text>
+            <Text>${data?.Savedamount}</Text>
           </View>
           <View style={styles.contentContainer}>
             <Progress.Bar
@@ -75,5 +88,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: scale(20),
     paddingVertical: scale(4),
+  },
+  editIcon: {
+    paddingHorizontal: scale(10),
+    paddingVertical: scale(2),
+  },
+  icon: {
+    fontSize: scale(16),
   },
 });

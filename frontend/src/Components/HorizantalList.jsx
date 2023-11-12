@@ -11,6 +11,7 @@ import { moderateScale, s, verticalScale } from "react-native-size-matters";
 
 import { AntDesign } from "react-native-vector-icons";
 import Color from "../../assets/colors/Color";
+import { formatCustomDate } from "../Utiles/GetData";
 
 const HorizantalList = ({
   items,
@@ -20,12 +21,21 @@ const HorizantalList = ({
   centerSelected,
   setCenterSelected,
   setSelectedIndex,
+  PickedDate,
+  setendDate,
 }) => {
   const flatListRef = useRef(null);
   const handleItemPress = (item, index) => {
     setSelectedItem(item.title);
     setCenterSelected(true);
     setSelectedIndex(index);
+    console.log(item);
+    const endDate = new Date();
+    endDate.setMonth(endDate.getMonth() + item.id);
+    let pickedDate = formatCustomDate(endDate);
+    setendDate(endDate);
+    PickedDate(pickedDate);
+
     flatListRef.current.scrollToIndex({
       animated: true,
       index: index,
@@ -55,7 +65,7 @@ const HorizantalList = ({
           selectedItem === item.title && styles.selectedItemText,
         ]}
       >
-        {item.title}
+        {item.title} Month
       </Text>
     </TouchableOpacity>
   );

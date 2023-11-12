@@ -1,5 +1,11 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
 import HeaderTitle from "../../Components/HeaderTitle";
 import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
@@ -11,75 +17,118 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { useUserState } from "../../Slices/userSlice";
 import { BASE_URL } from "../../../CONSTANTS";
-
-const data = [
-  {
-    itemName: "Item 1",
-    totalAmount: 1000,
-    savedAmount: 900,
-  },
-  {
-    itemName: "Item 2",
-    totalAmount: 2000,
-    savedAmount: 550,
-  },
-  {
-    itemName: "Item 3",
-    totalAmount: 1500,
-    savedAmount: 300,
-  },
-  {
-    itemName: "Item 3",
-    totalAmount: 1500,
-    savedAmount: 600,
-  },
-  {
-    itemName: "Item 5",
-    totalAmount: 1500,
-    savedAmount: 300,
-  },
-  {
-    itemName: "Item 6",
-    totalAmount: 1500,
-    savedAmount: 300,
-  },
-];
+import { useFocusEffect } from "@react-navigation/native";
+// const data = [
+//   {
+//     itemName: "Item 1",
+//     totalAmount: 1000,
+//     savedAmount: 900,
+//   },
+//   {
+//     itemName: "Item 2",
+//     totalAmount: 2000,
+//     savedAmount: 550,
+//   },
+//   {
+//     itemName: "Item 3",
+//     totalAmount: 1500,
+//     savedAmount: 300,
+//   },
+//   {
+//     itemName: "Item 3",
+//     totalAmount: 1500,
+//     savedAmount: 600,
+//   },
+//   {
+//     itemName: "Item 5",
+//     totalAmount: 1500,
+//     savedAmount: 300,
+//   },
+//   {
+//     itemName: "Item 6",
+//     totalAmount: 1500,
+//     savedAmount: 300,
+//   },
+// ];
 
 const FinanceGoalScreen = () => {
   const userState = useUserState();
   const navigation = useNavigation();
+  const [data, setdata] = useState([]);
+  const [totalValue, settotalValue] = useState(null);
+  const [loading, setloading] = useState(false);
   const handleAddGoal = () => {
     navigation.navigate("AddGoal");
   };
-  console.log(userState?.id);
-  useEffect(() => {
-    const fetchFinance = async () => {
-      try {
-        const res = await axios.get(
-          `${BASE_URL}/finance/getFinance/${userState.id}`
-        );
-        console.log(res);
-      } catch (error) {
-        console.log(error, "error while fetching Finace");
-      }
-    };
-    fetchFinance();
-  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      let isMounted = true;
+
+      const fetchFinance = async () => {
+        setloading(true);
+        try {
+          const res = await axios.get(
+            `${BASE_URL}/finance/getFinance/${userState.id}`
+          );
+
+          if (isMounted) {
+            const target = res?.data?.data?.map((item) =>
+              Number(item?.Goalamount)
+            );
+            const totalValue = target.reduce(
+              (acc, currentValue) => acc + currentValue,
+              0
+            );
+
+            console.log(totalValue);
+            setdata(res?.data?.data);
+            settotalValue(totalValue);
+            setloading(false);
+          }
+        } catch (error) {
+          console.log(error, "error while fetching Finance");
+          if (isMounted) {
+            setloading(false);
+          }
+        }
+      };
+
+      fetchFinance();
+
+      return () => {
+        isMounted = false;
+      };
+    }, [userState.id])
+  );
 
   return (
     <View style={styles.container}>
       <HeaderTitle title='FINANCIAL GOALS' />
 
       <View style={styles.contentContainer}>
-        <SaveingPlanBalance />
+        <SaveingPlanBalance loading={loading} totalValue={totalValue} />
 
         <View style={styles.goalsList}>
           <Text style={styles.title}>Saving goals</Text>
-          <FlatList
-            data={data}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => <FinanaceGoalItemDetails data={item} />}
-          />
+          {loading ? (
+            <View
+              style={{
+                flex: 1,
+
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ActivityIndicator size='large' color={Color.Blue} />
+            </View>
+          ) : (
+            <FlatList
+              data={data}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => <FinanaceGoalItemDetails data={item} />}
+            />
+          )}
         </View>
 
         <View style={styles.bottomContainer}>

@@ -42,7 +42,7 @@ export const updateFinance = async (req, res, next) => {
         _id: req.params.id,
       },
       {
-        ...req.body.data,
+        ...req.body,
       },
       {
         new: true,
