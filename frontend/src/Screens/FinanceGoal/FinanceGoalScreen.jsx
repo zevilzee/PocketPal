@@ -15,7 +15,7 @@ import BottomTab from "../../Components/BottomTab";
 import Icon from "../../../assets/add.png";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { useUserState } from "../../Slices/userSlice";
+import { useUserState, useUserStateActions } from "../../Slices/userSlice";
 import { BASE_URL } from "../../../CONSTANTS";
 import { useFocusEffect } from "@react-navigation/native";
 // const data = [
@@ -53,6 +53,8 @@ import { useFocusEffect } from "@react-navigation/native";
 
 const FinanceGoalScreen = () => {
   const userState = useUserState();
+  const userActions = useUserStateActions();
+
   const navigation = useNavigation();
   const [data, setdata] = useState([]);
   const [totalValue, settotalValue] = useState(null);
@@ -81,9 +83,10 @@ const FinanceGoalScreen = () => {
               0
             );
 
-            console.log(totalValue);
             setdata(res?.data?.data);
             settotalValue(totalValue);
+            userActions.setsaveingPlan(totalValue);
+
             setloading(false);
           }
         } catch (error) {

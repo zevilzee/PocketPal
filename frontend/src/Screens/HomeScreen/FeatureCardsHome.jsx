@@ -20,28 +20,30 @@ const FeatureCardsHome = () => {
     navigation.navigate("Expense");
   };
   const handleGoal = () => {
-    navigation.navigate("FinanceGoal")
+    navigation.navigate("FinanceGoal");
   };
-  const handleAnalytics = () => {};
+  const handleAnalytics = () => {
+    navigation.navigate("Analytics");
+  };
   const handleNotifications = () => {};
   return (
     <View>
       <View style={styles.topFeature}>
         <FeaturesCard
-          title="Income"
+          title='Income'
           image={money}
           style={"#EBF2FA"}
           onpress={handleIncome}
         />
         <FeaturesCard
-          title="Expense"
+          title='Expense'
           image={bill}
           style={"#FDDCAE"}
           onpress={handleExpense}
         />
 
         <FeaturesCard
-          title="Financial Goal"
+          title='Financial Goal'
           image={goal}
           style={"#DDFFDF"}
           onpress={handleGoal}
@@ -49,14 +51,14 @@ const FeatureCardsHome = () => {
       </View>
       <View style={{ ...styles.topFeature, marginTop: scale(17) }}>
         <FeaturesCard
-          title="Analytics and Visualization"
+          title='Analytics and Visualization'
           image={analytics}
           onpress={handleAnalytics}
           style={"#DDEDED"}
         />
 
         <FeaturesCard
-          title="Notifications"
+          title='Notifications'
           image={notification}
           style={"#FFE3F9"}
           onpress={handleNotifications}

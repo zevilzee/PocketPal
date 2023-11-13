@@ -39,6 +39,7 @@ import TermsConditions from "./src/Components/TermsConditions";
 import FinanceGoalScreen from "./src/Screens/FinanceGoal/FinanceGoalScreen";
 import AddNewGoal from "./src/Screens/FinanceGoal/AddNewGoal";
 import EditGoal from "./src/Screens/FinanceGoal/EditGoal";
+import AnalyticsScreen from "./src/Screens/Analytics/AnalyticsScreen";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -96,6 +97,7 @@ function Main() {
             <Stack.Screen name='FinanceGoal' component={FinanceGoalScreen} />
             <Stack.Screen name='AddGoal' component={AddNewGoal} />
             <Stack.Screen name='EditGoal' component={EditGoal} />
+            <Stack.Screen name='Analytics' component={AnalyticsScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

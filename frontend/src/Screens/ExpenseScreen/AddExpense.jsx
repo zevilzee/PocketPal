@@ -67,8 +67,6 @@ const AddExpense = () => {
         setname("");
         setamount("");
         setselected("");
-        const newBalance = parseInt(userState.Balance) - parseInt(amount);
-        useUserStateActions.setbalance(newBalance.toString());
       })
 
       .catch((e) => {

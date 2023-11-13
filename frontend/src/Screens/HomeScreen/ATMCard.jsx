@@ -7,6 +7,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useUserState } from "../../Slices/userSlice";
 
 const ATMCard = ({ balance }) => {
+  const userState = useUserState();
+  const totalBalce = userState?.totalIncome - userState?.totalExpence;
+
   return (
     // <ImageBackground
     //   style={styles.imageBg}
@@ -34,11 +37,11 @@ const ATMCard = ({ balance }) => {
         <View style={styles.contentContainer}>
           <View>
             <Text style={styles.total}>Total Balance</Text>
-            <Text style={styles.amount}>${balance}</Text>
+            <Text style={styles.amount}>${totalBalce}</Text>
           </View>
           <View>
             <Text style={styles.spent}>Spent money</Text>
-            <Text style={styles.amountSpend}>$45,000</Text>
+            <Text style={styles.amountSpend}>${userState?.totalExpence}</Text>
           </View>
 
           <Image

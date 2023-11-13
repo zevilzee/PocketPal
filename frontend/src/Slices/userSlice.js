@@ -12,7 +12,10 @@ export const initialState = {
   balance: null,
   city: null,
   IncomeType: null,
-  ExpenseCategory:null,
+  ExpenseCategory: null,
+  totalIncome: null,
+  totalExpence: null,
+  saveingPlan: null,
 };
 
 export const userSlice = createSlice({
@@ -22,7 +25,7 @@ export const userSlice = createSlice({
     resetState: () => {
       return initialState;
     },
-    setBalance: (state,action) =>{
+    setBalance: (state, action) => {
       state.balance = action.payload.balance;
     },
     setUser: (state, action) => {
@@ -35,7 +38,7 @@ export const userSlice = createSlice({
       state.country = action.payload.country;
       state.balance = action.payload.balance;
       state.city = action.payload.city;
-      state.IncomeType= action.payload.IncomeType;
+      state.IncomeType = action.payload.IncomeType;
       state.ExpenseCategory = action.payload.ExpenseCategory;
     },
     setfullName: (state, action) => {
@@ -49,6 +52,15 @@ export const userSlice = createSlice({
     },
     settoken: (state, action) => {
       state.token = action.payload;
+    },
+    settotalIncome: (state, action) => {
+      state.totalIncome = action.payload;
+    },
+    settotalExpence: (state, actions) => {
+      state.totalExpence = actions.payload;
+    },
+    setsaveingPlan: (state, actions) => {
+      state.saveingPlan = actions.payload;
     },
   },
 });
