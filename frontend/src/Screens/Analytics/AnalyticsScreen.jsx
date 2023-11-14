@@ -126,7 +126,7 @@ const AnalyticsScreen = () => {
               <View>
                 <Progress.Bar
                   progress={expencePercentage / 100}
-                  color={progressBarColor}
+                  color='green'
                   width={290}
                 />
               </View>
