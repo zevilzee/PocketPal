@@ -9,7 +9,7 @@ import { BASE_URL } from "../../CONSTANTS";
 import IncomeDetails from "../Screens/IncomeScreen/IncomeDetails";
 import Color from "../../assets/colors/Color";
 
-const IncomeDetailsGraph = () => {
+const IncomeDetailsGraph = ({ incomeDetails }) => {
   const navigation = useNavigation();
   const userState = useUserState();
 
@@ -64,6 +64,10 @@ const IncomeDetailsGraph = () => {
   const todayIncome = groupedExpenseData.filter(
     (item) => item?.timestamp === currentDate
   );
+  // console.log(todayIncome);
+  useEffect(() => {
+    incomeDetails(todayIncome);
+  }, [loading]);
 
   return (
     <View style={styles.container}>

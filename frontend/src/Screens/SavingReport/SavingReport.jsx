@@ -13,6 +13,7 @@ import { formatCustomDate } from "../../Utiles/GetData";
 import { CustomDateYear } from "../../Utiles/GetDateYear";
 import { CustomDateWithoutYear } from "../../Utiles/GetDateName";
 import IncomeDetailsGraph from "../../Components/IncomeDetailsGraph";
+import SaveingReportDetails from "../../Components/SaveingReportDetails";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -25,7 +26,7 @@ const chartConfig = {
   verticalLabelRotation: 30, // Add vertical labels on Y-axis
 };
 
-const IncomeReport = () => {
+const SavingReport = () => {
   const currentDate = new Date();
   const dateNow = CustomDateWithoutYear(currentDate);
   const userState = useUserState();
@@ -33,20 +34,21 @@ const IncomeReport = () => {
   const [loading, setLoading] = useState(true);
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [selectedDuration, setselectedDuration] = useState("Day");
-  const [incomeDetails, setincomeDetails] = useState([]);
+  const [incomeDetails, setincomeDetails] = useState("");
 
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        `${BASE_URL}/income/getIncome/${userState.id}`,
+        `${BASE_URL}/finance/getFinance/${userState.id}`,
+
         {
           headers: {
             "auth-token": userState.token,
           },
         }
       );
-      const data = res?.data;
-      const amounts = data.map((item) => item?.amount);
+      const data = res?.data?.data;
+      const amounts = data.map((item) => Number(item?.Goalamount));
       setAmount(amounts);
     } catch (error) {
       console.log(error);
@@ -80,9 +82,11 @@ const IncomeReport = () => {
       },
     ],
   };
+
+  console.log(incomeDetails);
   return (
     <View style={styles.container}>
-      <HeaderTitle title='Income Report' />
+      <HeaderTitle title='Saving Report' />
       <ScrollView style={styles.contentContainer}>
         {!loading && (
           <>
@@ -145,10 +149,8 @@ const IncomeReport = () => {
 
             <View style={styles.todayIncom}>
               <View style={styles.currentIncome}>
-                <Text style={styles.incomTitle}>Today Income</Text>
-                <Text style={styles.incomAmount}>
-                  ${incomeDetails[0]?.totalAmount}
-                </Text>
+                <Text style={styles.incomTitle}>Today Saving</Text>
+                <Text style={styles.incomAmount}>${incomeDetails}</Text>
               </View>
               <View>
                 <TouchableOpacity style={styles.currentDate}>
@@ -165,26 +167,14 @@ const IncomeReport = () => {
               onDataPointClick={handleDataPointClick}
               bezier
             />
-
-            <View>
-              <Text
-                style={{
-                  ...styles.incomAmount,
-                  alignSelf: "center",
-                  fontSize: scale(16),
-                }}
-              >
-                Income Details
-              </Text>
-              <IncomeDetailsGraph incomeDetails={setincomeDetails} />
-            </View>
             {selectedPoint !== null && (
-              <View style={[styles.selectedValueContainer]}>
-                <Text style={styles.selectedValue}>
-                  Selected Value: {selectedPoint.value}
-                </Text>
+              <View>
+                <Text>{selectedPoint.value}</Text>
               </View>
             )}
+            <View>
+              <SaveingReportDetails incomeDetails={setincomeDetails} />
+            </View>
           </>
         )}
       </ScrollView>
@@ -284,4 +274,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default IncomeReport;
+export default SavingReport;

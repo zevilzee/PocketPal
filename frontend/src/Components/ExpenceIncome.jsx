@@ -63,7 +63,10 @@ const ExpenceIncome = () => {
       {/* Personal Saving Goal */}
 
       <View style={styles.personalContainer}>
-        <View style={styles.personal}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SavingReport")}
+          style={styles.personal}
+        >
           <Image
             source={require("../../assets/saveing.png")}
             style={styles.bagImage}
@@ -76,7 +79,7 @@ const ExpenceIncome = () => {
               ${userState?.saveingPlan}
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
         <View>
           <AntDesign
             name='rightcircle'
