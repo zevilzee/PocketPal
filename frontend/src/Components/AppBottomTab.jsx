@@ -1,23 +1,47 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { scale } from "react-native-size-matters";
-import { MaterialIcons, AntDesign } from "react-native-vector-icons";
+import {
+  MaterialIcons,
+  AntDesign,
+  Ionicons,
+  Fontisto,
+  Feather,
+} from "react-native-vector-icons";
 import Color from "../../assets/colors/Color";
+import { useNavigation } from "@react-navigation/native";
 
-const AppBottomTab = () => {
+const AppBottomTab = ({ active }) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <TouchableOpacity>
-        <AntDesign name="home" style={styles.icon} />
+        <AntDesign
+          name='home'
+          style={styles.icon}
+          color={active === "home" ? Color.Blue : null}
+        />
       </TouchableOpacity>
       <TouchableOpacity>
-        <AntDesign name="wallet" style={styles.icon} />
+        <Ionicons
+          name='wallet-outline'
+          style={styles.icon}
+          color={active === "wallet" ? Color.Blue : null}
+        />
       </TouchableOpacity>
       <TouchableOpacity>
-        <MaterialIcons name="compare-arrows" style={styles.icon} />
+        <Fontisto
+          name='arrow-swap'
+          style={styles.icon}
+          color={active === "wallet" ? Color.Blue : null}
+        />
       </TouchableOpacity>
-      <TouchableOpacity>
-        <AntDesign name="user" style={styles.icon} />
+      <TouchableOpacity onPress={() => navigation.navigate("SettingScreen")}>
+        <Feather
+          name='user'
+          style={styles.icon}
+          color={active === "user" ? Color.Blue : null}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -45,5 +69,10 @@ const styles = StyleSheet.create({
 
   icon: {
     fontSize: scale(20),
+  },
+  images: {
+    width: 20,
+    height: 20,
+    resizeMode: "contain",
   },
 });

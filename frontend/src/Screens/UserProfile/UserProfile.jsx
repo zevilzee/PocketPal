@@ -24,10 +24,12 @@ import GradientButton from "../../Components/GradientButton";
 import AppBottomTab from "../../Components/AppBottomTab";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
+import { useUserState } from "../../Slices/userSlice";
 
 const UserProfile = () => {
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
+  const userState = useUserState();
 
   const handlePickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -43,13 +45,14 @@ const UserProfile = () => {
       setImage(result.assets[0].uri);
     }
   };
+  console.log(userState?.phoneNumber);
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "height" : null}
     >
       <View style={styles.container}>
-        <HeaderTitle title="pROFILE" />
+        <HeaderTitle title='pROFILE' />
 
         {/* Bottom container  */}
         <ScrollView style={styles.contentContainer}>
@@ -65,7 +68,7 @@ const UserProfile = () => {
               style={styles.iconContainer}
               onPress={handlePickImage}
             >
-              <AntDesign name="camera" style={styles.icon} />
+              <AntDesign name='camera' style={styles.icon} />
             </TouchableOpacity>
           </View>
 
@@ -79,50 +82,57 @@ const UserProfile = () => {
               >
                 <View style={styles.contentLeft}>
                   <MaterialCommunityIcons
-                    name="account-edit"
+                    name='account-edit'
                     style={styles.iconLeft}
                   />
-                  <TextInput placeholder="User name" />
+                  <TextInput
+                    placeholder='User name'
+                    value={userState?.fullName}
+                  />
                 </View>
                 <View>
-                  <Feather name="edit-3" style={styles.iconRight} />
+                  <Feather name='edit-3' style={styles.iconRight} />
                 </View>
               </TouchableOpacity>
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
-                  <FontAwesome name="phone" style={styles.iconLeft} />
-                  <TextInput placeholder="Phone No" />
+                  <FontAwesome name='phone' style={styles.iconLeft} />
+                  <TextInput
+                    placeholder='Phone No'
+                    value={userState?.phoneNumber}
+                    keyboardType='number-pad'
+                  />
                 </View>
                 <View>
-                  <Feather name="edit-3" style={styles.iconRight} />
+                  <Feather name='edit-3' style={styles.iconRight} />
                 </View>
               </View>
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
                   <MaterialCommunityIcons
-                    name="email"
+                    name='email'
                     style={styles.iconLeft}
                   />
-                  <TextInput placeholder="Email" />
+                  <TextInput placeholder='Email' value={userState?.email} />
                 </View>
                 <View>
-                  <Feather name="edit-3" style={styles.iconRight} />
+                  <Feather name='edit-3' style={styles.iconRight} />
                 </View>
               </View>
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
-                  <Fontisto name="locked" style={styles.iconLeft} />
-                  <TextInput placeholder="Password" />
+                  <Fontisto name='locked' style={styles.iconLeft} />
+                  <TextInput placeholder='Password' />
                 </View>
                 <View>
-                  <Feather name="edit-3" style={styles.iconRight} />
+                  <Feather name='edit-3' style={styles.iconRight} />
                 </View>
               </View>
             </View>
 
             <View style={styles.buttonContainer}>
               <GradientButton
-                title="Save"
+                title='Save'
                 // onPress={() => handleVerificationCode(recaptchaVerifier)}
                 containerStyle={styles.gradientButton}
               />

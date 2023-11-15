@@ -11,22 +11,35 @@ const LanguageModal = ({ modalVisible, setModalVisible }) => {
 
   return (
     <Portal>
-      <Modal
-        visible={modalVisible}
-        onDismiss={handleHideModal}
-        style={{ flex: 1 }}
-      >
+      <Modal visible={modalVisible} onDismiss={handleHideModal}>
         <View style={styles.container}>
-          <Text style={styles.title}>Select your language</Text>
+          <View
+            style={{
+              height: scale(300),
+              paddingHorizontal: scale(25),
+              paddingVertical: scale(20),
+              backgroundColor: Color.White,
+              bottom: scale(-150),
+            }}
+          >
+            <Text style={styles.title}>Select your language</Text>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonTitle}>English</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={{
+                  ...styles.button,
+                  borderWidth: 1,
+                  borderColor: Color.Blue,
+                  borderRadius: 8,
+                }}
+              >
+                <Text style={styles.buttonTitle}>English</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonTitle}>Arabic</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonTitle}>Arabic</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -38,14 +51,10 @@ export default LanguageModal;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Color.White,
-    position: "relative",
-    bottom: scale(-300),
-    height: scale(300),
-    borderTopRightRadius: scale(15),
-    borderTopLeftRadius: scale(15),
-    paddingHorizontal: scale(25),
-    paddingVertical: scale(20),
+    // position: "relative",
+    // bottom: scale(-300),
+    backgroundColor: "white",
+    flex: 1,
   },
   title: {
     fontFamily: "Medium",
@@ -61,12 +70,14 @@ const styles = StyleSheet.create({
     paddingVertical: scale(12),
     borderRadius: scale(10),
     shadowColor: Color.Bg,
+    elevation: 2,
+    shadowColor: Color.Bg,
     shadowOffset: {
-      width: 1,
-      height: 2,
+      width: 0,
+      height: 3,
     },
-    shadowOpacity: 1,
-    elevation: 3,
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
   },
   buttonTitle: {
     fontFamily: "Medium",
