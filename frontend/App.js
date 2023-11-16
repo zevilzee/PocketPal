@@ -44,6 +44,7 @@ import IncomeReport from "./src/Screens/IncomeReport/IncomeReport";
 import SavingReport from "./src/Screens/SavingReport/SavingReport";
 import Faq from "./src/Screens/Faqs/Faq";
 import AppLockScreen from "./src/Screens/AppLock/AppLockScreen";
+import AppLock from "./src/Screens/AppLock/AppLock";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -106,6 +107,7 @@ function Main() {
             <Stack.Screen name='SavingReport' component={SavingReport} />
             <Stack.Screen name='faq' component={Faq} />
             <Stack.Screen name='AppLockScreen' component={AppLockScreen} />
+            <Stack.Screen name='AppLock' component={AppLock} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

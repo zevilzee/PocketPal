@@ -11,8 +11,10 @@ import Color from "../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
 import LanguageModal from "./LanguageModal";
 import { Switch } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 const SetttingsData = () => {
+  const navigation = useNavigation();
   const [modalVisible, setmodalVisible] = useState(false);
   const [isSwitchOn, setIsSwitchOn] = useState(false);
 
@@ -29,7 +31,10 @@ const SetttingsData = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.containermain}>
+      <TouchableOpacity
+        style={styles.containermain}
+        onPress={() => navigation.navigate("AppLockScreen")}
+      >
         <View style={styles.leftContainer}>
           <AntDesign name='lock1' style={styles.icoMain} />
           <Text style={styles.title}>App Lock</Text>
