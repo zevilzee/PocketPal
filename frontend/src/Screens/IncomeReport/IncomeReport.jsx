@@ -81,6 +81,54 @@ const IncomeReport = () => {
       },
     ],
   };
+
+  function getFormattedDate(date) {
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const hours = String(date.getUTCHours()).padStart(2, "0");
+    const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+    const seconds = String(date.getUTCSeconds()).padStart(2, "0");
+    const milliseconds = String(date.getUTCMilliseconds()).padStart(3, "0");
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+  }
+  const handleDuration = async (time) => {
+    setselectedDuration(time);
+    const today = new Date();
+    const start = new Date(today);
+    const end = new Date(today);
+    if (selectedDuration === "Day") {
+      start.setDate(today.getDate());
+    } else if (selectedDuration === "Month") {
+      start.setMonth(today.getMonth() - 1);
+      start.setDate(1);
+      end.setDate(0);
+    } else if (selectedDuration === "Year") {
+      start.setFullYear(today.getFullYear() - 1);
+    }
+    const startDate = getFormattedDate(start);
+    const endDate = getFormattedDate(end);
+
+    try {
+      const res = await axios.get(`${BASE_URL}/income/get-income-history`, {
+        headers: {
+          "auth-token": userState.token,
+        },
+        params: {
+          startDate,
+          endDate,
+          user: userState.id,
+        },
+      });
+      console.log(res?.data);
+      const data = res?.data;
+      const amounts = data.map((item) => item?.amount);
+      setAmount(amounts);
+    } catch (error) {
+      console.log("error while fetching custom date history", error);
+    }
+  };
   return (
     <View style={styles.container}>
       <HeaderTitle title='Income Report' />
@@ -94,7 +142,7 @@ const IncomeReport = () => {
                     ? styles.selectedDuration
                     : styles.monthsCard
                 }
-                onPress={() => setselectedDuration("Day")}
+                onPress={() => handleDuration("Day")}
               >
                 <Text
                   style={
@@ -112,7 +160,7 @@ const IncomeReport = () => {
                     ? styles.selectedDuration
                     : styles.monthsCard
                 }
-                onPress={() => setselectedDuration("Month")}
+                onPress={() => handleDuration("Month")}
               >
                 <Text
                   style={
@@ -130,7 +178,7 @@ const IncomeReport = () => {
                     ? styles.selectedDuration
                     : styles.monthsCard
                 }
-                onPress={() => setselectedDuration("Year")}
+                onPress={() => handleDuration("Year")}
               >
                 <Text
                   style={
@@ -180,10 +228,18 @@ const IncomeReport = () => {
               <IncomeDetailsGraph incomeDetails={setincomeDetails} />
             </View>
             {selectedPoint !== null && (
-              <View style={[styles.selectedValueContainer]}>
-                <Text style={styles.selectedValue}>
-                  Selected Value: {selectedPoint.value}
-                </Text>
+              <View
+                style={{
+                  backgroundColor: Color.Blue,
+                  position: "absolute",
+                  top: screenHeight * 0.46,
+                  left: screenWidth * 0.08,
+                  paddingHorizontal: screenWidth * 0.04,
+                  paddingVertical: screenHeight * 0.006,
+                  borderRadius: 6,
+                }}
+              >
+                <Text style={styles.selectedValue}>{selectedPoint.value}</Text>
               </View>
             )}
           </>
@@ -292,6 +348,11 @@ const styles = StyleSheet.create({
   calendarIcon: {
     fontSize: 20,
     color: "white",
+  },
+  selectedValue: {
+    color: Color.White,
+    fontFamily: "Bold",
+    fontSize: scale(13),
   },
 });
 

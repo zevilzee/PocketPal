@@ -169,8 +169,18 @@ const SavingReport = () => {
               bezier
             />
             {selectedPoint !== null && (
-              <View>
-                <Text>{selectedPoint.value}</Text>
+              <View
+                style={{
+                  backgroundColor: Color.Blue,
+                  position: "absolute",
+                  top: screenHeight * 0.46,
+                  left: screenWidth * 0.08,
+                  paddingHorizontal: screenWidth * 0.04,
+                  paddingVertical: screenHeight * 0.006,
+                  borderRadius: 6,
+                }}
+              >
+                <Text style={styles.selectedValue}>{selectedPoint.value}</Text>
               </View>
             )}
             <View>
@@ -282,6 +292,11 @@ const styles = StyleSheet.create({
   calendarIcon: {
     fontSize: 20,
     color: "white",
+  },
+  selectedValue: {
+    color: Color.White,
+    fontFamily: "Bold",
+    fontSize: scale(13),
   },
 });
 

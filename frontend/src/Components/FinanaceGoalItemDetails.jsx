@@ -25,7 +25,6 @@ const FinanaceGoalItemDetails = ({ data }) => {
   const progressBarColor = getColorForPercentage(completionPercentage);
 
   const handleEditnavigation = (data) => {
-    console.log(data);
     navigation.navigate("EditGoal", { data });
   };
 

@@ -32,9 +32,7 @@ const AppLock = () => {
 
             <OTPTextInput
               style={styles.inputContainer}
-              handleTextChange={(code) => {
-                console.log(code);
-              }}
+              handleTextChange={(code) => {}}
               inputCount={4}
             />
           </View>

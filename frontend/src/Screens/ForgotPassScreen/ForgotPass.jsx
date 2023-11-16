@@ -50,7 +50,6 @@ const ForgotPass = () => {
       );
       setfirebaseApi(verificationId);
       setresetPass(phoneNumber);
-      console.log(verificationId);
       navigation.navigate("verifyEmail");
 
       // navigation.navigate("Otp");
@@ -58,7 +57,6 @@ const ForgotPass = () => {
       console.log("Error:", err);
     }
   };
-  console.log(phoneNumber);
 
   return (
     <View style={styles.container}>
@@ -87,14 +85,14 @@ const ForgotPass = () => {
           </View>
           <View style={styles.CustomInput}>
             <CustomInput
-              placeholder="Phone Number, e.g., +92300000000"
+              placeholder='Phone Number, e.g., +92300000000'
               onChangeText={(text) => {
                 setphoneNumber(text);
               }}
             />
           </View>
           <GradientButton
-            title="Send reset code"
+            title='Send reset code'
             onPress={() => handleVerificationCode(recaptchaVerifier)}
             containerStyle={styles.gradientButton}
           />

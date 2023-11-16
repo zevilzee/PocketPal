@@ -64,7 +64,6 @@ const IncomeDetailsGraph = ({ incomeDetails }) => {
   const todayIncome = groupedExpenseData.filter(
     (item) => item?.timestamp === currentDate
   );
-  // console.log(todayIncome);
   useEffect(() => {
     incomeDetails(todayIncome);
   }, [loading]);

@@ -25,32 +25,7 @@ import axios from "axios";
 import { BASE_URL } from "../../../CONSTANTS";
 import { useUserStateActions } from "../../Slices/userSlice";
 import { formatCustomDate } from "../../Utiles/GetData";
-const bills = [
-  {
-    description: "Electricity Bill",
-    date: "WED, 17 SEP, 2023 01:44PM",
-    amount: 320,
-    status: "Paid",
-  },
-  {
-    description: "Water Bill",
-    date: "FRI, 21 SEP, 2023 03:15PM",
-    amount: 50,
-    status: "Unpaid",
-  },
-  {
-    description: "Internet Bill",
-    date: "MON, 25 SEP, 2023 09:30AM",
-    amount: 80,
-    status: "Paid",
-  },
-  {
-    description: "Gas Bill",
-    date: "THU, 28 SEP, 2023 11:22AM",
-    amount: 60,
-    status: "Unpaid",
-  },
-];
+
 const ExpenseScreen = () => {
   const userStateActions = useUserStateActions();
   const userState = useUserState();
@@ -59,7 +34,6 @@ const ExpenseScreen = () => {
   const currentDate = formatCustomDate(date);
   useEffect(() => {
     const fetchData = async () => {
-      console.log(userState.id);
       try {
         const res = await axios.get(
           `${BASE_URL}/expense/getExpense/${userState.id}`,

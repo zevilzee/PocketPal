@@ -53,7 +53,6 @@ const AddNewGoal = () => {
   const userState = useUserState();
   const route = useRoute();
   const data = route?.params?.data;
-  console.log(data);
 
   const toast = useToast();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);

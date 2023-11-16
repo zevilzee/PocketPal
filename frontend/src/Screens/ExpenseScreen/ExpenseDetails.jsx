@@ -25,7 +25,6 @@ const ExpenseDetails = ({ data }) => {
   const formatedDate = formatCustomDate(data?.date);
 
   const handleDelete = async (item) => {
-    console.log(item);
     try {
       const res = await axios.delete(
         `${BASE_URL}/expense/delete-inome/${item}`,
