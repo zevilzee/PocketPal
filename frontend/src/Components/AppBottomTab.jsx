@@ -15,7 +15,7 @@ const AppBottomTab = ({ active }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
         <AntDesign
           name='home'
           style={styles.icon}

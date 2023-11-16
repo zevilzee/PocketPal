@@ -11,8 +11,12 @@ import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
 import { AntDesign, Ionicons } from "react-native-vector-icons";
 import { formatCustomDate } from "../../Utiles/GetData";
+import { BASE_URL } from "../../../CONSTANTS";
+import { useUserState } from "../../Slices/userSlice";
+import axios from "axios";
 
 const ExpenseDetails = ({ data }) => {
+  const userState = useUserState();
   if (!data) {
     // Handle the case where data is not available
     return <Text>Data not available</Text>;
@@ -20,8 +24,22 @@ const ExpenseDetails = ({ data }) => {
 
   const formatedDate = formatCustomDate(data?.date);
 
-  const handleDelete = (item) => {
+  const handleDelete = async (item) => {
     console.log(item);
+    try {
+      const res = await axios.delete(
+        `${BASE_URL}/expense/delete-inome/${item}`,
+        {
+          headers: {
+            "auth-token": userState.token,
+          },
+        }
+      );
+      console.log(res.data);
+      // setData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleEdit = (data) => {};
   return (
@@ -42,11 +60,11 @@ const ExpenseDetails = ({ data }) => {
               </View>
             </View>
             <View style={styles.rightIcons}>
-              <TouchableOpacity onPress={(data) => handleDelete(data.id)}>
-                <AntDesign name="delete" style={styles.icon} />
+              <TouchableOpacity onPress={() => handleDelete(data?._id)}>
+                <AntDesign name='delete' style={styles.icon} />
               </TouchableOpacity>
               <TouchableOpacity onPress={(data) => handleEdit(data)}>
-                <Ionicons name="create-outline" style={styles.icon} />
+                <Ionicons name='create-outline' style={styles.icon} />
               </TouchableOpacity>
             </View>
           </View>

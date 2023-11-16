@@ -14,6 +14,7 @@ import { CustomDateYear } from "../../Utiles/GetDateYear";
 import { CustomDateWithoutYear } from "../../Utiles/GetDateName";
 import IncomeDetailsGraph from "../../Components/IncomeDetailsGraph";
 import SaveingReportDetails from "../../Components/SaveingReportDetails";
+import AppBottomTab from "../../Components/AppBottomTab";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -178,6 +179,16 @@ const SavingReport = () => {
           </>
         )}
       </ScrollView>
+      <View
+        style={{
+          width: "100%",
+          position: "absolute",
+          bottom: 0,
+          zIndex: 100,
+        }}
+      >
+        <AppBottomTab active='usere' />
+      </View>
     </View>
   );
 };

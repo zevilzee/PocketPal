@@ -17,6 +17,7 @@ import { formatCustomDate } from "../../Utiles/GetData";
 const IncomeScreen = () => {
   const navigation = useNavigation();
   const userState = useUserState();
+  const totalBalce = userState?.totalIncome - userState?.totalExpence;
 
   const date = new Date();
   const currentDate = formatCustomDate(date);
@@ -73,17 +74,17 @@ const IncomeScreen = () => {
   const handleFilter = () => {};
   return (
     <View style={styles.container}>
-      <HeaderTitle title="Income" />
+      <HeaderTitle title='Income' />
       <View style={styles.historyCard}>
         <HistoryCard todayIncome={todayIncome} />
       </View>
-      <SearchInput filter={handleFilter} screen="" />
+      <SearchInput filter={handleFilter} screen='' />
       <FlatList
         data={groupedExpenseData}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <IncomeDetails data={item} />}
       />
-      <BottomTab title="Cash In" onpress={handleCashIn} />
+      <BottomTab title='Cash In' onpress={handleCashIn} />
     </View>
   );
 };

@@ -14,6 +14,7 @@ import { useUserState, useUserStateActions } from "../Slices/userSlice";
 import Color from "../../assets/colors/Color";
 import { BASE_URL } from "../../CONSTANTS";
 import FinanaceGoalItemDetails from "./FinanaceGoalItemDetails";
+import AppBottomTab from "./AppBottomTab";
 // const data = [
 //   {
 //     itemName: "Item 1",
@@ -110,8 +111,6 @@ const SaveingReportDetails = ({ incomeDetails }) => {
             />
           )}
         </View>
-
-        <View style={styles.bottomContainer}></View>
       </View>
     </View>
   );

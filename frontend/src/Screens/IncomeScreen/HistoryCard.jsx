@@ -4,9 +4,12 @@ import { scale } from "react-native-size-matters";
 import Color from "../../../assets/colors/Color";
 import { Fontisto } from "react-native-vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useUserState } from "../../Slices/userSlice";
 
 const HistoryCard = ({ todayIncome }) => {
   const navigation = useNavigation();
+  const userState = useUserState();
+  const totalBalce = userState?.totalIncome - userState?.totalExpence;
   const handleHistoryNavigation = () => {
     navigation.navigate("History");
   };
@@ -15,7 +18,7 @@ const HistoryCard = ({ todayIncome }) => {
   return (
     <View style={styles.card}>
       <View style={styles.container}>
-        <Text style={styles.title}>$1320</Text>
+        <Text style={styles.title}>${totalBalce}</Text>
         <View style={styles.row}>
           <Text style={styles.subTitle}>Cash in Hand</Text>
         </View>
@@ -34,7 +37,7 @@ const HistoryCard = ({ todayIncome }) => {
         style={styles.container}
         onPress={handleHistoryNavigation}
       >
-        <Fontisto name="history" style={styles.icon} />
+        <Fontisto name='history' style={styles.icon} />
         <View style={styles.row}>
           <Text style={styles.subTitle}>History</Text>
         </View>

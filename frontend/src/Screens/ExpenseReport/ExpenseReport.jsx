@@ -15,6 +15,7 @@ import { CustomDateWithoutYear } from "../../Utiles/GetDateName";
 import IncomeDetailsGraph from "../../Components/IncomeDetailsGraph";
 import ExpenseGraph from "../../Components/ExpenseGraph";
 import moment from "moment/moment";
+import AppBottomTab from "../../Components/AppBottomTab";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
@@ -191,6 +192,16 @@ const ExpenseReport = () => {
           </>
         )}
       </ScrollView>
+      <View
+        style={{
+          width: "100%",
+          position: "absolute",
+          bottom: 0,
+          zIndex: 100,
+        }}
+      >
+        <AppBottomTab active='usere' />
+      </View>
     </View>
   );
 };
