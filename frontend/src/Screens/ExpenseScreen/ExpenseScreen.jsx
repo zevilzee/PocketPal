@@ -71,8 +71,8 @@ const ExpenseScreen = () => {
         );
         console.log(res.data);
         setData(res.data);
-        const newBalance = parseInt(userState.Balance) - parseInt(amount)
-        userStateActions.setbalance(newBalance.toString())
+        const newBalance = parseInt(userState.Balance) - parseInt(amount);
+        userStateActions.setbalance(newBalance.toString());
       } catch (error) {
         console.log(error);
       }
@@ -119,13 +119,13 @@ const ExpenseScreen = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderTitle title="EXPENSE" />
+      <HeaderTitle title='EXPENSE' />
       <View style={styles.historyCard}>
         <HIstoryCardExpence todayExpense={todayIncome[0]?.totalAmount} />
       </View>
       <SearchInput
         filter={handleFilter}
-        screen="EXPENSE"
+        screen='EXPENSE'
         modalVisible={setmodalVisibal}
       />
       <FlatList
@@ -142,7 +142,7 @@ const ExpenseScreen = () => {
       />
 
       <BottomTab
-        title="Create new bill"
+        title='Create new bill'
         image={Icon}
         onpress={handleCreateBill}
       />

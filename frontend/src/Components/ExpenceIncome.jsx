@@ -24,7 +24,7 @@ const ExpenceIncome = () => {
       <View style={{ flexDirection: "row", gap: 10 }}>
         <TouchableOpacity
           style={{ ...styles.card, backgroundColor: "#FADEF4" }}
-          // onPress={() => navigation.navigate("IncomeReport")}
+          onPress={() => navigation.navigate("ExpenseReport")}
         >
           <View>
             <Image
