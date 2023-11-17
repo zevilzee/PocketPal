@@ -73,6 +73,23 @@ const ExpenseGraph = ({ incomeDetails }) => {
     (item) => item?.timestamp === currentDate
   );
 
+  const handleDelete = async (item) => {
+    try {
+      const res = await axios.delete(
+        `${BASE_URL}/expense/delete-expense/${item}`,
+        {
+          headers: {
+            "auth-token": userState.token,
+          },
+        }
+      );
+      console.log(res.data);
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.historyCard}></View>
@@ -80,7 +97,9 @@ const ExpenseGraph = ({ incomeDetails }) => {
       <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <ExpenseDetails data={item} />}
+        renderItem={({ item }) => (
+          <ExpenseDetails data={item} handleDelete={handleDelete} />
+        )}
       />
     </View>
   );

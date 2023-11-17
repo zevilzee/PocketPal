@@ -14,9 +14,14 @@ import { formatCustomDate } from "../../Utiles/GetData";
 import { BASE_URL } from "../../../CONSTANTS";
 import { useUserState } from "../../Slices/userSlice";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import { useStateContext } from "../../context/ContextProvider";
 
-const ExpenseDetails = ({ data }) => {
+const ExpenseDetails = ({ data, handleDelete }) => {
+  const navigation = useNavigation();
   const userState = useUserState();
+  const { expenceCategory, setexpenceCategory } = useStateContext();
+
   if (!data) {
     // Handle the case where data is not available
     return <Text>Data not available</Text>;
@@ -24,23 +29,10 @@ const ExpenseDetails = ({ data }) => {
 
   const formatedDate = formatCustomDate(data?.date);
 
-  const handleDelete = async (item) => {
-    try {
-      const res = await axios.delete(
-        `${BASE_URL}/expense/delete-inome/${item}`,
-        {
-          headers: {
-            "auth-token": userState.token,
-          },
-        }
-      );
-      console.log(res.data);
-      // setData(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleEdit = (data) => {
+    navigation.navigate("EditExpence", data);
+    setexpenceCategory(data?.category);
   };
-  const handleEdit = (data) => {};
   return (
     <View style={styles.container}>
       <View style={styles.entries}>
@@ -62,7 +54,7 @@ const ExpenseDetails = ({ data }) => {
               <TouchableOpacity onPress={() => handleDelete(data?._id)}>
                 <AntDesign name='delete' style={styles.icon} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={(data) => handleEdit(data)}>
+              <TouchableOpacity onPress={() => handleEdit(data)}>
                 <Ionicons name='create-outline' style={styles.icon} />
               </TouchableOpacity>
             </View>
@@ -131,7 +123,7 @@ const styles = StyleSheet.create({
   rightIcons: {
     flexDirection: "row",
     alignItems: "center",
-    gap: scale(10),
+    gap: scale(14),
   },
   icon: {
     fontSize: scale(15),

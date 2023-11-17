@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import HeaderTitle from "../../Components/HeaderTitle";
 import HistoryCard from "./HistoryCard";
 import { scale } from "react-native-size-matters";
@@ -8,7 +8,7 @@ import Color from "../../../assets/colors/Color";
 import IncomeDetails from "./IncomeDetails";
 import expenseData from "./Data";
 import BottomTab from "../../Components/BottomTab";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import { useUserState } from "../../Slices/userSlice";
 import axios from "axios";
 import { BASE_URL } from "../../../CONSTANTS";
@@ -45,9 +45,11 @@ const IncomeScreen = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
   const groupedExpenses = {};
 

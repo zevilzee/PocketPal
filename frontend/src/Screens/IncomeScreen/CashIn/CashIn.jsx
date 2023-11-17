@@ -21,11 +21,12 @@ import IncomeMethodModal from "./IncomeMethodModal";
 import axios from "axios";
 import { BASE_URL } from "../../../../CONSTANTS";
 import { useUserState, useUserStateActions } from "../../../Slices/userSlice";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useToast } from "react-native-toast-notifications";
 
 const CashIn = () => {
   const toast = useToast();
+  const navigation = useNavigation();
   const userStateActions = useUserStateActions();
   const userState = useUserState();
   const [name, setname] = useState("");
@@ -54,6 +55,7 @@ const CashIn = () => {
         setSelectedItem("");
         const newBalance = parseInt(userState.Balance) + parseInt(amount);
         userStateActions.setBalance(newBalance.toString());
+        navigation.goBack();
       })
       .catch((e) => {
         toast.show("Failed to add income. Please try again.", {

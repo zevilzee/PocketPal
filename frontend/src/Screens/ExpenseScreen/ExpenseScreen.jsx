@@ -5,11 +5,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import { scale } from "react-native-size-matters";
 
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useFocusEffect } from "@react-navigation/core";
 import HeaderTitle from "../../Components/HeaderTitle";
 import HistoryCard from "../IncomeScreen/HistoryCard";
 import SearchInput from "../IncomeScreen/SearchInput";
@@ -32,28 +32,29 @@ const ExpenseScreen = () => {
   const [data, setData] = useState([]);
   const date = new Date();
   const currentDate = formatCustomDate(date);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          `${BASE_URL}/expense/getExpense/${userState.id}`,
-          {
-            headers: {
-              "auth-token": userState.token,
-            },
-          }
-        );
-        console.log(res.data);
-        setData(res.data);
-        const newBalance = parseInt(userState.Balance) - parseInt(amount);
-        userStateActions.setbalance(newBalance.toString());
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/expense/getExpense/${userState.id}`,
+        {
+          headers: {
+            "auth-token": userState.token,
+          },
+        }
+      );
+      setData(res.data);
+      const newBalance = parseInt(userState.Balance) - parseInt(amount);
+      userStateActions.setbalance(newBalance.toString());
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    fetchData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
   const navigation = useNavigation();
   const [modalVisibal, setmodalVisibal] = useState(false);
@@ -91,6 +92,23 @@ const ExpenseScreen = () => {
     (item) => item?.timestamp === currentDate
   );
 
+  const handleDelete = async (item) => {
+    try {
+      const res = await axios.delete(
+        `${BASE_URL}/expense/delete-expense/${item}`,
+        {
+          headers: {
+            "auth-token": userState.token,
+          },
+        }
+      );
+      console.log(res.data);
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <HeaderTitle title='EXPENSE' />
@@ -105,7 +123,9 @@ const ExpenseScreen = () => {
       <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <ExpenseDetails data={item} />}
+        renderItem={({ item }) => (
+          <ExpenseDetails data={item} handleDelete={handleDelete} />
+        )}
       />
 
       <FilterModal
