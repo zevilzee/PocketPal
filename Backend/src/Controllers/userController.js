@@ -63,3 +63,16 @@ export const forgotPassword = async (req, res) => {
 export const me = async (req, res, next) => {
   res.status(200).json({ success: true, user: req?.user });
 };
+
+export const updatePicture = async (req, res, next) => {
+  if (!req.file) {
+    res.status(200).send("Image not found");
+  }
+  const user = await UserModel.findByIdAndUpdate(
+    { _id: req.params.id },
+    {
+      image: req.file.filename,
+    }
+  );
+  res.status(200).send(user);
+};

@@ -13,6 +13,7 @@ app.use(
     // ...other CORS options
   })
 );
+app.use(express.static("./uploads"));
 app.use(express.json());
 const server = http.createServer(app);
 app.use("/user", userRoutes);

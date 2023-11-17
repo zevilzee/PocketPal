@@ -11,7 +11,7 @@ const router = Router();
 router.get("/get-expense-history", GetExpenseHistory);
 router.post("/create-expense", createExpense);
 router.patch("/update-expense/:id", updateExpense);
-router.delete("/delete-inome/:id", deleteExpense);
+router.delete("/delete-expense/:id", deleteExpense);
 router.get("/getExpense/:id", GetExpense);
 
 export default router;

@@ -80,6 +80,7 @@ export const updateExpense = async (req, res, next) => {
 
 export const deleteExpense = async (req, res, next) => {
   const expense = await Expense.findOne({ _id: req.params.id });
+  console.log(expense);
   let userData = await User.findOne({ _id: expense.user });
   const newBalance = parseInt(expense.amount) - parseInt(userData.balance);
 
@@ -88,7 +89,7 @@ export const deleteExpense = async (req, res, next) => {
     { balance: newBalance.toString() }
   );
 
-  await Expense.findByIdAndUpdate({ _id: req.params.id });
+  await Expense.findByIdAndDelete({ _id: req.params.id });
 
   res.send({ status: 200, data: "Deleted Successfully" });
 };
