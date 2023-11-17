@@ -67,6 +67,7 @@ const AddExpense = () => {
         setname("");
         setamount("");
         setselected("");
+        navigation.goBack();
       })
 
       .catch((e) => {

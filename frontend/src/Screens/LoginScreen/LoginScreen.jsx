@@ -70,22 +70,22 @@ const LoginScreen = () => {
       <View style={styles.formContainer}>
         <View style={styles.InputContainer}>
           <CustomInput
-            placeholder="Email"
+            placeholder='Email'
             onChangeText={(text) => {
               setemail(text);
             }}
           />
 
           <PasswordInput
-            placeholder="Password"
+            placeholder='Password'
             value={password}
             onChangeText={handlePassChange}
             style={styles.input}
             icon={
               passwordVisible ? (
-                <Entypo name="eye" size={20} color={Color.Blue} />
+                <Entypo name='eye' size={20} color={Color.Blue} />
               ) : (
-                <Entypo name="eye-with-line" size={20} color={Color.Blue} />
+                <Entypo name='eye-with-line' size={20} color={Color.Blue} />
               )
             }
             onIconPress={() => setPasswordVisible(!passwordVisible)}
@@ -99,7 +99,7 @@ const LoginScreen = () => {
           </TouchableOpacity>
 
           <GradientButton
-            title="Login"
+            title='Login'
             onPress={handleLogin}
             containerStyle={styles.gradientButton}
           />
@@ -108,9 +108,11 @@ const LoginScreen = () => {
         <View style={styles.InputContainer}>
           <View style={styles.haveAccount}>
             <Text style={styles.accountTitle}>Don’t have an account? </Text>
-            <Text style={{ ...styles.accountTitle, color: Color.Red }}>
-              Sign Up
-            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+              <Text style={{ ...styles.accountTitle, color: Color.Red }}>
+                Sign Up
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -122,7 +124,7 @@ const LoginScreen = () => {
               style={styles.google}
             />
             <Text style={styles.line}></Text>
-            <AntDesign name="apple1" style={styles.apple} />
+            <AntDesign name='apple1' style={styles.apple} />
           </View>
         </View>
       </View>

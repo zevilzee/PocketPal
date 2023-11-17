@@ -21,11 +21,13 @@ import SetttingsData from "../../Components/SetttingsData";
 import HelpSupport from "../../Components/HelpSupport";
 import About from "../../Components/About";
 import AppBottomTab from "../../Components/AppBottomTab";
-import { useUserState } from "../../Slices/userSlice";
+import { useUserState, useUserStateActions } from "../../Slices/userSlice";
+import { useNavigation } from "@react-navigation/native";
 
 const screenHeight = Dimensions.get("screen").height;
 
 const SettingScreen = () => {
+  const navigation = useNavigation();
   const userState = useUserState();
   const [isSetting, setisSetting] = useState(false);
   const [isHelp, setisHelp] = useState(false);
@@ -42,7 +44,14 @@ const SettingScreen = () => {
   const handleIsAbout = () => {
     setisAbout(!isAbout);
   };
-  console.log(userState);
+  const userActions = useUserStateActions();
+  const Logout = () => {
+    userActions.resetState();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  };
   return (
     <View style={styles.container}>
       <HeaderTitle title='Setting' />
@@ -107,10 +116,10 @@ const SettingScreen = () => {
           <TouchableOpacity
             style={{ ...styles.containermain, borderBottomWidth: 0 }}
           >
-            <View style={styles.leftContainer}>
+            <TouchableOpacity style={styles.leftContainer} onPress={Logout}>
               <SimpleLineIcons name='logout' style={styles.icoMain} />
-              <Text style={styles.title}>logout</Text>
-            </View>
+              <Text style={styles.title}>Logout</Text>
+            </TouchableOpacity>
           </TouchableOpacity>
         </View>
         <View

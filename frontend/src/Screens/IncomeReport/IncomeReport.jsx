@@ -48,7 +48,11 @@ const IncomeReport = () => {
       );
       const data = res?.data;
       const amounts = data.map((item) => item?.amount);
-      setAmount(amounts);
+      if (amounts?.length === 0) {
+        setAmount([0]);
+      } else {
+        setAmount(amounts);
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -121,10 +125,14 @@ const IncomeReport = () => {
           user: userState.id,
         },
       });
-      console.log(res?.data);
+
       const data = res?.data;
       const amounts = data.map((item) => item?.amount);
-      setAmount(amounts);
+      if (amounts?.length === 0) {
+        setAmount([0]);
+      } else {
+        setAmount(amounts);
+      }
     } catch (error) {
       console.log("error while fetching custom date history", error);
     }

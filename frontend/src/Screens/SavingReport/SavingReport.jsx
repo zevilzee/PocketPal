@@ -50,7 +50,11 @@ const SavingReport = () => {
       );
       const data = res?.data?.data;
       const amounts = data.map((item) => Number(item?.Goalamount));
-      setAmount(amounts);
+      if (amounts?.length === 0) {
+        setAmount([0]);
+      } else {
+        setAmount(amounts);
+      }
     } catch (error) {
       console.log(error);
     } finally {

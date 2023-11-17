@@ -37,7 +37,6 @@ const ExpenseReport = () => {
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [selectedDuration, setselectedDuration] = useState("Day");
   const [incomeDetails, setincomeDetails] = useState([]);
-  console.log(userState);
   const fetchData = async () => {
     try {
       const res = await axios.get(
@@ -50,8 +49,13 @@ const ExpenseReport = () => {
         }
       );
       const data = res?.data;
+      // console.log(data);
       const amounts = data.map((item) => item?.amount);
-      setAmount(amounts);
+      if (amounts?.length === 0) {
+        setAmount([0]);
+      } else {
+        setAmount(amounts);
+      }
     } catch (error) {
       console.log(error);
     } finally {

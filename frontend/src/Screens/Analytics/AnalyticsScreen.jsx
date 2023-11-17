@@ -33,19 +33,27 @@ const AnalyticsScreen = () => {
     const calculate = async () => {
       setloading(true);
       try {
-        const remainingPercentage = Math.floor(
-          ((userState?.totalIncome - userState?.totalExpence) /
-            userState?.totalIncome) *
-            100
-        );
-        const expensePercentage = Math.floor(
-          (userState?.totalExpence / userState?.totalIncome) * 100
-        );
+        let remainingPercentage;
+        if (userState?.totalIncome === 0) {
+          setremainingPercentagee(0.01);
+          // setexpencePercentage(0.1);
+          setloading(false);
+          return;
+        } else {
+          remainingPercentage = Math.floor(
+            ((userState?.totalIncome - userState?.totalExpence) /
+              userState?.totalIncome) *
+              100
+          );
+          const expensePercentage = Math.floor(
+            (userState?.totalExpence / userState?.totalIncome) * 100
+          );
 
-        setexpencePercentage(expensePercentage);
-        setpercent(remainingPercentage);
-        const percentage = remainingPercentage / 100;
-        setremainingPercentagee(percentage);
+          setexpencePercentage(expensePercentage);
+          setpercent(remainingPercentage);
+          const percentage = remainingPercentage / 100;
+          setremainingPercentagee(percentage);
+        }
         setloading(false);
       } catch (error) {
         setloading(false);
@@ -53,7 +61,7 @@ const AnalyticsScreen = () => {
     };
     calculate();
   }, []);
-  console.log(expencePercentage, "percent  ");
+  console.log(remainingPercentagee, "percent  ");
   const data = {
     data: [remainingPercentagee || 0.1],
   };
