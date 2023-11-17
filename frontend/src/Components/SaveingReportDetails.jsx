@@ -86,7 +86,6 @@ const SaveingReportDetails = ({ incomeDetails }) => {
     fetchFinance();
   }, []);
 
-  console.log(totalValue);
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>

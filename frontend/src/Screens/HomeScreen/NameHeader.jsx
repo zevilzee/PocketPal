@@ -8,15 +8,21 @@ import { BASE_URL } from "../../../CONSTANTS";
 
 const NameHeader = ({ userName }) => {
   const userState = useUserState();
-  console.log(userState?.image);
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <View>
-          <Image
-            source={{ uri: `${BASE_URL}/${userState?.image}` }}
-            style={styles.userImage}
-          />
+          {userState?.image === null ? (
+            <Image
+              source={require("../../../assets/placeholder.png")}
+              style={styles.userImage}
+            />
+          ) : (
+            <Image
+              source={{ uri: `${BASE_URL}/${userState?.image}` }}
+              style={styles.userImage}
+            />
+          )}
         </View>
         <View style={styles.userContainer}>
           <Text style={styles.title}>Good Morning,</Text>

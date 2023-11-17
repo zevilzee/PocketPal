@@ -56,7 +56,6 @@ const AddExpense = () => {
         status: `${selected}`,
       })
       .then((res) => {
-        console.log(res.data);
         toast.show("Expense added successfully", {
           type: "success",
           placement: "top",

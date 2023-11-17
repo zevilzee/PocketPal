@@ -16,10 +16,17 @@ const ProfileCardUser = () => {
         style={styles.topContainer}
       >
         <View style={styles.userContainer}>
-          <Image
-            source={{ uri: `${BASE_URL}/${userState?.image}` }}
-            style={styles.userImage}
-          />
+          {userState?.image === null ? (
+            <Image
+              source={require("../../assets/placeholder.png")}
+              style={styles.userImage}
+            />
+          ) : (
+            <Image
+              source={{ uri: `${BASE_URL}/${userState?.image}` }}
+              style={styles.userImage}
+            />
+          )}
           <Text>{userState?.fullName}</Text>
         </View>
         <View>

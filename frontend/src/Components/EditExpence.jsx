@@ -36,8 +36,6 @@ const AddExpense = () => {
   const [amount, setamount] = useState(route?.params?.amount);
   const { expenceCategory, setexpenceCategory } = useStateContext();
 
-  // console.log(selectedItem, "selected item");
-
   const handleSave = () => {
     if (!name || !amount || !expenceCategory || !selected) {
       toast.show("All fileds required", {
@@ -58,7 +56,6 @@ const AddExpense = () => {
         status: `${selected}`,
       })
       .then((res) => {
-        console.log(res.data);
         toast.show("Expense edit successfully", {
           type: "success",
           placement: "top",

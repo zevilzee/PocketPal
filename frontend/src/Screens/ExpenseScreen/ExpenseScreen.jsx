@@ -102,7 +102,6 @@ const ExpenseScreen = () => {
           },
         }
       );
-      console.log(res.data);
       fetchData();
     } catch (error) {
       console.log(error);

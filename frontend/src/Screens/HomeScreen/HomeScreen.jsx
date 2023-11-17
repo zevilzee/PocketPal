@@ -26,7 +26,6 @@ const screenWidth = Dimensions.get("screen").width;
 const HomeScreen = () => {
   const userState = useUserState();
   const userActions = useUserStateActions();
-  console.log(userState);
   const [loading, setloading] = useState(false);
 
   const fetchExpence = async () => {
@@ -81,6 +80,7 @@ const HomeScreen = () => {
 
   const fetchDataOnFocus = async () => {
     fetchData();
+    fetchFinance();
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -89,6 +89,27 @@ const HomeScreen = () => {
       return () => {};
     }, [])
   );
+
+  const fetchFinance = async () => {
+    setloading(true);
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/finance/getFinance/${userState.id}`
+      );
+
+      const target = res?.data?.data?.map((item) => Number(item?.Goalamount));
+      const totalValue = target.reduce(
+        (acc, currentValue) => acc + currentValue,
+        0
+      );
+      userActions.setsaveingPlan(totalValue);
+
+      setloading(false);
+    } catch (error) {
+      console.log(error);
+      setloading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>

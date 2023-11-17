@@ -41,7 +41,6 @@ const ResetPassword = () => {
             password: password,
           }
         );
-        console.log(response.data);
         if (response.status === 200) {
           const updatedUser = response.data.message;
         } else {

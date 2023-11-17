@@ -25,7 +25,6 @@ const AppLock = () => {
   const [pin, setpin] = useState("");
 
   const handleSetPin = () => {
-    console.log(userState.pin);
     if (userState.pin !== null) {
       if (userState.pin === pin) {
         navigation.navigate("Home");
@@ -42,7 +41,7 @@ const AppLock = () => {
   };
   return (
     <View style={styles.container}>
-      <HeaderTitle title="APP LOCK" />
+      <HeaderTitle title='APP LOCK' />
       <View style={styles.formContainer}>
         <View style={styles.InputContainer}>
           <View>
@@ -61,7 +60,7 @@ const AppLock = () => {
             />
           </View>
           <GradientButton
-            title="Continue"
+            title='Continue'
             containerStyle={styles.gradientButton}
             onPress={handleSetPin}
           />

@@ -86,7 +86,6 @@ const HistoryScreen = () => {
           user: userState.id,
         },
       });
-      console.log(res?.data);
       setData(res.data);
     } catch (error) {
       console.log("error while fetching custom date history", error);
@@ -95,7 +94,7 @@ const HistoryScreen = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderTitle title="Income history" />
+      <HeaderTitle title='Income history' />
       <View style={styles.historyCard}>
         <DurationCard modal={setmodalVisibal} selectedItem={selectedItem} />
         {/* <StartEndTime
@@ -117,7 +116,7 @@ const HistoryScreen = () => {
         getHistory={customeDateHistory}
       />
 
-      <BottomTab title="PDF" image={Icon} />
+      <BottomTab title='PDF' image={Icon} />
     </View>
   );
 };

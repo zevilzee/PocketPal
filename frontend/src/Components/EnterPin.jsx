@@ -16,7 +16,6 @@ const EnterPin = () => {
   const [pin, setpin] = useState("");
 
   const handleSetPin = () => {
-    console.log(userState.pin);
     if (userState.pin !== null) {
       if (userState.pin === pin) {
         navigation.navigate("Home");

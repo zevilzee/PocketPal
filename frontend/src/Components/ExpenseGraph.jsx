@@ -18,7 +18,6 @@ const ExpenseGraph = ({ incomeDetails }) => {
   const currentDate = formatCustomDate(date);
   useEffect(() => {
     const fetchData = async () => {
-      console.log(userState.id);
       try {
         const res = await axios.get(
           `${BASE_URL}/expense/getExpense/${userState.id}`,
@@ -83,7 +82,6 @@ const ExpenseGraph = ({ incomeDetails }) => {
           },
         }
       );
-      console.log(res.data);
       fetchData();
     } catch (error) {
       console.log(error);

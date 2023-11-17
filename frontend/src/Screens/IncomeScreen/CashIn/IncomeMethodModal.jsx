@@ -44,7 +44,6 @@ const IncomeMethodModal = ({
   };
 
   const handleItemPress = (item) => {
-    console.log(item);
     const updatedData = data.map((d) =>
       d.id === item.id ? { ...d, isSelected: !d.isSelected } : d
     );
@@ -73,7 +72,7 @@ const IncomeMethodModal = ({
               </View>
 
               <GradientButton
-                title="Continue"
+                title='Continue'
                 onPress={handleContinue}
                 containerStyle={styles.gradientButton}
               />
@@ -89,7 +88,7 @@ const IncomeMethodModal = ({
                     end={{ x: 0.11, y: 0.55 }}
                     style={styles.gradientBackground}
                   >
-                    <Ionicons name="add" style={styles.methodIcon} />
+                    <Ionicons name='add' style={styles.methodIcon} />
                     <Text style={styles.methodTitle}>Add New Method</Text>
                   </LinearGradient>
                 </View>

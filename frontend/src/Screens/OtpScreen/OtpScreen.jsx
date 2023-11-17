@@ -41,8 +41,6 @@ const OtpScreen = () => {
     }
   };
 
-  console.log(firebaseApi);
-
   const handleSignUp = async () => {
     try {
       const credential = PhoneAuthProvider.credential(firebaseApi, otp);

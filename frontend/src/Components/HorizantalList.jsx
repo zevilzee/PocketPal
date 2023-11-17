@@ -29,7 +29,6 @@ const HorizantalList = ({
     setSelectedItem(item.title);
     setCenterSelected(true);
     setSelectedIndex(index);
-    console.log(item);
     const endDate = new Date();
     endDate.setMonth(endDate.getMonth() + item.id);
     let pickedDate = formatCustomDate(endDate);

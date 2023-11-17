@@ -76,9 +76,7 @@ const UserProfile = () => {
         `${BASE_URL}/user/update-picture/${userState?.id}`,
         formData
       );
-      console.log(res.data);
       userActions.setUser(res.data);
-      console.log(res?.data);
     } catch (error) {
       console.log(error);
     }
@@ -98,10 +96,19 @@ const UserProfile = () => {
           <View style={styles.imageContainer}>
             <View style={styles.imageMain}>
               {image === "" ? (
-                <Image
-                  style={styles.image}
-                  source={{ uri: `${BASE_URL}/${userState?.image}` }}
-                />
+                <>
+                  {userState?.image === null ? (
+                    <Image
+                      source={require("../../../assets/placeholder.png")}
+                      style={styles.image}
+                    />
+                  ) : (
+                    <Image
+                      source={{ uri: `${BASE_URL}/${userState?.image}` }}
+                      style={styles.image}
+                    />
+                  )}
+                </>
               ) : (
                 <Image source={{ uri: image }} style={styles.image} />
               )}

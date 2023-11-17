@@ -88,7 +88,6 @@ const EditGoal = () => {
   };
   const handleEditGoal = async () => {
     const savedAmount = Number(isSaved) + Number(Savedamount);
-    console.log(savedAmount);
     try {
       const res = await axios.patch(
         `${BASE_URL}/finance/update-finance/${data?._id}`,
@@ -110,7 +109,6 @@ const EditGoal = () => {
         });
       }
       console.log("New goal added successfully");
-      console.log(res, "updated res");
     } catch (error) {
       console.error("Error creating new goal:", error);
       toast.show("Failed to edit goal. Please try again.", {
@@ -123,8 +121,6 @@ const EditGoal = () => {
       console.log(error, "Error creating new goal");
     }
   };
-
-  console.log(isSaved, "is saved");
 
   const handleAddGoal = (text) => {
     setGoalamount(text);
