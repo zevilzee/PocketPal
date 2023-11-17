@@ -1,6 +1,23 @@
 import FinanceSchema from "../Models/FinanceModel.js";
 
-export const GetFinanceHistory = async (req, res, next) => {};
+export const GetFinanceHistory = async (req, res, next) => {
+  const { startDate, endDate, user } = req.body;
+  console.log(req.body);
+  try {
+    const FinanceHistory = await FinanceSchema.find({
+      date: {
+        $gte: new Date(startDate),
+        $lte: new Date(endDate),
+      },
+      user: user,
+    });
+
+    res.send(FinanceHistory);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 export const GetFinance = async (req, res, next) => {
   try {
