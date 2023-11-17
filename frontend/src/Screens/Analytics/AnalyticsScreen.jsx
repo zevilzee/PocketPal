@@ -14,6 +14,7 @@ import { ProgressChart } from "react-native-chart-kit";
 import { useUserState } from "../../Slices/userSlice";
 import * as Progress from "react-native-progress";
 import ExpenceIncome from "../../Components/ExpenceIncome";
+import AppBottomTab from "../../Components/AppBottomTab";
 
 const Height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
@@ -126,7 +127,7 @@ const AnalyticsScreen = () => {
               <View>
                 <Progress.Bar
                   progress={expencePercentage / 100}
-                  color={progressBarColor}
+                  color='green'
                   width={290}
                 />
               </View>
@@ -158,6 +159,16 @@ const AnalyticsScreen = () => {
             </View>
           </View>
         )}
+        <View
+          style={{
+            width: "100%",
+            position: "absolute",
+            bottom: Height * 0 - 105,
+            zIndex: 100,
+          }}
+        >
+          <AppBottomTab active='usere' />
+        </View>
       </View>
     </View>
   );

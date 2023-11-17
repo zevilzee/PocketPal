@@ -10,27 +10,32 @@ import {
 } from "react-native-vector-icons";
 import Color from "../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
+import { useNavigation } from "@react-navigation/native";
 
 const HelpSupport = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.containermain}>
-        <View style={styles.leftContainer}>
-          <Feather name="help-circle" style={styles.icoMain} />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("faq")}
+          style={styles.leftContainer}
+        >
+          <Feather name='help-circle' style={styles.icoMain} />
           <Text style={styles.title}>FAQs</Text>
-        </View>
+        </TouchableOpacity>
         <View>
-          <MaterialIcons name="keyboard-arrow-right" style={styles.arrowLeft} />
+          <MaterialIcons name='keyboard-arrow-right' style={styles.arrowLeft} />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.containermain}>
         <View style={styles.leftContainer}>
-          <AntDesign name="playcircleo" style={styles.icoMain} />
+          <AntDesign name='playcircleo' style={styles.icoMain} />
           <Text style={styles.title}>How to use POCKET PAL</Text>
         </View>
         <View>
-          <MaterialIcons name="keyboard-arrow-right" style={styles.arrowLeft} />
+          <MaterialIcons name='keyboard-arrow-right' style={styles.arrowLeft} />
         </View>
       </TouchableOpacity>
     </View>

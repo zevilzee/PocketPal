@@ -10,28 +10,37 @@ import {
 import Color from "../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
 import LanguageModal from "./LanguageModal";
+import { Switch } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 const SetttingsData = () => {
+  const navigation = useNavigation();
   const [modalVisible, setmodalVisible] = useState(false);
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.containermain}>
         <View style={styles.leftContainer}>
-          <Ionicons name="notifications-outline" style={styles.icoMain} />
+          <Ionicons name='notifications-outline' style={styles.icoMain} />
           <Text style={styles.title}>Quick entry from notification</Text>
         </View>
         <View>
-          <MaterialIcons name="keyboard-arrow-right" style={styles.arrowLeft} />
+          <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.containermain}>
+      <TouchableOpacity
+        style={styles.containermain}
+        onPress={() => navigation.navigate("AppLockScreen")}
+      >
         <View style={styles.leftContainer}>
-          <AntDesign name="lock1" style={styles.icoMain} />
+          <AntDesign name='lock1' style={styles.icoMain} />
           <Text style={styles.title}>App Lock</Text>
         </View>
         <View>
-          <MaterialIcons name="keyboard-arrow-right" style={styles.arrowLeft} />
+          <MaterialIcons name='keyboard-arrow-right' style={styles.arrowLeft} />
         </View>
       </TouchableOpacity>
 
@@ -40,11 +49,11 @@ const SetttingsData = () => {
         onPress={() => setmodalVisible(true)}
       >
         <View style={styles.leftContainer}>
-          <Ionicons name="language" style={styles.icoMain} />
+          <Ionicons name='language' style={styles.icoMain} />
           <Text style={styles.title}>Language</Text>
         </View>
         <View>
-          <MaterialIcons name="keyboard-arrow-right" style={styles.arrowLeft} />
+          <MaterialIcons name='keyboard-arrow-right' style={styles.arrowLeft} />
         </View>
       </TouchableOpacity>
       <LanguageModal

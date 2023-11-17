@@ -40,6 +40,12 @@ import FinanceGoalScreen from "./src/Screens/FinanceGoal/FinanceGoalScreen";
 import AddNewGoal from "./src/Screens/FinanceGoal/AddNewGoal";
 import EditGoal from "./src/Screens/FinanceGoal/EditGoal";
 import AnalyticsScreen from "./src/Screens/Analytics/AnalyticsScreen";
+import IncomeReport from "./src/Screens/IncomeReport/IncomeReport";
+import SavingReport from "./src/Screens/SavingReport/SavingReport";
+import Faq from "./src/Screens/Faqs/Faq";
+import AppLockScreen from "./src/Screens/AppLock/AppLockScreen";
+import AppLock from "./src/Screens/AppLock/AppLock";
+import ExpenseReport from "./src/Screens/ExpenseReport/ExpenseReport";
 
 let persistor = persistStore(store);
 const Stack = createNativeStackNavigator();
@@ -98,6 +104,12 @@ function Main() {
             <Stack.Screen name='AddGoal' component={AddNewGoal} />
             <Stack.Screen name='EditGoal' component={EditGoal} />
             <Stack.Screen name='Analytics' component={AnalyticsScreen} />
+            <Stack.Screen name='IncomeReport' component={IncomeReport} />
+            <Stack.Screen name='SavingReport' component={SavingReport} />
+            <Stack.Screen name='faq' component={Faq} />
+            <Stack.Screen name='AppLockScreen' component={AppLockScreen} />
+            <Stack.Screen name='AppLock' component={AppLock} />
+            <Stack.Screen name='ExpenseReport' component={ExpenseReport} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

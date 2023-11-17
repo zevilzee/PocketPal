@@ -35,7 +35,6 @@ const OtpScreen = () => {
   const handleCreateAccount = async () => {
     try {
       const res = await axios.post(`${BASE_URL}/user/sign-up`, userSignUpData);
-      console.log(res);
       // setModalVisible(false);
     } catch (error) {
       console.log("error", error);
@@ -100,18 +99,18 @@ const OtpScreen = () => {
             />
           </View>
           <GradientButton
-            title="Verify Code"
+            title='Verify Code'
             onPress={handleSignUp}
             containerStyle={styles.gradientButton}
           />
 
           <Modal
-            animationType="fade"
+            animationType='fade'
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => setModalVisible(false)}
           >
-            <ExpoBlurView style={styles.blurView} tint="light" intensity={10}>
+            <ExpoBlurView style={styles.blurView} tint='light' intensity={10}>
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                   <TouchableOpacity
@@ -141,7 +140,7 @@ const OtpScreen = () => {
                   </Text>
 
                   <GradientButton
-                    title="Confirm"
+                    title='Confirm'
                     onPress={() => {
                       setModalVisible(false);
                       setsuccessSignup(true);

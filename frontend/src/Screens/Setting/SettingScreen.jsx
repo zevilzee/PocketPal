@@ -1,4 +1,11 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import HeaderTitle from "../../Components/HeaderTitle";
 import { scale } from "react-native-size-matters";
@@ -13,8 +20,13 @@ import {
 import SetttingsData from "../../Components/SetttingsData";
 import HelpSupport from "../../Components/HelpSupport";
 import About from "../../Components/About";
+import AppBottomTab from "../../Components/AppBottomTab";
+import { useUserState } from "../../Slices/userSlice";
+
+const screenHeight = Dimensions.get("screen").height;
 
 const SettingScreen = () => {
+  const userState = useUserState();
   const [isSetting, setisSetting] = useState(false);
   const [isHelp, setisHelp] = useState(false);
   const [isAbout, setisAbout] = useState(false);
@@ -30,9 +42,10 @@ const SettingScreen = () => {
   const handleIsAbout = () => {
     setisAbout(!isAbout);
   };
+  console.log(userState);
   return (
     <View style={styles.container}>
-      <HeaderTitle title="Setting" />
+      <HeaderTitle title='Setting' />
 
       <View style={styles.contentContainer}>
         {/* User Profile Card  */}
@@ -46,7 +59,7 @@ const SettingScreen = () => {
             onPress={handleIsSettingOpen}
           >
             <View style={styles.leftContainer}>
-              <AntDesign name="setting" style={styles.icoMain} />
+              <AntDesign name='setting' style={styles.icoMain} />
               <Text style={styles.title}>Setting</Text>
             </View>
             <View>
@@ -62,7 +75,7 @@ const SettingScreen = () => {
 
           <TouchableOpacity style={styles.containermain} onPress={handleIsHelp}>
             <View style={styles.leftContainer}>
-              <Entypo name="help-with-circle" style={styles.icoMain} />
+              <Entypo name='help-with-circle' style={styles.icoMain} />
               <Text style={styles.title}>Help & Support</Text>
             </View>
             <View>
@@ -78,7 +91,7 @@ const SettingScreen = () => {
             onPress={handleIsAbout}
           >
             <View style={styles.leftContainer}>
-              <AntDesign name="minuscircle" style={styles.icoMain} />
+              <AntDesign name='minuscircle' style={styles.icoMain} />
               <Text style={styles.title}>About Us</Text>
             </View>
             <View>
@@ -95,10 +108,20 @@ const SettingScreen = () => {
             style={{ ...styles.containermain, borderBottomWidth: 0 }}
           >
             <View style={styles.leftContainer}>
-              <SimpleLineIcons name="logout" style={styles.icoMain} />
+              <SimpleLineIcons name='logout' style={styles.icoMain} />
               <Text style={styles.title}>logout</Text>
             </View>
           </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            position: "absolute",
+            bottom: screenHeight * 0 - 15,
+            zIndex: 100,
+          }}
+        >
+          <AppBottomTab active='user' />
         </View>
       </View>
     </View>

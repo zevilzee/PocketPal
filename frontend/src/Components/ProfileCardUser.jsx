@@ -1,23 +1,30 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Color from "../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
+import { useUserState } from "../Slices/userSlice";
+import { useNavigation } from "@react-navigation/native";
 
 const ProfileCardUser = () => {
+  const userState = useUserState();
+  const navigation = useNavigation();
   return (
     <View style={styles.userCard}>
-      <View style={styles.topContainer}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("UserProfile")}
+        style={styles.topContainer}
+      >
         <View style={styles.userContainer}>
           <Image
             source={require("../../assets/profile.jpg")}
             style={styles.userImage}
           />
-          <Text>User Name</Text>
+          <Text>{userState?.fullName}</Text>
         </View>
         <View>
           <Text>Update</Text>
         </View>
-      </View>
+      </TouchableOpacity>
       <View style={styles.bottomContainer}>
         <View>
           <Text>Profile Strength</Text>

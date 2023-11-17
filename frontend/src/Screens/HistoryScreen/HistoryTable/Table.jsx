@@ -8,11 +8,12 @@ import { CustomDateYear } from "../../../Utiles/GetDateYear";
 
 const TableDesign = ({ data }) => {
   const userState = useUserState();
+  const totalBalce = userState?.totalIncome - userState?.totalExpence;
 
   const tableHead = ["Date", "Daily income", "Cash In Hand"];
   const tableData = data?.map((item) => {
     const date = CustomDateYear(item?.date);
-    return [date, item?.amount, userState?.balance];
+    return [date, item?.amount, totalBalce];
   });
 
   return (

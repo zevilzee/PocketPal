@@ -1,32 +1,16 @@
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React, { useState, useEffect } from "react";
-
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
 import { scale } from "react-native-size-matters";
-
 import { useNavigation } from "@react-navigation/core";
-import HeaderTitle from "../../Components/HeaderTitle";
-import HistoryCard from "../IncomeScreen/HistoryCard";
-import SearchInput from "../IncomeScreen/SearchInput";
-import expenseData from "../IncomeScreen/Data";
-import BottomTab from "../../Components/BottomTab";
-import Color from "../../../assets/colors/Color";
-import ExpenseDetails from "./ExpenseDetails";
-import Icon from "../../../assets/add.png";
-import FilterModal from "./FilterModal";
-import HIstoryCardExpence from "../../Components/HIstoryCardExpence";
-import { useUserState } from "../../Slices/userSlice";
 import axios from "axios";
-import { BASE_URL } from "../../../CONSTANTS";
-import { useUserStateActions } from "../../Slices/userSlice";
-import { formatCustomDate } from "../../Utiles/GetData";
+import { useUserState, useUserStateActions } from "../Slices/userSlice";
+import { formatCustomDate } from "../Utiles/GetData";
+import { BASE_URL } from "../../CONSTANTS";
+import IncomeDetails from "../Screens/IncomeScreen/IncomeDetails";
+import Color from "../../assets/colors/Color";
+import ExpenseDetails from "../Screens/ExpenseScreen/ExpenseDetails";
 
-const ExpenseScreen = () => {
+const ExpenseGraph = ({ incomeDetails }) => {
   const userStateActions = useUserStateActions();
   const userState = useUserState();
   const [data, setData] = useState([]);
@@ -34,6 +18,7 @@ const ExpenseScreen = () => {
   const currentDate = formatCustomDate(date);
   useEffect(() => {
     const fetchData = async () => {
+      console.log(userState.id);
       try {
         const res = await axios.get(
           `${BASE_URL}/expense/getExpense/${userState.id}`,
@@ -43,10 +28,7 @@ const ExpenseScreen = () => {
             },
           }
         );
-        console.log(res.data);
         setData(res.data);
-        const newBalance = parseInt(userState.Balance) - parseInt(amount);
-        userStateActions.setbalance(newBalance.toString());
       } catch (error) {
         console.log(error);
       }
@@ -93,42 +75,22 @@ const ExpenseScreen = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderTitle title='EXPENSE' />
-      <View style={styles.historyCard}>
-        <HIstoryCardExpence todayExpense={todayIncome[0]?.totalAmount} />
-      </View>
-      <SearchInput
-        filter={handleFilter}
-        screen='EXPENSE'
-        modalVisible={setmodalVisibal}
-      />
+      <View style={styles.historyCard}></View>
+
       <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <ExpenseDetails data={item} />}
       />
-
-      <FilterModal
-        visibal={modalVisibal}
-        setmodalVisibal={setmodalVisibal}
-        selectedItem={selectedItem}
-        setSelectedItem={setSelectedItem}
-      />
-
-      <BottomTab
-        title='Create new bill'
-        image={Icon}
-        onpress={handleCreateBill}
-      />
     </View>
   );
 };
 
-export default ExpenseScreen;
+export default ExpenseGraph;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: Color.White,
   },
   historyCard: {

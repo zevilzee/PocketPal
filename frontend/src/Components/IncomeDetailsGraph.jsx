@@ -1,23 +1,17 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import HeaderTitle from "../../Components/HeaderTitle";
-import HistoryCard from "./HistoryCard";
 import { scale } from "react-native-size-matters";
-import SearchInput from "./SearchInput";
-import Color from "../../../assets/colors/Color";
-import IncomeDetails from "./IncomeDetails";
-import expenseData from "./Data";
-import BottomTab from "../../Components/BottomTab";
 import { useNavigation } from "@react-navigation/core";
-import { useUserState } from "../../Slices/userSlice";
 import axios from "axios";
-import { BASE_URL } from "../../../CONSTANTS";
-import { formatCustomDate } from "../../Utiles/GetData";
+import { useUserState } from "../Slices/userSlice";
+import { formatCustomDate } from "../Utiles/GetData";
+import { BASE_URL } from "../../CONSTANTS";
+import IncomeDetails from "../Screens/IncomeScreen/IncomeDetails";
+import Color from "../../assets/colors/Color";
 
-const IncomeScreen = () => {
+const IncomeDetailsGraph = ({ incomeDetails }) => {
   const navigation = useNavigation();
   const userState = useUserState();
-  const totalBalce = userState?.totalIncome - userState?.totalExpence;
 
   const date = new Date();
   const currentDate = formatCustomDate(date);
@@ -70,30 +64,28 @@ const IncomeScreen = () => {
   const todayIncome = groupedExpenseData.filter(
     (item) => item?.timestamp === currentDate
   );
+  useEffect(() => {
+    incomeDetails(todayIncome);
+  }, [loading]);
 
-  const handleFilter = () => {};
   return (
     <View style={styles.container}>
-      <HeaderTitle title='Income' />
-      <View style={styles.historyCard}>
-        <HistoryCard todayIncome={todayIncome} />
-      </View>
-      <SearchInput filter={handleFilter} screen='' />
+      <View style={styles.historyCard}></View>
+
       <FlatList
         data={groupedExpenseData}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <IncomeDetails data={item} />}
       />
-      <BottomTab title='Cash In' onpress={handleCashIn} />
     </View>
   );
 };
 
-export default IncomeScreen;
+export default IncomeDetailsGraph;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: Color.White,
   },
   historyCard: {

@@ -1,4 +1,10 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import HeaderHome from "./HeaderHome";
 import NameHeader from "./NameHeader";
@@ -12,6 +18,10 @@ import { useUserState, useUserStateActions } from "../../Slices/userSlice";
 import FeatureCardsHome from "./FeatureCardsHome";
 import axios from "axios";
 import { BASE_URL } from "../../../CONSTANTS";
+import AppBottomTab from "../../Components/AppBottomTab";
+
+const screenHeight = Dimensions.get("screen").height;
+const screenWidth = Dimensions.get("screen").width;
 
 const HomeScreen = () => {
   const userState = useUserState();
@@ -82,6 +92,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <HeaderHome />
+      <View></View>
       {loading ? (
         <View
           style={{
@@ -98,6 +109,16 @@ const HomeScreen = () => {
           <ATMCard />
           <Text style={styles.title}>Features</Text>
           <FeatureCardsHome />
+          <View
+            style={{
+              width: "100%",
+              position: "absolute",
+              bottom: screenHeight * 0.09,
+              zIndex: 100,
+            }}
+          >
+            <AppBottomTab active='home' />
+          </View>
         </View>
       )}
     </View>

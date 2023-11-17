@@ -26,15 +26,14 @@ const SignUpCompleteModal = ({
     setModalVisible(false);
   };
 
-  console.log(modalVisible);
   return (
     <Modal
-      animationType="fade"
+      animationType='fade'
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => setModalVisible(false)}
     >
-      <ExpoBlurView style={styles.blurView} tint="light" intensity={10}>
+      <ExpoBlurView style={styles.blurView} tint='light' intensity={10}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <TouchableOpacity
@@ -63,7 +62,7 @@ const SignUpCompleteModal = ({
             </Text>
 
             <GradientButton
-              title="Login"
+              title='Login'
               onPress={handlenavigation}
               containerStyle={styles.modalButton}
             />

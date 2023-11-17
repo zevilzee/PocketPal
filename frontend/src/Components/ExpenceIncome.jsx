@@ -1,19 +1,31 @@
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 
 import { AntDesign } from "react-native-vector-icons";
 import { scale } from "react-native-size-matters";
 import { useUserState } from "../Slices/userSlice";
 import Color from "../../assets/colors/Color";
+import { useNavigation } from "@react-navigation/native";
 const Height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
 const ExpenceIncome = () => {
   const userState = useUserState();
-  console.log(userState);
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", gap: 10 }}>
-        <View style={{ ...styles.card, backgroundColor: "#FADEF4" }}>
+        <TouchableOpacity
+          style={{ ...styles.card, backgroundColor: "#FADEF4" }}
+          onPress={() => navigation.navigate("ExpenseReport")}
+        >
           <View>
             <Image
               source={require("../../assets/bill.png")}
@@ -27,8 +39,11 @@ const ExpenceIncome = () => {
           <View>
             <AntDesign name='rightcircle' style={styles.icon} />
           </View>
-        </View>
-        <View style={styles.card}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => navigation.navigate("IncomeReport")}
+        >
           <View>
             <Image
               source={require("../../assets/money-bag.png")}
@@ -42,13 +57,16 @@ const ExpenceIncome = () => {
           <View>
             <AntDesign name='rightcircle' style={styles.icon} />
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
 
       {/* Personal Saving Goal */}
 
       <View style={styles.personalContainer}>
-        <View style={styles.personal}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SavingReport")}
+          style={styles.personal}
+        >
           <Image
             source={require("../../assets/saveing.png")}
             style={styles.bagImage}
@@ -61,7 +79,7 @@ const ExpenceIncome = () => {
               ${userState?.saveingPlan}
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
         <View>
           <AntDesign
             name='rightcircle'

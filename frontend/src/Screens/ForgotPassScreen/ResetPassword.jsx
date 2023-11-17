@@ -28,9 +28,7 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { firebaseApi, userSignUpData, resetPass } = useStateContext();
-  console.log(userSignUpData);
   const phone = userSignUpData;
-  console.log(resetPass);
 
   const handleReset = async () => {
     if (!password || !confirmPassword) {
@@ -96,15 +94,15 @@ const ResetPassword = () => {
               <Text style={styles.subTtiel}>continue</Text>
             </View>
             <PasswordInput
-              placeholder="Enter your Password"
+              placeholder='Enter your Password'
               value={password}
               onChangeText={handlePassChange}
               style={styles.input}
               icon={
                 passwordVisible ? (
-                  <Entypo name="eye" size={20} color={Color.Blue} />
+                  <Entypo name='eye' size={20} color={Color.Blue} />
                 ) : (
-                  <Entypo name="eye-with-line" size={20} color={Color.Blue} />
+                  <Entypo name='eye-with-line' size={20} color={Color.Blue} />
                 )
               }
               onIconPress={() => setPasswordVisible(!passwordVisible)}
@@ -112,15 +110,15 @@ const ResetPassword = () => {
             />
 
             <PasswordInput
-              placeholder="Confirm Password"
+              placeholder='Confirm Password'
               value={confirmPassword}
               onChangeText={handleConfirmPassword}
               style={styles.input}
               icon={
                 passwordVisible ? (
-                  <Entypo name="eye" size={20} color={Color.Blue} />
+                  <Entypo name='eye' size={20} color={Color.Blue} />
                 ) : (
-                  <Entypo name="eye-with-line" size={20} color={Color.Blue} />
+                  <Entypo name='eye-with-line' size={20} color={Color.Blue} />
                 )
               }
               onIconPress={() => setPasswordVisible(!passwordVisible)}
@@ -128,18 +126,18 @@ const ResetPassword = () => {
             />
           </View>
           <GradientButton
-            title="Reset Password"
+            title='Reset Password'
             onPress={handleReset}
             containerStyle={styles.gradientButton}
           />
 
           <Modal
-            animationType="fade"
+            animationType='fade'
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => setModalVisible(false)}
           >
-            <ExpoBlurView style={styles.blurView} tint="light" intensity={10}>
+            <ExpoBlurView style={styles.blurView} tint='light' intensity={10}>
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                   <TouchableOpacity
