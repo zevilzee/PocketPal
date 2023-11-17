@@ -3,14 +3,18 @@ import React from "react";
 import { scale } from "react-native-size-matters";
 import { AntDesign } from "react-native-vector-icons";
 import Color from "../../../assets/colors/Color";
+import { useUserState } from "../../Slices/userSlice";
+import { BASE_URL } from "../../../CONSTANTS";
 
 const NameHeader = ({ userName }) => {
+  const userState = useUserState();
+  console.log(userState?.image);
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <View>
           <Image
-            source={require("../../../assets/profile.jpg")}
+            source={{ uri: `${BASE_URL}/${userState?.image}` }}
             style={styles.userImage}
           />
         </View>
@@ -20,8 +24,8 @@ const NameHeader = ({ userName }) => {
         </View>
       </View>
       <View style={styles.iconContainer}>
-        <AntDesign name="bells" style={styles.icons} />
-        <AntDesign name="search1" style={styles.icons} />
+        <AntDesign name='bells' style={styles.icons} />
+        <AntDesign name='search1' style={styles.icons} />
       </View>
     </View>
   );

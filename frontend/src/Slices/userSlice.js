@@ -18,6 +18,7 @@ export const initialState = {
   saveingPlan: null,
   authMethod: null,
   pin: null,
+  image: null,
 };
 
 export const userSlice = createSlice({
@@ -42,6 +43,7 @@ export const userSlice = createSlice({
       state.city = action.payload.city;
       state.IncomeType = action.payload.IncomeType;
       state.ExpenseCategory = action.payload.ExpenseCategory;
+      state.image = action.payload.image;
     },
     setfullName: (state, action) => {
       state.fullName = action.payload;
@@ -67,6 +69,9 @@ export const userSlice = createSlice({
     setAuthMethod: (state, actions) => {
       state.authMethod = actions.payload.authMethod;
       state.pin = actions.payload.pin;
+    },
+    setimage: (state, action) => {
+      state.image = action.payload;
     },
   },
 });

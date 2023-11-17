@@ -26,6 +26,7 @@ const screenWidth = Dimensions.get("screen").width;
 const HomeScreen = () => {
   const userState = useUserState();
   const userActions = useUserStateActions();
+  console.log(userState);
   const [loading, setloading] = useState(false);
 
   const fetchExpence = async () => {

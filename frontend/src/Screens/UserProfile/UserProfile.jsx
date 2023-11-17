@@ -24,28 +24,66 @@ import GradientButton from "../../Components/GradientButton";
 import AppBottomTab from "../../Components/AppBottomTab";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
-import { useUserState } from "../../Slices/userSlice";
+import { useUserState, useUserStateActions } from "../../Slices/userSlice";
+import axios from "axios";
+import { BASE_URL } from "../../../CONSTANTS";
 
 const UserProfile = () => {
   const navigation = useNavigation();
-  const [image, setImage] = useState(null);
-  const userState = useUserState();
+  const userActions = useUserStateActions();
 
+  const [image, setImage] = useState("");
+  const userState = useUserState();
+  const [name, setname] = useState(userState?.fullName);
+  const [email, setemail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fileName, setfileName] = useState("");
+  const [phoneNumber, setphoneNumber] = useState(
+    userState?.phoneNumber.toString()
+  );
   const handlePickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-
-      aspect: [4, 3],
-      quality: 1,
     });
-
-    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setfileName(result.assets[0].fileName);
     }
   };
-  console.log(userState?.phoneNumber);
+
+  const handleUpdateImage = async () => {
+    const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("email", email);
+    if (password !== "") {
+      formData.append("password", password);
+    }
+    formData.append("phoneNumber", phoneNumber);
+
+    if (!image) {
+      formData.append("image", null);
+    } else {
+      formData.append("image", {
+        name: fileName,
+        uri: image,
+        type: "image/png",
+      });
+    }
+    try {
+      const res = await axios.patch(
+        `${BASE_URL}/user/update-picture/${userState?.id}`,
+        formData
+      );
+      console.log(res.data);
+      userActions.setUser(res.data);
+      console.log(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -59,10 +97,14 @@ const UserProfile = () => {
           {/* Image Container  */}
           <View style={styles.imageContainer}>
             <View style={styles.imageMain}>
-              <Image
-                source={require("../../../assets/imagePlaceHolder.png")}
-                style={styles.image}
-              />
+              {image === "" ? (
+                <Image
+                  style={styles.image}
+                  source={{ uri: `${BASE_URL}/${userState?.image}` }}
+                />
+              ) : (
+                <Image source={{ uri: image }} style={styles.image} />
+              )}
             </View>
             <TouchableOpacity
               style={styles.iconContainer}
@@ -76,10 +118,7 @@ const UserProfile = () => {
           <View style={styles.formContainer}>
             {/* User details  */}
             <View style={styles.formContent}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("SettingScreen")}
-                style={styles.formMain}
-              >
+              <TouchableOpacity style={styles.formMain}>
                 <View style={styles.contentLeft}>
                   <MaterialCommunityIcons
                     name='account-edit'
@@ -87,7 +126,8 @@ const UserProfile = () => {
                   />
                   <TextInput
                     placeholder='User name'
-                    value={userState?.fullName}
+                    value={name}
+                    onChangeText={(text) => setname(text)}
                   />
                 </View>
                 <View>
@@ -99,8 +139,9 @@ const UserProfile = () => {
                   <FontAwesome name='phone' style={styles.iconLeft} />
                   <TextInput
                     placeholder='Phone No'
-                    value={userState?.phoneNumber}
+                    value={phoneNumber}
                     keyboardType='number-pad'
+                    onChangeText={(text) => setphoneNumber(text)}
                   />
                 </View>
                 <View>
@@ -112,6 +153,8 @@ const UserProfile = () => {
                   <MaterialCommunityIcons
                     name='email'
                     style={styles.iconLeft}
+                    onChangeText={(text) => setemail(text)}
+                    value={email}
                   />
                   <TextInput placeholder='Email' value={userState?.email} />
                 </View>
@@ -122,7 +165,11 @@ const UserProfile = () => {
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
                   <Fontisto name='locked' style={styles.iconLeft} />
-                  <TextInput placeholder='Password' />
+                  <TextInput
+                    placeholder='Password'
+                    onChangeText={(text) => setPassword(text)}
+                    value={password}
+                  />
                 </View>
                 <View>
                   <Feather name='edit-3' style={styles.iconRight} />
@@ -133,7 +180,7 @@ const UserProfile = () => {
             <View style={styles.buttonContainer}>
               <GradientButton
                 title='Save'
-                // onPress={() => handleVerificationCode(recaptchaVerifier)}
+                onPress={() => handleUpdateImage()}
                 containerStyle={styles.gradientButton}
               />
             </View>

@@ -4,6 +4,7 @@ import Color from "../../assets/colors/Color";
 import { scale } from "react-native-size-matters";
 import { useUserState } from "../Slices/userSlice";
 import { useNavigation } from "@react-navigation/native";
+import { BASE_URL } from "../../CONSTANTS";
 
 const ProfileCardUser = () => {
   const userState = useUserState();
@@ -16,7 +17,7 @@ const ProfileCardUser = () => {
       >
         <View style={styles.userContainer}>
           <Image
-            source={require("../../assets/profile.jpg")}
+            source={{ uri: `${BASE_URL}/${userState?.image}` }}
             style={styles.userImage}
           />
           <Text>{userState?.fullName}</Text>
