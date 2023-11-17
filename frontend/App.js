@@ -72,10 +72,10 @@ function Main() {
   let initialRouteName = isEqual(initialUserState, UserState)
     ? "Intro"
     : "Home";
-
-  // if (UserState.pin !== null) {
-  //   initialRouteName = "AppLock";
-  // }
+  console.log(UserState.pin);
+  if (UserState.pin !== null) {
+    initialRouteName = "EnterPin";
+  }
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -84,40 +84,40 @@ function Main() {
             initialRouteName={initialRouteName}
             screenOptions={{ headerShown: false }}
           >
-            <Stack.Screen name='Intro' component={IntroScreen} />
+            <Stack.Screen name="Intro" component={IntroScreen} />
             <Stack.Screen
-              name='LoginOrSignUp'
+              name="LoginOrSignUp"
               component={LoginOrSignUpScreen}
             />
-            <Stack.Screen name='SignUp' component={SignUp} />
-            <Stack.Screen name='Otp' component={OtpScreen} />
-            <Stack.Screen name='Login' component={LoginScreen} />
-            <Stack.Screen name='Forgot' component={ForgotPass} />
-            <Stack.Screen name='verifyEmail' component={VerifyEmail} />
-            <Stack.Screen name='ResetPass' component={ResetPassword} />
-            <Stack.Screen name='Home' component={HomeScreen} />
-            <Stack.Screen name='Income' component={IncomeScreen} />
-            <Stack.Screen name='History' component={HistoryScreen} />
-            <Stack.Screen name='CashIn' component={CashIn} />
-            <Stack.Screen name='Expense' component={ExpenseScreen} />
-            <Stack.Screen name='AddExpense' component={AddExpense} />
-            <Stack.Screen name='AddCategory' component={AddCategory} />
-            <Stack.Screen name='UserProfile' component={UserProfile} />
-            <Stack.Screen name='SettingScreen' component={SettingScreen} />
-            <Stack.Screen name='PrivacyPolicy' component={PrivacyPolicy} />
-            <Stack.Screen name='TermsCondition' component={TermsConditions} />
-            <Stack.Screen name='FinanceGoal' component={FinanceGoalScreen} />
-            <Stack.Screen name='AddGoal' component={AddNewGoal} />
-            <Stack.Screen name='EditGoal' component={EditGoal} />
-            <Stack.Screen name='Analytics' component={AnalyticsScreen} />
-            <Stack.Screen name='IncomeReport' component={IncomeReport} />
-            <Stack.Screen name='SavingReport' component={SavingReport} />
-            <Stack.Screen name='faq' component={Faq} />
-            <Stack.Screen name='AppLockScreen' component={AppLockScreen} />
-            <Stack.Screen name='AppLock' component={AppLock} />
-            <Stack.Screen name='ExpenseReport' component={ExpenseReport} />
-            <Stack.Screen name='EditExpence' component={EditExpence} />
-            <Stack.Screen name='EnterPin' component={EnterPin} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="Otp" component={OtpScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Forgot" component={ForgotPass} />
+            <Stack.Screen name="verifyEmail" component={VerifyEmail} />
+            <Stack.Screen name="ResetPass" component={ResetPassword} />
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Income" component={IncomeScreen} />
+            <Stack.Screen name="History" component={HistoryScreen} />
+            <Stack.Screen name="CashIn" component={CashIn} />
+            <Stack.Screen name="Expense" component={ExpenseScreen} />
+            <Stack.Screen name="AddExpense" component={AddExpense} />
+            <Stack.Screen name="AddCategory" component={AddCategory} />
+            <Stack.Screen name="UserProfile" component={UserProfile} />
+            <Stack.Screen name="SettingScreen" component={SettingScreen} />
+            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+            <Stack.Screen name="TermsCondition" component={TermsConditions} />
+            <Stack.Screen name="FinanceGoal" component={FinanceGoalScreen} />
+            <Stack.Screen name="AddGoal" component={AddNewGoal} />
+            <Stack.Screen name="EditGoal" component={EditGoal} />
+            <Stack.Screen name="Analytics" component={AnalyticsScreen} />
+            <Stack.Screen name="IncomeReport" component={IncomeReport} />
+            <Stack.Screen name="SavingReport" component={SavingReport} />
+            <Stack.Screen name="faq" component={Faq} />
+            <Stack.Screen name="AppLockScreen" component={AppLockScreen} />
+            <Stack.Screen name="AppLock" component={AppLock} />
+            <Stack.Screen name="ExpenseReport" component={ExpenseReport} />
+            <Stack.Screen name="EditExpence" component={EditExpence} />
+            <Stack.Screen name="EnterPin" component={EnterPin} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

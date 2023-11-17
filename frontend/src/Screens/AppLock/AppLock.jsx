@@ -25,16 +25,9 @@ const AppLock = () => {
   const [pin, setpin] = useState("");
 
   const handleSetPin = () => {
-    console.log(userState.pin);
-    if (userState.pin !== null) {
-      if (userState.pin === pin) {
-        navigation.navigate("Home");
-      } else {
-        alert("Invalid pin");
-      }
-    }
     if (pin.length === 4) {
       userStateActions.setAuthMethod({ authMethod: "pin", pin: pin });
+      alert("Pin Set Successfully");
     } else {
       alert("Pin should be 4 digits");
     }
