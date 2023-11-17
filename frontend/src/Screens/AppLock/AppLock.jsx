@@ -16,11 +16,33 @@ import Header from "../../Components/Header";
 import GradientButton from "../../Components/GradientButton";
 import Color from "../../../assets/colors/Color";
 import HeaderTitle from "../../Components/HeaderTitle";
-
+import { useUserState, useUserStateActions } from "../../Slices/userSlice";
+import { useNavigation } from "@react-navigation/native";
 const AppLock = () => {
+  const navigation = useNavigation();
+  const userState = useUserState();
+  const userStateActions = useUserStateActions();
+  const [pin, setpin] = useState("");
+
+  const handleSetPin = () => {
+    console.log(userState.pin);
+    if (userState.pin !== null) {
+      if (userState.pin === pin) {
+        navigation.navigate("Home");
+      } else {
+        alert("Invalid pin");
+      }
+    }
+    if (pin.length === 4) {
+      userStateActions.setAuthMethod({ authMethod: "pin", pin: pin });
+    } else {
+      alert("Pin should be 4 digits");
+    }
+    console.log("called");
+  };
   return (
     <View style={styles.container}>
-      <HeaderTitle title='APP LOCK' />
+      <HeaderTitle title="APP LOCK" />
       <View style={styles.formContainer}>
         <View style={styles.InputContainer}>
           <View>
@@ -32,13 +54,16 @@ const AppLock = () => {
 
             <OTPTextInput
               style={styles.inputContainer}
-              handleTextChange={(code) => {}}
+              handleTextChange={(code) => {
+                setpin(code);
+              }}
               inputCount={4}
             />
           </View>
           <GradientButton
-            title='Continue'
+            title="Continue"
             containerStyle={styles.gradientButton}
+            onPress={handleSetPin}
           />
         </View>
       </View>

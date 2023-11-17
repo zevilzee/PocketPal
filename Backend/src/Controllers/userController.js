@@ -66,13 +66,26 @@ export const me = async (req, res, next) => {
 
 export const updatePicture = async (req, res, next) => {
   if (!req.file) {
-    res.status(200).send("Image not found");
+    res.status(400).send("Image not found");
   }
   const user = await UserModel.findByIdAndUpdate(
     { _id: req.params.id },
     {
       image: req.file.filename,
-    }
+    },
+    { new: true }
+  );
+  res.status(200).send(user);
+};
+
+export const updateUser = async (req, res, next) => {
+  if (!req.file) {
+    res.status(400).send("Data is invalid");
+  }
+  const user = await UserModel.findByIdAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    { new: true }
   );
   res.status(200).send(user);
 };

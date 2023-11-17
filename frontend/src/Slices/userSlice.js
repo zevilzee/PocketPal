@@ -16,6 +16,8 @@ export const initialState = {
   totalIncome: null,
   totalExpence: null,
   saveingPlan: null,
+  authMethod: null,
+  pin: null,
 };
 
 export const userSlice = createSlice({
@@ -61,6 +63,10 @@ export const userSlice = createSlice({
     },
     setsaveingPlan: (state, actions) => {
       state.saveingPlan = actions.payload;
+    },
+    setAuthMethod: (state, actions) => {
+      state.authMethod = actions.payload.authMethod;
+      state.pin = actions.payload.pin;
     },
   },
 });
