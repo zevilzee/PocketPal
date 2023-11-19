@@ -76,9 +76,6 @@ export const updatePicture = async (req, res, next) => {
 };
 
 export const updateUser = async (req, res, next) => {
-  if (!req.file) {
-    res.status(400).send("Data is invalid");
-  }
   const user = await UserModel.findByIdAndUpdate(
     { _id: req.params.id },
     req.body,
