@@ -70,27 +70,13 @@ const LoginScreen = () => {
       <View style={styles.formContainer}>
         <View style={styles.InputContainer}>
           <CustomInput
-            placeholder='Email'
+            placeholder="Email"
             onChangeText={(text) => {
               setemail(text);
             }}
           />
+          <CustomInput placeholder="Password" onChangeText={handlePassChange} />
 
-          <PasswordInput
-            placeholder='Password'
-            value={password}
-            onChangeText={handlePassChange}
-            style={styles.input}
-            icon={
-              passwordVisible ? (
-                <Entypo name='eye' size={20} color={Color.Blue} />
-              ) : (
-                <Entypo name='eye-with-line' size={20} color={Color.Blue} />
-              )
-            }
-            onIconPress={() => setPasswordVisible(!passwordVisible)}
-            secureTextEntry={!passwordVisible}
-          />
           <TouchableOpacity
             style={styles.forgetContainer}
             onPress={handleForget}
@@ -99,7 +85,7 @@ const LoginScreen = () => {
           </TouchableOpacity>
 
           <GradientButton
-            title='Login'
+            title="Login"
             onPress={handleLogin}
             containerStyle={styles.gradientButton}
           />
@@ -124,7 +110,7 @@ const LoginScreen = () => {
               style={styles.google}
             />
             <Text style={styles.line}></Text>
-            <AntDesign name='apple1' style={styles.apple} />
+            <AntDesign name="apple1" style={styles.apple} />
           </View>
         </View>
       </View>
