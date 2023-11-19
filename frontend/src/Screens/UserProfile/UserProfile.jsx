@@ -35,10 +35,12 @@ const UserProfile = () => {
   const [image, setImage] = useState("");
   const userState = useUserState();
   const [name, setname] = useState(userState?.fullName);
-  const [email, setemail] = useState(userState?.email);
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [fileName, setfileName] = useState("");
-  const [phoneNumber, setphoneNumber] = useState(userState?.phoneNumber);
+  const [phoneNumber, setphoneNumber] = useState(
+    userState?.phoneNumber.toString()
+  );
   const handlePickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -53,36 +55,29 @@ const UserProfile = () => {
   const handleUpdateImage = async () => {
     const formData = new FormData();
 
-    formData.append("name", name);
-    formData.append("email", email);
+    name !== userState?.fullName && formData.append("name", name);
+    email !== "" && formData.append("email", email);
     if (password !== "") {
       formData.append("password", password);
     }
-    formData.append("phoneNumber", userState?.phoneNumber);
+    phoneNumber !== "" && formData.append("phoneNumber", phoneNumber);
 
     if (image) {
-      console.log(image);
+      // console.log(image);
       formData.append("image", {
-        name: fileName,
+        name: `${userState?.fullName}.jpg`,
         uri: image,
         type: "image/png",
       });
     }
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Accept: "application/json",
-      },
-    };
     try {
       const res = await axios.patch(
         `${BASE_URL}/user/update-picture/${userState?.id}`,
-        formData,
-        config
+        formData
       );
-      console.log(res);
-      // userActions.setUser(res.data);
-      // console.log(res?.data);
+      console.log(res.data);
+      userActions.setUser(res.data);
+      console.log(res?.data);
     } catch (error) {
       console.log(error);
     }

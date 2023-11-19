@@ -31,6 +31,7 @@ const ResetPassword = () => {
   const phone = userSignUpData;
 
   const handleReset = async () => {
+    console.log("reset");
     if (!password || !confirmPassword) {
       Alert.alert("Please fill in both password fields.");
     } else if (password === confirmPassword) {
