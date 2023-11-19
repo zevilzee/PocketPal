@@ -8,9 +8,8 @@ export const signUp = async (req, res, next) => {
   console.log(req.body);
 
   //hashing the password
-  let hash = await hashSync(req.body.password);
 
-  let user = new UserModel({ ...req.body, password: hash });
+  let user = new UserModel({ ...req.body });
   await user.save();
 
   res.status(200).json({ success: true, message: "user created successfully" });
@@ -21,12 +20,9 @@ export const signIn = async (req, res, next) => {
   try {
     const user = await UserModel.findOne({
       email: req.body?.email,
+      password: req.body?.password,
     });
     if (!user) {
-      res.status(200).json({ message: "Incorrect details", status: 400 });
-    }
-    const passwordMatched = await user.comparePassword(req.body?.password);
-    if (!passwordMatched) {
       res.status(200).json({ message: "Incorrect details", status: 400 });
     }
 
@@ -49,7 +45,7 @@ export const forgotPassword = async (req, res) => {
 
     const newuser = await UserModel.findByIdAndUpdate(
       { _id: test._id },
-      { password: hash },
+      { password: req.body.password },
       { new: true }
     );
     console.log(user);
