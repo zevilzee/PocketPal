@@ -55,16 +55,15 @@ const UserProfile = () => {
   const handleUpdateImage = async () => {
     const formData = new FormData();
 
-    formData.append("name", name);
-    formData.append("email", email);
+    name !== userState?.fullName && formData.append("name", name);
+    email !== "" && formData.append("email", email);
     if (password !== "") {
       formData.append("password", password);
     }
-    formData.append("phoneNumber", phoneNumber);
+    phoneNumber !== "" && formData.append("phoneNumber", phoneNumber);
 
-    if (!image) {
-      formData.append("image", null);
-    } else {
+    if (image) {
+      // console.log(image);
       formData.append("image", {
         name: fileName,
         uri: image,
@@ -90,7 +89,7 @@ const UserProfile = () => {
       behavior={Platform.OS === "ios" ? "height" : null}
     >
       <View style={styles.container}>
-        <HeaderTitle title='pROFILE' />
+        <HeaderTitle title="pROFILE" />
 
         {/* Bottom container  */}
         <ScrollView style={styles.contentContainer}>
@@ -110,7 +109,7 @@ const UserProfile = () => {
               style={styles.iconContainer}
               onPress={handlePickImage}
             >
-              <AntDesign name='camera' style={styles.icon} />
+              <AntDesign name="camera" style={styles.icon} />
             </TouchableOpacity>
           </View>
 
@@ -121,65 +120,68 @@ const UserProfile = () => {
               <TouchableOpacity style={styles.formMain}>
                 <View style={styles.contentLeft}>
                   <MaterialCommunityIcons
-                    name='account-edit'
+                    name="account-edit"
                     style={styles.iconLeft}
                   />
                   <TextInput
-                    placeholder='User name'
+                    placeholder="User name"
                     value={name}
                     onChangeText={(text) => setname(text)}
                   />
                 </View>
                 <View>
-                  <Feather name='edit-3' style={styles.iconRight} />
+                  <Feather name="edit-3" style={styles.iconRight} />
                 </View>
               </TouchableOpacity>
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
-                  <FontAwesome name='phone' style={styles.iconLeft} />
+                  <FontAwesome name="phone" style={styles.iconLeft} />
                   <TextInput
-                    placeholder='Phone No'
+                    placeholder="Phone No"
                     value={phoneNumber}
-                    keyboardType='number-pad'
+                    keyboardType="number-pad"
                     onChangeText={(text) => setphoneNumber(text)}
                   />
                 </View>
                 <View>
-                  <Feather name='edit-3' style={styles.iconRight} />
+                  <Feather name="edit-3" style={styles.iconRight} />
                 </View>
               </View>
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
                   <MaterialCommunityIcons
-                    name='email'
+                    name="email"
                     style={styles.iconLeft}
-                    onChangeText={(text) => setemail(text)}
                     value={email}
                   />
-                  <TextInput placeholder='Email' value={userState?.email} />
+                  <TextInput
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={(text) => setemail(text)}
+                  />
                 </View>
                 <View>
-                  <Feather name='edit-3' style={styles.iconRight} />
+                  <Feather name="edit-3" style={styles.iconRight} />
                 </View>
               </View>
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
-                  <Fontisto name='locked' style={styles.iconLeft} />
+                  <Fontisto name="locked" style={styles.iconLeft} />
                   <TextInput
-                    placeholder='Password'
+                    placeholder="Password"
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                   />
                 </View>
                 <View>
-                  <Feather name='edit-3' style={styles.iconRight} />
+                  <Feather name="edit-3" style={styles.iconRight} />
                 </View>
               </View>
             </View>
 
             <View style={styles.buttonContainer}>
               <GradientButton
-                title='Save'
+                title="Save"
                 onPress={() => handleUpdateImage()}
                 containerStyle={styles.gradientButton}
               />
