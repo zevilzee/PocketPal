@@ -44,7 +44,7 @@ export const forgotPassword = async (req, res) => {
     const user = await UserModel.findOne({ phoneNumber: req.params.id });
 
     const newuser = await UserModel.findByIdAndUpdate(
-      { _id: test._id },
+      { _id: user._id },
       { password: req.body.password },
       { new: true }
     );
