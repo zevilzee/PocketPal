@@ -35,12 +35,10 @@ const UserProfile = () => {
   const [image, setImage] = useState("");
   const userState = useUserState();
   const [name, setname] = useState(userState?.fullName);
-  const [email, setemail] = useState("");
+  const [email, setemail] = useState(userState?.email);
   const [password, setPassword] = useState("");
   const [fileName, setfileName] = useState("");
-  const [phoneNumber, setphoneNumber] = useState(
-    userState?.phoneNumber.toString()
-  );
+  const [phoneNumber, setphoneNumber] = useState(userState?.phoneNumber);
   const handlePickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -55,29 +53,36 @@ const UserProfile = () => {
   const handleUpdateImage = async () => {
     const formData = new FormData();
 
-    name !== userState?.fullName && formData.append("name", name);
-    email !== "" && formData.append("email", email);
+    formData.append("name", name);
+    formData.append("email", email);
     if (password !== "") {
       formData.append("password", password);
     }
-    phoneNumber !== "" && formData.append("phoneNumber", phoneNumber);
+    formData.append("phoneNumber", userState?.phoneNumber);
 
     if (image) {
-      // console.log(image);
+      console.log(image);
       formData.append("image", {
         name: fileName,
         uri: image,
         type: "image/png",
       });
     }
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+      },
+    };
     try {
       const res = await axios.patch(
         `${BASE_URL}/user/update-picture/${userState?.id}`,
-        formData
+        formData,
+        config
       );
-      console.log(res.data);
-      userActions.setUser(res.data);
-      console.log(res?.data);
+      console.log(res);
+      // userActions.setUser(res.data);
+      // console.log(res?.data);
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +94,7 @@ const UserProfile = () => {
       behavior={Platform.OS === "ios" ? "height" : null}
     >
       <View style={styles.container}>
-        <HeaderTitle title="pROFILE" />
+        <HeaderTitle title='pROFILE' />
 
         {/* Bottom container  */}
         <ScrollView style={styles.contentContainer}>
@@ -109,7 +114,7 @@ const UserProfile = () => {
               style={styles.iconContainer}
               onPress={handlePickImage}
             >
-              <AntDesign name="camera" style={styles.icon} />
+              <AntDesign name='camera' style={styles.icon} />
             </TouchableOpacity>
           </View>
 
@@ -120,68 +125,68 @@ const UserProfile = () => {
               <TouchableOpacity style={styles.formMain}>
                 <View style={styles.contentLeft}>
                   <MaterialCommunityIcons
-                    name="account-edit"
+                    name='account-edit'
                     style={styles.iconLeft}
                   />
                   <TextInput
-                    placeholder="User name"
+                    placeholder='User name'
                     value={name}
                     onChangeText={(text) => setname(text)}
                   />
                 </View>
                 <View>
-                  <Feather name="edit-3" style={styles.iconRight} />
+                  <Feather name='edit-3' style={styles.iconRight} />
                 </View>
               </TouchableOpacity>
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
-                  <FontAwesome name="phone" style={styles.iconLeft} />
+                  <FontAwesome name='phone' style={styles.iconLeft} />
                   <TextInput
-                    placeholder="Phone No"
+                    placeholder='Phone No'
                     value={phoneNumber}
-                    keyboardType="number-pad"
+                    keyboardType='number-pad'
                     onChangeText={(text) => setphoneNumber(text)}
                   />
                 </View>
                 <View>
-                  <Feather name="edit-3" style={styles.iconRight} />
+                  <Feather name='edit-3' style={styles.iconRight} />
                 </View>
               </View>
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
                   <MaterialCommunityIcons
-                    name="email"
+                    name='email'
                     style={styles.iconLeft}
                     value={email}
                   />
                   <TextInput
-                    placeholder="Email"
+                    placeholder='Email'
                     value={email}
                     onChangeText={(text) => setemail(text)}
                   />
                 </View>
                 <View>
-                  <Feather name="edit-3" style={styles.iconRight} />
+                  <Feather name='edit-3' style={styles.iconRight} />
                 </View>
               </View>
               <View style={styles.formMain}>
                 <View style={styles.contentLeft}>
-                  <Fontisto name="locked" style={styles.iconLeft} />
+                  <Fontisto name='locked' style={styles.iconLeft} />
                   <TextInput
-                    placeholder="Password"
+                    placeholder='Password'
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                   />
                 </View>
                 <View>
-                  <Feather name="edit-3" style={styles.iconRight} />
+                  <Feather name='edit-3' style={styles.iconRight} />
                 </View>
               </View>
             </View>
 
             <View style={styles.buttonContainer}>
               <GradientButton
-                title="Save"
+                title='Save'
                 onPress={() => handleUpdateImage()}
                 containerStyle={styles.gradientButton}
               />

@@ -197,9 +197,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: scale(10),
   },
   totalBudgetContainer: {
-    position: "absolute",
-    left: width * 0.36,
-    top: Height * 0.088,
+    position: "relative",
+    left: width * 0.358,
+    bottom: Height * 0.242,
     height: Height * 0.18,
     width: width * 0.36,
     borderRadius: Height * 0.1,

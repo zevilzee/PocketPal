@@ -61,6 +61,7 @@ export const me = async (req, res, next) => {
 };
 
 export const updatePicture = async (req, res, next) => {
+  console.log(req);
   if (!req.file) {
     res.status(400).send("Image not found");
   }
