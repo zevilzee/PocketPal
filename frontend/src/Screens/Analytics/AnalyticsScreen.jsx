@@ -108,7 +108,7 @@ const AnalyticsScreen = () => {
             <ProgressChart
               data={data}
               width={width * 0.99}
-              height={220}
+              height={Height * 0.305}
               strokeWidth={16}
               radius={80}
               chartConfig={chartConfig}
@@ -196,22 +196,23 @@ const styles = StyleSheet.create({
     borderTopRightRadius: scale(10),
   },
   totalBudgetContainer: {
-    // alignItems: "center",
-    // justifyContent: "center",
-    // backgroundColor: Color.White,
-    // shadowColor: Color.Black,
-    // shadowOffset: {
-    //   width: 9,
-    //   height: 8,
-    // },
-    // shadowOpacity: 0.27,
-    // shadowRadius: 6.65,
-    // elevation: 8,
-    paddingHorizontal: scale(20),
-    paddingVertical: scale(10),
-    borderBottomWidth: 0.7,
-    borderBottomColor: Color.Border,
+    position: "absolute",
+    left: width * 0.318,
+    top: Height * 0.09,
+    height: Height * 0.18,
+    width: width * 0.36,
+    borderRadius: Height * 0.1,
     alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: Color.White,
+    shadowColor: Color.Black,
+    shadowOffset: {
+      width: 9,
+      height: 8,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 6.65,
+    elevation: 8,
   },
   totalTitle: {
     fontFamily: "Medium",
