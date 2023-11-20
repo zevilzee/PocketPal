@@ -61,7 +61,6 @@ const AnalyticsScreen = () => {
     };
     calculate();
   }, []);
-  console.log(remainingPercentagee, "percent  ");
   const data = {
     data: [remainingPercentagee || 0.1],
   };
@@ -108,13 +107,13 @@ const AnalyticsScreen = () => {
             <Text></Text>
             <ProgressChart
               data={data}
-              width={scale(470)}
+              width={width * 0.99}
               height={220}
               strokeWidth={16}
               radius={80}
               chartConfig={chartConfig}
-              hideLegend={false}
-              style={{ backgroundColor: "red" }}
+              hideLegend={true}
+              // style={{ backgroundColor: "red" }}
             />
             <View style={styles.totalBudgetContainer}>
               <Text style={styles.totalTitle}>Total Budget</Text>
@@ -197,23 +196,22 @@ const styles = StyleSheet.create({
     borderTopRightRadius: scale(10),
   },
   totalBudgetContainer: {
-    position: "relative",
-    left: width * 0.358,
-    bottom: Height * 0.242,
-    height: Height * 0.18,
-    width: width * 0.36,
-    borderRadius: Height * 0.1,
+    // alignItems: "center",
+    // justifyContent: "center",
+    // backgroundColor: Color.White,
+    // shadowColor: Color.Black,
+    // shadowOffset: {
+    //   width: 9,
+    //   height: 8,
+    // },
+    // shadowOpacity: 0.27,
+    // shadowRadius: 6.65,
+    // elevation: 8,
+    paddingHorizontal: scale(20),
+    paddingVertical: scale(10),
+    borderBottomWidth: 0.7,
+    borderBottomColor: Color.Border,
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: Color.White,
-    shadowColor: Color.Black,
-    shadowOffset: {
-      width: 9,
-      height: 8,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 6.65,
-    elevation: 8,
   },
   totalTitle: {
     fontFamily: "Medium",
@@ -221,7 +219,7 @@ const styles = StyleSheet.create({
   },
   totalAmount: {
     fontFamily: "Bold",
-    fontSize: scale(16),
+    fontSize: scale(18),
     paddingVertical: scale(2),
   },
   monthlyBudhet: {
